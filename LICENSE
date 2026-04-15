@@ -1,0 +1,25 @@
+Ryvex Miner - Proprietary Software License
+
+Copyright (c) 2026 Ryvex. All rights reserved.
+
+This software is provided as-is for personal and commercial mining use.
+
+You MAY:
+- Use this software to mine cryptocurrency on your own hardware
+- Copy and distribute the unmodified binary and associated files
+- Run multiple instances on hardware you own or operate
+
+You MAY NOT:
+- Reverse engineer, decompile, or disassemble the software
+- Modify, patch, or create derivative works of the binary
+- Remove or circumvent any licensing, copy protection, or usage restrictions
+- Redistribute modified versions of the software
+- Use this software for any unlawful purpose
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

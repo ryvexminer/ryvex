@@ -1,0 +1,157 @@
+# ============================================================
+# Ryvex — Configuration
+# Copy this file to config.toml and adjust the values
+# ============================================================
+
+# Worker name (identifies this miner on the pool)
+worker_name = "rig1"
+
+# Mining algorithm
+algorithm = "kawpow"
+
+# === Mining Pools ===
+# The first pool is the primary, the rest are backups (failover).
+# If the primary pool is unreachable, the miner automatically tries the next ones.
+
+# Wallets can be encrypted with --encrypt-config --config-key PASSWORD
+# An encrypted wallet looks like: "enc:base64..."
+# To decrypt at launch: --config-key PASSWORD or env RYVEX_CONFIG_KEY
+
+# Ravencoin (KawPoW)
+[[pools]]
+url = "rvn.2miners.com:6060"
+wallet = "YOUR_RAVENCOIN_WALLET_HERE"
+password = "x"
+tls = false
+# ssl_verify = true       # Verify TLS certificate (default: true, false for self-signed certs)
+is_backup = false
+
+# Backup Ravencoin pool (automatic failover)
+[[pools]]
+url = "rvn.suprnova.cc:8888"
+wallet = "YOUR_RAVENCOIN_WALLET_HERE"
+password = "x"
+tls = false
+is_backup = true
+
+# TLS pool example (stratum+ssl://)
+# The stratum+ssl:// prefix automatically enables TLS even if tls = false
+# [[pools]]
+# url = "stratum+ssl://rvn.example.com:6161"
+# wallet = "YOUR_RAVENCOIN_WALLET_HERE"
+# password = "x"
+# tls = true
+# ssl_verify = true       # false = accept self-signed certificates
+# is_backup = true
+
+# === GPU Configuration ===
+[gpu]
+# GPU indices to use (empty = all detected GPUs)
+# Example: [0, 1] to use the first 2 GPUs
+# Each GPU launches an independent worker connected to the pool
+devices = []
+
+# Mining intensity (0.0 to 1.0)
+# 1.0 = full power, 0.5 = half power (reduces temperature)
+intensity = 1.0
+
+# Thermal protection: pause mining when GPU reaches temp_stop (°C)
+# Mining resumes when temperature drops to temp_start (°C)
+# 0 = disabled (default: built-in 85/75°C safety limit still active)
+# temp_stop = 80
+# temp_start = 70
+
+# Hashrate watchdog: restart GPU worker if 5-min average drops below this (H/s)
+# Useful to detect stuck GPUs or driver crashes. 0 = disabled.
+# Example: 20000000 = 20 MH/s
+# min_hashrate = 0
+
+# GPU overclock via NVML (optional, requires admin rights)
+# Note: on Ampere Windows, the memory offset has no effect via NVML.
+# Use MSI Afterburner for memory OC.
+# [gpu.overclock]
+# power_limit_watts = 130     # 0 = do not modify (NVML, limited effect on Ampere)
+# core_clock_min_mhz = 0     # 0 = no lock (NVML)
+# core_clock_max_mhz = 0     # 0 = no lock (NVML)
+# mem_clock_min_mhz = 0      # 0 = no lock (NVML)
+# mem_clock_max_mhz = 0      # 0 = no lock (NVML)
+# fan_speed = 0               # 0 = auto driver, 1 = auto curve (40-100% based on temp), 30-100 = fixed
+#
+# === OC via NVAPI (works on Ampere Windows, replaces MSI Afterburner) ===
+# core_offset_mhz = -150     # Core offset in MHz (negative = underclock = less heat)
+# mem_offset_mhz = 1200      # Memory offset in MHz (+1200 = +4 MH/s KawPoW on RTX 3070)
+# WARNING: too high an offset causes VRAM errors (corrupt DAG) or GPU crash
+# Safe values RTX 3070: mem +1200 (stable, clean DAG), +1250 = VRAM errors, +1350 = crash
+
+# === Logging ===
+[logging]
+# Log level: "trace", "debug", "info", "warn", "error"
+level = "info"
+
+# Write logs to a file (optional, uncomment to enable)
+# file = "ryvex.log"
+
+# === Remote Web Dashboard ===
+[dashboard]
+# Enable web dashboard (accessible via browser)
+enabled = true
+
+# Dashboard port (0 to disable)
+port = 8081
+
+# API key to protect dashboard access (optional)
+# If set, requests must include ?key=YOUR_KEY or the X-API-Key header
+# api_key = "a-random-secret-key"
+
+# HTTP API bind address (default: "127.0.0.1" = local only)
+# Set to "0.0.0.0" to listen on all interfaces (multi-rig LAN monitoring)
+# bind_address = "0.0.0.0"
+
+# Static API token for remote access (optional)
+# If empty or absent, a random token is generated each session.
+# A static token allows remote GUIs to reconnect after a reboot.
+# Generate a token: openssl rand -hex 32
+# api_token = "your-secret-token-here"
+
+# === Network Timeouts ===
+[timeouts]
+# Pool connection timeout in seconds (default: 10)
+pool_connect_secs = 10
+# Pool message receive timeout in seconds (default: 2)
+pool_recv_secs = 2
+
+# === Multi-pool Failover ===
+[failover]
+# When the miner is on a backup pool, check interval for the primary
+# pool in seconds (default: 60). If the primary comes back,
+# the miner switches automatically.
+primary_check_interval_secs = 60
+# If the pool sends no messages during this delay (in seconds),
+# it is considered silent and the miner triggers a failover.
+# Active pools send mining.notify every ~15-30s.
+silence_timeout_secs = 300
+
+# === Advanced Mining ===
+[mining]
+# Verify GPU shares on CPU before submitting (avoids invalid shares)
+cpu_check = true
+# Electricity cost per kWh (for profit display in stats and summary)
+electricity_cost = 0.15
+# Currency symbol for electricity cost display
+# Examples: "USD", "EUR", "GBP", "JPY", "CNY", "CAD", "AUD"
+electricity_currency = "USD"
+# DAG cache: keep old DAG while generating new one ("auto", "true", "false")
+# Auto enables on GPUs with 12GB+ VRAM
+dag_cache = "auto"
+# Save DAG to disk in background after generation for fast reload on next startup
+# Location: %LOCALAPPDATA%/ryvex/dag-cache/dag_epoch_{N}.bin
+dag_cache_save = true
+# Benchmark duration in seconds (used with --benchmark flag)
+benchmark_duration_secs = 60
+
+# === Telemetry ===
+[telemetry]
+# Anonymous telemetry (opt-in, disabled by default)
+# No personal information collected
+enabled = false
+# endpoint = "https://telemetry.ryvex.app/v1"
