@@ -1,6 +1,6 @@
 # Ryvex - High-Performance GPU Miner
 
-NVIDIA CUDA miner with runtime-optimized kernels, desktop GUI, and enterprise-grade reliability.
+NVIDIA CUDA miner with runtime-optimized kernels, built-in web dashboard, and enterprise-grade reliability.
 
 ## Supported Algorithms
 
@@ -22,7 +22,7 @@ NVIDIA CUDA miner with runtime-optimized kernels, desktop GUI, and enterprise-gr
 algorithm = "kawpow"
 
 [[pools]]
-url = "stratum.ravenminer.com:13801"
+url = "rvn.2miners.com:16060"
 wallet = "YOUR_RVN_WALLET"
 tls = true
 ```
@@ -41,7 +41,8 @@ tls = true
 - **Thermal Protection** — Auto-throttle and shutdown on overtemp
 - **GPU Crash Recovery** — Automatic TDR detection, context reset, and DAG regeneration
 - **Encrypted Wallets** — AES-256-GCM wallet encryption in config file
-- **Web Dashboard** — Real-time hashrate, shares, power, and profit at `http://localhost:8081`
+- **Web Dashboard** — Real-time hashrate, shares, GPU stats, and profit at `http://localhost:8081` (auto-starts, no setup)
+- **HTTP API** — JSON API at `http://localhost:8080` for monitoring and integration
 
 ## CLI Options
 
@@ -64,14 +65,16 @@ Options:
 
 ## Validated Pools
 
-| Pool | URL | Port (SSL) |
-|------|-----|------------|
-| **2miners** | rvn.2miners.com | 16060 |
-| **Ravenminer** | stratum.ravenminer.com | 13801 |
-| **WoolyPooly** | pool.woolypooly.com | 55556 |
-| **Suprnova** | rvn.suprnova.cc | 6275 |
-| **Nanopool** | rvn.nanopool.org | 12643 |
-| **HeroMiners** | ravencoin.herominers.com | 10641 |
+| Pool | URL | TCP Port | SSL Port |
+|------|-----|----------|----------|
+| **2Miners** | rvn.2miners.com | 15555 | 16060 |
+| **Ravenminer** | stratum.ravenminer.com | 13801 | 13838 |
+| **HeroMiners** | ravencoin.herominers.com | 10640 | 10641 |
+| **WoolyPooly** | pool.woolypooly.com | 55555 | 55556 |
+| **Suprnova** | rvn.suprnova.cc | 6275 | 6275 |
+| **Nanopool** | rvn.nanopool.org | 12641 | 12643 |
+
+Set `tls = true` in config.toml when using an SSL port, `tls = false` for TCP.
 
 ## Recommended Overclock (KawPoW)
 
@@ -89,8 +92,8 @@ Benchmarked on RTX 3070 (Zotac, driver 591.86):
 
 | Config | Hashrate | Power | Efficiency |
 |--------|----------|-------|------------|
-| Stock | 25.5 MH/s | 219W | 117 kH/W |
-| OC (+1200/-150/PL60%) | 23.2 MH/s | 131W | 179 kH/W |
+| Stock | 25.4 MH/s | 219W | 116 kH/W |
+| OC (+1200/-150/PL60%) | 25.5 MH/s | 131W | 194 kH/W |
 
 *Performance varies by GPU model, driver, cooling, and OC settings.*
 
@@ -128,8 +131,7 @@ Compare with `SHA256SUMS.txt` in the release.
 
 ## Support
 
-- [GitHub Issues](https://github.com/ryvex-miner/ryvex/issues) — Bug reports and feature requests
-- Discord — *Coming soon*
+- [GitHub Issues](https://github.com/ryvexminer/ryvex/issues) — Bug reports and feature requests
 
 ## License
 
