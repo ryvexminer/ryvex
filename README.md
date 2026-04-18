@@ -12,7 +12,7 @@ NVIDIA CUDA miner with runtime-optimized kernels, built-in web dashboard, and en
 
 ## Quick Start
 
-1. Download the latest release from [Releases](https://github.com/ryvex-miner/ryvex/releases)
+1. Download the latest release from [Releases](https://github.com/ryvexminer/ryvex/releases)
 2. Extract the archive
 3. Edit a launch script (e.g. `RVN-2miners.bat`) — replace `YOUR_RVN_WALLET` with your wallet address
 4. Double-click the script to start mining
@@ -32,11 +32,15 @@ tls = true
 
 ## Features
 
-- **NVRTC Runtime Kernels** — Compiles optimized CUDA code per ProgPoW period (no stale kernels)
+- **NVRTC Runtime Kernels** — Compiles optimized CUDA code per ProgPoW period with dual-kernel rolling cache (zero stalls on period changes)
+- **Native SASS Compilation** — Fatbin with native SASS for Pascal, Turing, Ampere, Ada, and Blackwell GPUs
+- **Fast DAG** — 20s cold generation, 2s from disk cache, real-time progress display during generation
 - **GPU-Aware Tuning** — Auto-detects your GPU architecture (Pascal to Blackwell) and adapts kernel parameters
-- **DAG Disk Cache** — 3-4s reload instead of 16-21s generation on restarts
 - **Double-Buffered Pipeline** — Overlapped kernel execution and result readback
+- **NiceHash Support** — Full KawPoW_NiceHash_v1.0 protocol
+- **HiveOS Ready** — Custom miner package included
 - **Pool Failover** — Automatic reconnection with backup pool support
+- **Stale Share Prevention** — Detects new blocks before submitting outdated shares
 - **TLS/SSL** — Encrypted pool connections on all supported pools
 - **Thermal Protection** — Auto-throttle and shutdown on overtemp
 - **GPU Crash Recovery** — Automatic TDR detection, context reset, and DAG regeneration
@@ -50,17 +54,24 @@ tls = true
 Usage: ryvex [OPTIONS]
 
 Options:
-  --algo <ALGO>          Mining algorithm [default: kawpow]
-  --pool <POOL>          Pool URL (stratum+ssl://host:port)
-  --wallet <WALLET>      Wallet address
-  --worker <WORKER>      Worker name [default: rig1]
-  --password <PASS>      Pool password [default: x]
-  --config <FILE>        Config file path [default: config.toml]
-  --benchmark            Benchmark mode (60s, no pool)
-  --api-port <PORT>      HTTP API port [default: 8080]
-  --no-color             Disable colored output
-  -h, --help             Print help
-  -V, --version          Print version
+  -c, --config <CONFIG>       Config file [default: config.toml]
+  -u, --wallet <WALLET>       Wallet address (overrides config)
+  -o, --pool <POOL>           Pool URL (host:port or stratum+ssl://host:port)
+  -p, --pass <PASSWORD>       Pool password (e.g. "d=1" for difficulty)
+  -a, --algo <ALGO>           Mining algorithm [default: kawpow]
+  -n, --worker <WORKER>       Worker name (visible on pool)
+  -d, --devices <DEVICES>     GPUs to use, e.g. "0,2" [default: all]
+      --benchmark             Benchmark mode (60s, no pool)
+      --flush-dag             Delete DAG cache and regenerate
+      --api-port <PORT>       HTTP API port [default: 8080]
+      --no-api                Disable HTTP API
+      --dashboard-port <P>    Web dashboard port [default: 8081, 0=off]
+      --config-key <KEY>      Encryption key (or env RYVEX_CONFIG_KEY)
+      --encrypt-config        Encrypt wallets in config and exit
+      --profile <NAME>        Load a mining profile
+      --gpu-algo <GPU_ALGO>   Algo per GPU, e.g. "0:kawpow,1:kawpow"
+  -h, --help                  Print help
+  -V, --version               Print version
 ```
 
 ## Validated Pools
@@ -80,7 +91,7 @@ Set `tls = true` in config.toml when using an SSL port, `tls = false` for TCP.
 
 | Setting | Range | Notes |
 |---------|-------|-------|
-| Memory | +800 to +1200 | Start low, increase gradually |
+| Memory | +800 to +1000 | Start low, increase gradually |
 | Core | -100 to -200 | Reduces power without losing hashrate |
 | Power Limit | 60-70% | Best efficiency sweet spot |
 
@@ -88,18 +99,25 @@ Set `tls = true` in config.toml when using an SSL port, `tls = false` for TCP.
 
 ## Performance
 
-Benchmarked on RTX 3070 (Zotac, driver 591.86):
+Benchmarked on RTX 3070 (OC +950/-150/PL60%, driver 596.21, ravenminer SSL):
 
-| Config | Hashrate | Power | Efficiency |
-|--------|----------|-------|------------|
-| Stock | 25.4 MH/s | 219W | 116 kH/W |
-| OC (+1200/-150/PL60%) | 25.5 MH/s | 131W | 194 kH/W |
+| Metric | Ryvex | Leading Alternative |
+|--------|-------|---------------------|
+| Hashrate | 23.7 MH/s | 23.9 MH/s |
+| Power | 131W | 131W |
+| Efficiency | 181 kH/W | 182 kH/W |
+| DAG (cold) | 20s | 18s |
+| DAG (cached) | **2s** | 18s |
+| Pool latency | 33ms | 35ms |
+| Share rate | 100% (0 rejected) | 98% |
 
 *Performance varies by GPU model, driver, cooling, and OC settings.*
 
 ## Requirements
 
-- NVIDIA GPU with CUDA support (Maxwell or newer, GTX 9xx / RTX series)
+- NVIDIA GPU with CUDA support (GTX 9xx through RTX 50xx)
+  - Native SASS: Pascal (GTX 10xx), Turing (RTX 20xx), Ampere (RTX 30xx), Ada (RTX 40xx), Blackwell (RTX 50xx)
+  - PTX JIT fallback: Maxwell (GTX 9xx) and future architectures
 - NVIDIA driver 525.x or newer
 - Windows 10/11 x64 or Linux x64
 

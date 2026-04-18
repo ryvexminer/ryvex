@@ -1,5 +1,38 @@
 # Changelog
 
+## v1.0.1 (2026-04-18)
+
+### Performance
+- DAG generation 3x faster (72s → 20s cold, 2s cached)
+- Native SASS compilation for Pascal, Turing, Ampere, Ada, and Blackwell GPUs (sm_61 to sm_100)
+- CUDA context cache — eliminates redundant GPU context switches
+- Header/target GPU upload cache — skip unchanged data
+- NVRTC dual-kernel rolling cache — zero stalls on period changes
+- Pool latency reduced from 44ms to 33ms (accurate socket-level measurement)
+
+### Stability
+- Graceful shutdown replaces abrupt exit (proper GPU fan/OC reset)
+- Circuit breaker auto-recovery after 5 minutes
+- DAG coordinator timeout prevents multi-GPU deadlocks
+- Stale share detection before submission (drain new jobs after GPU batch)
+- Auto-cleanup of old DAG cache files (prevents disk bloat)
+- Config validation for silence timeout bounds
+
+### Quality
+- Refactored CLI from 4098-line monolith into 4 focused modules
+- 115 new integration tests (stratum, pool parsing, config)
+- Zero compiler warnings
+- DAG generation progress display (real-time percentage)
+
+### Fixes
+- DAG cache save deferred to shutdown (no longer blocks mining start)
+- Incomplete DAG cache files prevented via atomic .tmp → .bin rename
+- Light cache persisted to disk (eliminates 2-3s CPU on warm start)
+- Session summary ANSI colors restored
+- Removed dead heap allocations in ping-pong readback
+
+---
+
 ## v1.0.0 (2026-04-16)
 
 **Initial release — KawPoW (Ravencoin) GPU miner**

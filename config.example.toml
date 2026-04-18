@@ -17,27 +17,26 @@ algorithm = "kawpow"
 # An encrypted wallet looks like: "enc:base64..."
 # To decrypt at launch: --config-key PASSWORD or env RYVEX_CONFIG_KEY
 
-# Ravencoin (KawPoW)
+# Ravencoin (KawPoW) — primary pool (TCP)
 [[pools]]
-url = "rvn.2miners.com:6060"
+url = "rvn.2miners.com:15555"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
 tls = false
-# ssl_verify = true       # Verify TLS certificate (default: true, false for self-signed certs)
 is_backup = false
 
-# Backup Ravencoin pool (automatic failover)
+# Ravencoin — backup pool (SSL)
 [[pools]]
-url = "rvn.suprnova.cc:8888"
+url = "ravencoin.herominers.com:10641"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
-tls = false
+tls = true
 is_backup = true
 
 # TLS pool example (stratum+ssl://)
 # The stratum+ssl:// prefix automatically enables TLS even if tls = false
 # [[pools]]
-# url = "stratum+ssl://rvn.example.com:6161"
+# url = "stratum+ssl://rvn.2miners.com:16060"
 # wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 # password = "x"
 # tls = true
@@ -66,23 +65,6 @@ intensity = 1.0
 # Example: 20000000 = 20 MH/s
 # min_hashrate = 0
 
-# GPU overclock via NVML (optional, requires admin rights)
-# Note: on Ampere Windows, the memory offset has no effect via NVML.
-# Use MSI Afterburner for memory OC.
-# [gpu.overclock]
-# power_limit_watts = 130     # 0 = do not modify (NVML, limited effect on Ampere)
-# core_clock_min_mhz = 0     # 0 = no lock (NVML)
-# core_clock_max_mhz = 0     # 0 = no lock (NVML)
-# mem_clock_min_mhz = 0      # 0 = no lock (NVML)
-# mem_clock_max_mhz = 0      # 0 = no lock (NVML)
-# fan_speed = 0               # 0 = auto driver, 1 = auto curve (40-100% based on temp), 30-100 = fixed
-#
-# === OC via NVAPI (works on Ampere Windows, replaces MSI Afterburner) ===
-# core_offset_mhz = -150     # Core offset in MHz (negative = underclock = less heat)
-# mem_offset_mhz = 1200      # Memory offset in MHz (+1200 = +4 MH/s KawPoW on RTX 3070)
-# WARNING: too high an offset causes VRAM errors (corrupt DAG) or GPU crash
-# Safe values RTX 3070: mem +1200 (stable, clean DAG), +1250 = VRAM errors, +1350 = crash
-
 # === Logging ===
 [logging]
 # Log level: "trace", "debug", "info", "warn", "error"
@@ -91,9 +73,9 @@ level = "info"
 # Write logs to a file (optional, uncomment to enable)
 # file = "ryvex.log"
 
-# === Remote Web Dashboard ===
+# === Web Dashboard ===
 [dashboard]
-# Enable web dashboard (accessible via browser)
+# Enable web dashboard (accessible via browser at http://localhost:8081)
 enabled = true
 
 # Dashboard port (0 to disable)
@@ -129,9 +111,9 @@ primary_check_interval_secs = 60
 # If the pool sends no messages during this delay (in seconds),
 # it is considered silent and the miner triggers a failover.
 # Active pools send mining.notify every ~15-30s.
-silence_timeout_secs = 300
+silence_timeout_secs = 90
 
-# === Advanced Mining ===
+# === Mining ===
 [mining]
 # Verify GPU shares on CPU before submitting (avoids invalid shares)
 cpu_check = true
@@ -143,15 +125,18 @@ electricity_currency = "USD"
 # DAG cache: keep old DAG while generating new one ("auto", "true", "false")
 # Auto enables on GPUs with 12GB+ VRAM
 dag_cache = "auto"
-# Save DAG to disk in background after generation for fast reload on next startup
-# Location: %LOCALAPPDATA%/ryvex/dag-cache/dag_epoch_{N}.bin
+# Save DAG to disk for fast reload on next startup
+# Location: %LOCALAPPDATA%/ryvex/dag-cache/ (Windows) or ~/.local/share/ryvex/dag-cache/ (Linux)
 dag_cache_save = true
 # Benchmark duration in seconds (used with --benchmark flag)
 benchmark_duration_secs = 60
 
-# === Telemetry ===
-[telemetry]
-# Anonymous telemetry (opt-in, disabled by default)
-# No personal information collected
-enabled = false
-# endpoint = "https://telemetry.ryvex.app/v1"
+# === Advanced Tuning (optional) ===
+# Most users should leave defaults — Ryvex auto-tunes for your GPU.
+# Only modify if you know what you're doing.
+# [mining.tuning]
+# kawpow_burst = 1            # CUDA kernels queued before sync (1-4, higher = more throughput, >2 risks TDR on Windows)
+# kawpow_grid_mult = 128      # Grid multiplier for CUDA launches (max 1024)
+# kawpow_precompile = true    # Pre-compile next ProgPoW period kernel in background (eliminates 10-15s stall)
+# kawpow_cpu_verify = "adaptive"  # CPU share verification: "adaptive" (default), "always", "off"
+# dag_verify = false          # Heavy DAG integrity check after generation (~60s, for diagnosing VRAM corruption under OC)
