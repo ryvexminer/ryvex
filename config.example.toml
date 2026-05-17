@@ -6,7 +6,7 @@
 # Worker name (identifies this miner on the pool)
 worker_name = "rig1"
 
-# Mining algorithm
+# Mining algorithm — supported values: "kawpow" (RVN), "autolykos2" (ERG), "fishhash" (IRON)
 algorithm = "kawpow"
 
 # === Mining Pools ===
@@ -17,15 +17,23 @@ algorithm = "kawpow"
 # An encrypted wallet looks like: "enc:base64..."
 # To decrypt at launch: --config-key PASSWORD or env RYVEX_CONFIG_KEY
 
-# Ravencoin (KawPoW) — primary pool (TCP)
+# --- Ravencoin (KawPoW) ---
+
+# Ravencoin (KawPoW) — 2miners primary (TCP)
 [[pools]]
 url = "rvn.2miners.com:15555"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
 tls = false
 is_backup = false
+# coin = "RVN"            # optional: coin symbol mined on this pool. One algorithm
+#                         # can serve several coins (e.g. KawPoW on zpool: RVN, MEWC,
+#                         # NEOX, AIPG...). Defaults to the algorithm's canonical coin.
+# api_url = "https://rvn.2miners.com/api/accounts/YOUR_WALLET"
+#                         # optional: pool HTTP API for pool-reported hashrate + balance,
+#                         # polled every 60s. See the "Pool HTTP API" section below.
 
-# Ravencoin — backup pool (SSL)
+# Ravencoin (KawPoW) — HeroMiners backup (SSL)
 [[pools]]
 url = "ravencoin.herominers.com:10641"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
@@ -41,6 +49,39 @@ is_backup = true
 # password = "x"
 # tls = true
 # ssl_verify = true       # false = accept self-signed certificates
+# is_backup = true
+
+# --- Ergo (Autolykos2) — uncomment and set algorithm = "autolykos2" ---
+# [[pools]]
+# url = "stratum+ssl://erg.2miners.com:8088"
+# wallet = "YOUR_ERGO_WALLET_HERE"
+# password = "x"
+# tls = true
+# is_backup = false
+# # 2miners ERG uses a high baseline difficulty — pre-set to avoid rejected shares at startup:
+# # [mining.tuning]
+# # target_multiplier = 4.0
+
+# [[pools]]
+# url = "stratum+ssl://ergo.herominers.com:10250"
+# wallet = "YOUR_ERGO_WALLET_HERE"
+# password = "x"
+# tls = true
+# is_backup = true
+
+# --- IronFish (FishHash) — uncomment and set algorithm = "fishhash" ---
+# [[pools]]
+# url = "stratum+ssl://ironfish.herominers.com:10370"
+# wallet = "YOUR_IRONFISH_WALLET_HERE"
+# password = "x"
+# tls = true
+# is_backup = false
+
+# [[pools]]
+# url = "stratum+ssl://ironfish.pool.2miners.com:20300"
+# wallet = "YOUR_IRONFISH_WALLET_HERE"
+# password = "x"
+# tls = true
 # is_backup = true
 
 # === GPU Configuration ===
@@ -136,7 +177,15 @@ benchmark_duration_secs = 60
 # Only modify if you know what you're doing.
 # [mining.tuning]
 # kawpow_burst = 1            # CUDA kernels queued before sync (1-4, higher = more throughput, >2 risks TDR on Windows)
-# kawpow_grid_mult = 128      # Grid multiplier for CUDA launches (max 1024)
+# kawpow_grid_mult = 12       # Grid multiplier for CUDA launches (default 12, clamped to 16)
 # kawpow_precompile = true    # Pre-compile next ProgPoW period kernel in background (eliminates 10-15s stall)
 # kawpow_cpu_verify = "adaptive"  # CPU share verification: "adaptive" (default), "always", "off"
 # dag_verify = false          # Heavy DAG integrity check after generation (~60s, for diagnosing VRAM corruption under OC)
+#
+# target_multiplier = 1.0     # Scales the local share target sent to the pool (default: 1.0, auto-adjusts on reject).
+#                             # Increase when the pool's baseline difficulty is much higher than the binary's default
+#                             # assumption — avoids 2-3 rejected shares at session start while the auto-ladder catches up.
+#                             # Recommended values by pool category:
+#                             #   1.0  — most pools (NiceHash, HeroMiners, WoolyPooly, Nanopool)
+#                             #   4.0  — 2miners ERG (Autolykos2) high-diff sessions
+#                             #   8.0  — ultra-high-diff sessions (rare)

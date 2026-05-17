@@ -7,8 +7,8 @@ NVIDIA CUDA miner with runtime-optimized kernels, built-in web dashboard, and en
 | Algorithm | Coin | Dev Fee |
 |-----------|------|---------|
 | **KawPoW** | Ravencoin (RVN) | 1% |
-
-*More algorithms coming in future releases (Autolykos2/ERG, FishHash/IRON).*
+| **Autolykos2** | Ergo (ERG) | 1% |
+| **FishHash** | IronFish (IRON) | 1% |
 
 ## Quick Start
 
