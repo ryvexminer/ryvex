@@ -22,7 +22,7 @@ NVIDIA CUDA miner with runtime-optimized kernels, built-in web dashboard, and en
 algorithm = "kawpow"
 
 [[pools]]
-url = "rvn.2miners.com:16060"
+url = "stratum+ssl://rvn.2miners.com:16060"
 wallet = "YOUR_RVN_WALLET"
 tls = true
 ```
@@ -47,6 +47,7 @@ tls = true
 - **Encrypted Wallets** — AES-256-GCM wallet encryption in config file
 - **Web Dashboard** — Real-time hashrate, shares, GPU stats, and profit at `http://localhost:8081` (auto-starts, no setup)
 - **HTTP API** — JSON API at `http://localhost:8080` for monitoring and integration
+- **API auth** — use `Authorization: Bearer <api_token>` or `X-API-Key: <api_token>` for remote HTTP API access
 
 ## CLI Options
 
@@ -62,6 +63,7 @@ Options:
   -n, --worker <WORKER>       Worker name (visible on pool)
   -d, --devices <DEVICES>     GPUs to use, e.g. "0,2" [default: all]
       --benchmark             Benchmark mode (60s, no pool)
+      --benchmark-duration <S> Benchmark duration in seconds [default: 60]
       --flush-dag             Delete DAG cache and regenerate
       --api-port <PORT>       HTTP API port [default: 8080]
       --no-api                Disable HTTP API
@@ -78,12 +80,12 @@ Options:
 
 | Pool | URL | TCP Port | SSL Port |
 |------|-----|----------|----------|
-| **2Miners** | rvn.2miners.com | 15555 | 16060 |
+| **2Miners** | rvn.2miners.com | 6060 | 16060 |
 | **Ravenminer** | stratum.ravenminer.com | 13801 | 13838 |
 | **HeroMiners** | ravencoin.herominers.com | 10640 | 10641 |
 | **WoolyPooly** | pool.woolypooly.com | 55555 | 55556 |
-| **Suprnova** | rvn.suprnova.cc | 6275 | 6275 |
-| **Nanopool** | rvn.nanopool.org | 12641 | 12643 |
+| **Suprnova** | rvn.suprnova.cc | 8888 | 8889 |
+| **Nanopool** | rvn-eu1.nanopool.org | 10400 | 10443 |
 
 Set `tls = true` in config.toml when using an SSL port, `tls = false` for TCP.
 

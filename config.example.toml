@@ -21,7 +21,7 @@ algorithm = "kawpow"
 
 # Ravencoin (KawPoW) — 2miners primary (TCP)
 [[pools]]
-url = "rvn.2miners.com:15555"
+url = "rvn.2miners.com:6060"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
 tls = false
@@ -77,13 +77,6 @@ is_backup = true
 # tls = true
 # is_backup = false
 
-# [[pools]]
-# url = "stratum+ssl://ironfish.pool.2miners.com:20300"
-# wallet = "YOUR_IRONFISH_WALLET_HERE"
-# password = "x"
-# tls = true
-# is_backup = true
-
 # === GPU Configuration ===
 [gpu]
 # GPU indices to use (empty = all detected GPUs)
@@ -122,16 +115,17 @@ enabled = true
 # Dashboard port (0 to disable)
 port = 8081
 
-# API key to protect dashboard access (optional)
-# If set, requests must include ?key=YOUR_KEY or the X-API-Key header
+# API key to protect web dashboard access (optional).
+# Dashboard requests must include the X-API-Key header.
 # api_key = "a-random-secret-key"
 
 # HTTP API bind address (default: "127.0.0.1" = local only)
 # Set to "0.0.0.0" to listen on all interfaces (multi-rig LAN monitoring)
 # bind_address = "0.0.0.0"
 
-# Static API token for remote access (optional)
+# Static HTTP API token for remote access (optional).
 # If empty or absent, a random token is generated each session.
+# API requests must include Authorization: Bearer TOKEN or X-API-Key: TOKEN.
 # A static token allows remote GUIs to reconnect after a reboot.
 # Generate a token: openssl rand -hex 32
 # api_token = "your-secret-token-here"
