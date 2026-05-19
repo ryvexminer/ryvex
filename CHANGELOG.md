@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.1.1 (2026-05-19)
+
+### Fixed
+- Hardened Stratum log redaction so wallet, password, token, and submit data are not leaked by raw protocol logs.
+- Hardened pool target parsing for malformed or oversized Stratum targets.
+- Fixed NiceHash startup ordering when `mining.notify` arrives before `mining.set_difficulty`.
+- Preserved raw FishHash pool targets during dev-fee mining fragments.
+- Stabilized dev-fee fragment timing so the configured fee percentage is exact.
+- Improved GUI benchmark parsing for ANSI-colored decimal power output.
+
+### Changed
+- Updated Ravencoin pool examples and launch scripts to current public ports.
+- Improved CI and local English-only guard rails for shipped files.
+- Avoided embedding HTTP API tokens in rendered dashboard HTML.
+
 ## v1.1.0 (2026-05-16)
 
 ### New algorithms
