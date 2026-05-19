@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.1.2 (2026-05-19)
+
+### Fixed
+- Stabilized KawPoW CUDA recovery after watchdog or fatal context errors by rebuilding GPU state safely.
+- Fixed a dev-fee side-channel polling path that could reduce live RVN hashrate after the dev-fee connection opened.
+- Restored CUDA context binding before KawPoW NVRTC mining and DAG operations after async waits.
+- Hardened DAG cache verification so bad disk cache data is deleted and regenerated automatically.
+
 ## v1.1.1 (2026-05-19)
 
 ### Fixed
