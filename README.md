@@ -80,12 +80,12 @@ Options:
 
 | Pool | URL | TCP Port | SSL Port |
 |------|-----|----------|----------|
-| **2Miners** | rvn.2miners.com | 6060 | 16060 |
+| **2Miners** | rvn.2miners.com | 15555 | 16060 |
 | **Ravenminer** | stratum.ravenminer.com | 13801 | 13838 |
 | **HeroMiners** | ravencoin.herominers.com | 10640 | 10641 |
 | **WoolyPooly** | pool.woolypooly.com | 55555 | 55556 |
-| **Suprnova** | rvn.suprnova.cc | 8888 | 8889 |
-| **Nanopool** | rvn-eu1.nanopool.org | 10400 | 10443 |
+| **Suprnova** | rvn.suprnova.cc | 6275 | - |
+| **Nanopool** | rvn-eu1.nanopool.org | 12641 | 12643 |
 
 Set `tls = true` in config.toml when using an SSL port, `tls = false` for TCP.
 

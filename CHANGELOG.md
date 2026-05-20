@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.2.0 (2026-05-20)
+
+### Added
+- Added benchmark JSON reports for machine-readable hashrate, power, efficiency, GPU, and duration data.
+- Added KawPoW tuning configuration foundations with safe defaults.
+
+### Changed
+- Hardened Stratum request tracking, authorization handling, stale-job draining, and submit response accounting.
+- Improved power and efficiency accounting in CLI output and the HTTP API.
+- Refined KawPoW NVRTC cache keys and launch planning while keeping stable compiler defaults.
+
+### Fixed
+- Kept KawPoW target uploads stream-local in the ping-pong CUDA path to avoid unsafe cross-stream caching.
+- Preserved stable KawPoW defaults after validating a 1-hour live RVN run.
+
 ## v1.1.2 (2026-05-19)
 
 ### Fixed

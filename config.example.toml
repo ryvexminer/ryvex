@@ -21,7 +21,7 @@ algorithm = "kawpow"
 
 # Ravencoin (KawPoW) — 2miners primary (TCP)
 [[pools]]
-url = "rvn.2miners.com:6060"
+url = "rvn.2miners.com:15555"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
 tls = false
@@ -167,11 +167,17 @@ dag_cache_save = true
 benchmark_duration_secs = 60
 
 # === Advanced Tuning (optional) ===
-# Most users should leave defaults — Ryvex auto-tunes for your GPU.
-# Only modify if you know what you're doing.
+# Most users should leave defaults.
+# Optional KawPoW autotune keys are disabled unless explicitly enabled.
 # [mining.tuning]
 # kawpow_burst = 1            # CUDA kernels queued before sync (1-4, higher = more throughput, >2 risks TDR on Windows)
 # kawpow_grid_mult = 12       # Grid multiplier for CUDA launches (default 12, clamped to 12)
+# kawpow_autotune = false     # Enable KawPoW launch autotune (default false keeps fixed launch behavior)
+# kawpow_autotune_grid_min = 12  # Lowest grid multiplier to benchmark during autotune
+# kawpow_autotune_grid_max = 12  # Highest grid multiplier to benchmark during autotune
+# kawpow_autotune_nvrtc_max_registers = 0  # NVRTC register cap for autotune candidates (0 = compiler default)
+# kawpow_autotune_adjust_intensity = false # Keep gpu.intensity fixed during autotune samples
+# kawpow_autotune_duration_secs = 30       # Seconds per autotune benchmark sample
 # kawpow_precompile = true    # Pre-compile next ProgPoW period kernel in background (eliminates 10-15s stall)
 # kawpow_cpu_verify = "adaptive"  # CPU share verification: "adaptive" (default), "always", "off"
 # dag_verify = false          # Heavy DAG integrity check after generation (~60s, for diagnosing VRAM corruption under OC)
