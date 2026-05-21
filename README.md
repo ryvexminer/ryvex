@@ -32,7 +32,7 @@ tls = true
 
 ## Ryvex in Action
 
-![Ryvex mining RVN on an RTX 3070](docs/images/ryvex-in-action.svg)
+![Ryvex mining RVN on an RTX 3070](docs/images/ryvex-in-action.png)
 
 Example RVN/KawPoW session on an RTX 3070: accepted shares, live hashrate, power, efficiency, pool latency, and uptime.
 
