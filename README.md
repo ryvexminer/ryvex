@@ -1,10 +1,32 @@
-# Ryvex v1.5.0
+# Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.5.0 focuses on first-run setup, generated launchers, and preflight diagnostics.
+Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.7.0 is a support-focused release that makes redacted troubleshooting reports easier to create and share safely.
+
+## What is new in v1.7.0
+
+- **One-command setup** - create a usable `config.toml` for RVN, ERG, or IRON from the CLI.
+- **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
+- **Preflight diagnostics** - check config syntax, GPU detection, and pool settings before mining.
+- **Support reports** - export a redacted support JSON without raw wallets, pool passwords, API tokens, or webhook URLs.
+- **Web dashboard** - local status view at `http://localhost:8081`.
+
+## Supported algorithms
+
+| Coin | Setup value | Algorithm |
+|------|-------------|-----------|
+| Ravencoin | `RVN` | `kawpow` |
+| Ergo | `ERG` | `autolykos2` |
+| IronFish | `IRON` | `fishhash` |
+
+All algorithms use a 1% dev fee.
 
 ## Quick start
 
-### 1. Run setup
+### 1. Extract the release
+
+Extract the Windows `.zip` or Linux `.tar.gz` into a folder you can write to.
+
+### 2. Run setup
 
 Windows:
 
@@ -18,9 +40,9 @@ Linux:
 ./ryvex --first-run-setup --setup-coin RVN --setup-wallet YOUR_RVN_WALLET --setup-worker my-rig
 ```
 
-Use `--setup-coin ERG` or `--setup-coin IRON` for the other supported coins. Setup creates `config.toml` and matching launch files for your platform.
+Use `--setup-coin ERG` or `--setup-coin IRON` for the other supported coins. Setup writes `config.toml` and generated launch files for the selected coin. The setup output prints the exact paths.
 
-### 2. Run preflight diagnostics
+### 3. Check the install before mining
 
 Windows:
 
@@ -34,11 +56,11 @@ Linux:
 ./ryvex --preflight --config config.toml
 ```
 
-Preflight mode checks the local setup before mining. It does not mine or submit shares.
+Preflight mode does not mine or submit shares. It validates the local setup and reports issues to fix before launch.
 
-### 3. Start mining
+### 4. Start Ryvex
 
-Use the generated `.bat` file on Windows or `.sh` file on Linux. You can also start directly:
+Use the generated `.bat` file on Windows or `.sh` file on Linux. You can also start manually:
 
 Windows:
 
@@ -52,17 +74,9 @@ Linux:
 ./ryvex --config config.toml
 ```
 
-## Supported algorithms
-
-| Coin | Setup value | Algorithm | Dev fee |
-|------|-------------|-----------|---------|
-| Ravencoin | `RVN` | `kawpow` | 1% |
-| Ergo | `ERG` | `autolykos2` | 1% |
-| IronFish | `IRON` | `fishhash` | 1% |
-
 ## Manual config
 
-The setup command is recommended for first run. Manual configs should use explicit Stratum prefixes:
+Setup is the recommended path for a new install. If you prefer to edit `config.toml` yourself, use explicit Stratum prefixes:
 
 ```toml
 worker_name = "my-rig"
@@ -76,24 +90,47 @@ tls = true
 
 Use `stratum+ssl://` for TLS endpoints and `stratum+tcp://` for plaintext endpoints.
 
-## Features
+## Preflight Diagnostics
 
-- **One-command setup** - writes a usable config for RVN, ERG, or IRON.
-- **Generated launchers** - creates Windows and Linux launch files that match the generated config.
-- **Preflight diagnostics** - validates config, GPU detection, and pool settings before mining.
-- **Pool failover** - reconnects to backup pools when configured.
-- **Stale share prevention** - detects new jobs before submitting outdated work.
-- **Encrypted wallets** - AES-256-GCM wallet encryption for config files.
-- **Support diagnostics** - redacted reports for support without raw wallets, passwords, API tokens, or webhook URLs.
-- **Web dashboard** - local dashboard at `http://localhost:8081`.
-- **HTTP API** - JSON API at `http://localhost:8080` for local monitoring and integration.
+`--preflight` is intended for first-run checks and support triage. It verifies:
+
+- config parsing and required fields;
+- selected algorithm and coin mapping;
+- pool URL prefix format;
+- GPU discovery;
+- pool URL prefix format.
+
+Fix any reported issue, then run `--preflight` again before starting the miner.
+
+## Support report
+
+If you need a support report, generate a redacted JSON file:
+
+```powershell
+.\ryvex.exe --support-report --support-report-output ryvex-support-report.json
+```
+
+The same report can be exported from the local dashboard at `http://localhost:8081`. The older `--diagnostics --diagnostics-output` command remains available as a compatibility alias.
+
+Support reports include version, OS, GPU, driver, redacted config, config warnings, a privacy summary, and recent redacted logs. They do not include raw wallets, pool passwords, dashboard keys, API tokens, webhook URLs, or DAG/cache files.
+
+## Web dashboard
+
+Ryvex starts a local dashboard by default:
+
+```text
+http://localhost:8081
+```
+
+The dashboard shows device status, shares, pool status, session estimates, and recent events. To disable it, start Ryvex with `--dashboard-port 0`.
+
+For remote access, set `bind_address = "0.0.0.0"` in the `[dashboard]` config section and protect the HTTP API with its configured token.
 
 ## CLI options
 
 ```text
-Usage: ryvex [OPTIONS]
+ryvex [OPTIONS]
 
-Options:
   -c, --config <CONFIG>       Config file [default: config.toml]
       --first-run-setup       Create config and launchers, then exit
       --setup-coin <COIN>     Coin for setup: RVN, ERG, or IRON
@@ -107,6 +144,9 @@ Options:
                               Worker name for setup
   -d, --devices <DEVICES>     GPUs to use, e.g. "0,2"
       --preflight             Validate setup without mining
+      --support-report        Write a redacted support report JSON and exit
+      --support-report-output <PATH>
+                              Support report path
       --benchmark             Benchmark mode without a pool
       --benchmark-duration <S> Benchmark duration in seconds
       --benchmark-json <PATH> Write a benchmark JSON report
@@ -118,12 +158,14 @@ Options:
       --autotune-profile <NAME>
                               Apply a saved KawPoW autotune profile to live mining
       --flush-dag             Delete DAG cache and regenerate
+      --cpu                   Enable CPU worker
+      --force-cpu             CPU-only mode
       --api-port <PORT>       HTTP API port [default: 8080]
       --no-api                Disable HTTP API
       --dashboard-port <P>    Web dashboard port [default: 8081, 0=off]
-      --diagnostics           Write a redacted diagnostics JSON report and exit
+      --diagnostics           Compatibility alias for support report export
       --diagnostics-output <PATH>
-                              Diagnostics report path
+                              Compatibility output path for --diagnostics
       --config-key <KEY>      Encryption key, or env RYVEX_CONFIG_KEY
       --encrypt-config        Encrypt wallets in config and exit
       --profile <NAME>        Load a mining profile
@@ -132,19 +174,11 @@ Options:
   -V, --version               Print version
 ```
 
-## Support diagnostics
+## Antivirus notice
 
-Generate a redacted diagnostics report:
+Mining software can be flagged by antivirus heuristics because it uses GPU compute and Stratum networking. Add an exclusion for the Ryvex folder before first launch if your security software quarantines miner binaries.
 
-```powershell
-.\ryvex.exe --diagnostics --diagnostics-output ryvex-diagnostics.json
-```
-
-You can also export the same report from the local web dashboard at `http://localhost:8081`.
-
-## Verification
-
-Each release includes SHA-256 checksums. Verify your download before first launch:
+Each release includes SHA-256 checksums:
 
 Windows:
 
@@ -166,10 +200,6 @@ Compare the result with the checksum file included in the release.
 - NVIDIA driver 525.x or newer.
 - Windows 10/11 x64 or Linux x64.
 
-## Support
-
-- GitHub Issues: https://github.com/ryvexminer/ryvex/issues
-
 ## License
 
-Proprietary software. See [LICENSE](LICENSE) for details.
+Proprietary. See [LICENSE](LICENSE) for details.

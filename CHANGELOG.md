@@ -1,5 +1,52 @@
 # Changelog
 
+## v1.7.0 (2026-05-21)
+
+### Added
+- Added `--support-report` and `--support-report-output <PATH>` as the friendly support export command.
+- Added an explicit support-report schema and privacy summary to redacted troubleshooting reports.
+
+### Changed
+- Dashboard support export now downloads `ryvex-support-report-*.json` and labels the action as a support report.
+- Kept `--diagnostics` and `--diagnostics-output` as compatibility aliases for existing scripts.
+- Updated version metadata for the v1.7.0 support report release.
+
+### Notes
+- No mining kernel changes.
+- No dev-fee logic changes.
+- Support reports are still redacted and should be reviewed before sharing.
+
+## v1.6.0 (2026-05-21)
+
+### Added
+- Added a shared pool catalog for setup presets and release launcher validation.
+- Added catalog coverage tests so every release pool preset resolves through first-run setup.
+
+### Changed
+- Release launcher validation now uses the same pool matrix as first-run setup instead of duplicating pool URLs.
+- Updated version metadata for the v1.6.0 pool reliability release.
+
+### Notes
+- No mining kernel changes.
+- No dev-fee logic changes.
+- Pool URLs are not changed in this release; v1.6.0 reduces future drift risk.
+
+## v1.5.1 (2026-05-21)
+
+### Fixed
+- Hardened release publishing so prepared versions, changelogs, keys, docs, and archives are validated before GitHub upload.
+- Fixed HiveOS stats version reporting so packaged releases do not report a stale miner version.
+- Added release-script line-ending guards to prevent Bash scripts from breaking on Windows checkouts.
+
+### Changed
+- Release Docker builds now use Rust 1.94.1 and Cargo.lock.
+- GitHub release uploads now fail closed, retry transient errors, and verify uploaded asset sizes.
+- Publishing no longer mutates source version files during release.
+
+### Notes
+- No mining kernel changes.
+- No protocol behavior changes.
+
 ## v1.5.0 (2026-05-21)
 
 ### Added
@@ -36,9 +83,9 @@
 
 ### Added
 - Added kernel-only KawPoW autotune profiles saved from benchmark JSON reports.
-- Added CLI commands to create, list, and apply autotune profiles.
-- Added live profile monitoring with rollback to baseline launch settings.
-- Added profile validation status to `/api/stats`.
+- Added `--autotune-profile-create`, `--from-benchmark`, `--autotune-profile-list`, and `--autotune-profile`.
+- Added live profile monitoring with rollback to baseline launch settings on sustained validation failure, CUDA faults, or GPU worker restarts.
+- Added profile validation status to `/api/stats` under `autotune_profile`.
 
 ### Changed
 - Kept default live mining behavior unchanged unless an autotune profile is explicitly selected.
@@ -107,7 +154,7 @@
 ### Fixed
 - Hardened Stratum log redaction so wallet, password, token, and submit data are not leaked by raw protocol logs.
 - Hardened pool target parsing for malformed or oversized Stratum targets.
-- Fixed startup ordering for an alternate KawPoW Stratum dialect.
+- Fixed startup ordering for an alternate KawPoW Stratum dialect when `mining.notify` arrives before `mining.set_difficulty`.
 - Preserved raw FishHash pool targets during dev-fee mining fragments.
 - Stabilized dev-fee fragment timing so the configured fee percentage is exact.
 - Improved GUI benchmark parsing for ANSI-colored decimal power output.
