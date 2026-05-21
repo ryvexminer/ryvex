@@ -19,9 +19,9 @@ algorithm = "kawpow"
 
 # --- Ravencoin (KawPoW) ---
 
-# Ravencoin (KawPoW) — 2miners primary (TCP)
+# Ravencoin (KawPoW) — 2Miners primary (TCP)
 [[pools]]
-url = "rvn.2miners.com:15555"
+url = "stratum+tcp://rvn.2miners.com:6060"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
 tls = false
@@ -33,12 +33,12 @@ is_backup = false
 #                         # optional: pool HTTP API for pool-reported hashrate + balance,
 #                         # polled every 60s. See the "Pool HTTP API" section below.
 
-# Ravencoin (KawPoW) — HeroMiners backup (SSL)
+# Ravencoin (KawPoW) — HeroMiners backup (TCP)
 [[pools]]
-url = "ravencoin.herominers.com:10641"
+url = "stratum+tcp://ravencoin.herominers.com:10240"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
-tls = true
+tls = false
 is_backup = true
 
 # TLS pool example (stratum+ssl://)
@@ -53,28 +53,28 @@ is_backup = true
 
 # --- Ergo (Autolykos2) — uncomment and set algorithm = "autolykos2" ---
 # [[pools]]
-# url = "stratum+ssl://erg.2miners.com:8088"
+# url = "stratum+tcp://erg.2miners.com:8888"
 # wallet = "YOUR_ERGO_WALLET_HERE"
 # password = "x"
-# tls = true
+# tls = false
 # is_backup = false
 # # 2miners ERG uses a high baseline difficulty — pre-set to avoid rejected shares at startup:
 # # [mining.tuning]
 # # target_multiplier = 4.0
 
 # [[pools]]
-# url = "stratum+ssl://ergo.herominers.com:10250"
+# url = "stratum+tcp://de.ergo.herominers.com:1180"
 # wallet = "YOUR_ERGO_WALLET_HERE"
 # password = "x"
-# tls = true
+# tls = false
 # is_backup = true
 
 # --- IronFish (FishHash) — uncomment and set algorithm = "fishhash" ---
 # [[pools]]
-# url = "stratum+ssl://ironfish.herominers.com:10370"
+# url = "stratum+tcp://ironfish.herominers.com:1145"
 # wallet = "YOUR_IRONFISH_WALLET_HERE"
 # password = "x"
-# tls = true
+# tls = false
 # is_backup = false
 
 # === GPU Configuration ===

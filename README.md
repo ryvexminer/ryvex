@@ -14,7 +14,7 @@ NVIDIA CUDA miner with runtime-optimized kernels, built-in web dashboard, and en
 
 1. Download the latest release from [Releases](https://github.com/ryvexminer/ryvex/releases)
 2. Extract the archive
-3. Edit a launch script (e.g. `RVN-2miners.bat`) — replace `YOUR_RVN_WALLET` with your wallet address
+3. Edit a launch script (e.g. `RVN-2miners.bat`, `ERG-2miners.bat`, or `IRON-herominers.bat`) and replace the placeholder wallet with your wallet address
 4. Double-click the script to start mining
 
 **Or use config.toml:**
@@ -60,7 +60,7 @@ Autotune profiles adjust Ryvex kernel launch settings only. They do not change G
 - **HiveOS Ready** — Custom miner package included
 - **Pool Failover** — Automatic reconnection with backup pool support
 - **Stale Share Prevention** — Detects new blocks before submitting outdated shares
-- **TLS/SSL** — Encrypted pool connections on all supported pools
+- **TLS/SSL** — Encrypted pool connections on supported SSL endpoints
 - **Thermal Protection** — Auto-throttle and shutdown on overtemp
 - **GPU Crash Recovery** — Automatic TDR detection, context reset, and DAG regeneration
 - **Encrypted Wallets** — AES-256-GCM wallet encryption in config file
@@ -77,7 +77,7 @@ Usage: ryvex [OPTIONS]
 Options:
   -c, --config <CONFIG>       Config file [default: config.toml]
   -u, --wallet <WALLET>       Wallet address (overrides config)
-  -o, --pool <POOL>           Pool URL (host:port or stratum+ssl://host:port)
+  -o, --pool <POOL>           Pool URL (host:port, stratum+tcp://host:port, or stratum+ssl://host:port)
   -p, --pass <PASSWORD>       Pool password (e.g. "d=1" for difficulty)
   -a, --algo <ALGO>           Mining algorithm [default: kawpow]
   -n, --worker <WORKER>       Worker name (visible on pool)
@@ -109,16 +109,34 @@ Options:
 
 ## Validated Pools
 
-| Pool | URL | TCP Port | SSL Port |
-|------|-----|----------|----------|
-| **2Miners** | rvn.2miners.com | 6060 | 16060 |
-| **Ravenminer** | stratum.ravenminer.com | 13801 | 13838 |
-| **HeroMiners** | ravencoin.herominers.com | 10640 | 10641 |
-| **WoolyPooly** | pool.woolypooly.com | 55555 | 55556 |
-| **Suprnova** | rvn.suprnova.cc | 6275 | - |
-| **Nanopool** | rvn-eu1.nanopool.org | 12641 | 12643 |
+### Ravencoin (KawPoW)
 
-Set `tls = true` in config.toml when using an SSL port, `tls = false` for TCP.
+| Pool | URL | Protocol |
+|------|-----|----------|
+| **2Miners** | `stratum+ssl://rvn.2miners.com:16060` | SSL |
+| **Ravenminer** | `stratum+ssl://stratum.ravenminer.com:13838` | SSL |
+| **HeroMiners** | `stratum+tcp://ravencoin.herominers.com:10240` | TCP |
+| **Nanopool** | `stratum+tcp://rvn-eu1.nanopool.org:10400` | TCP |
+| **Suprnova** | `stratum+tcp://rvn.suprnova.cc:8888` | TCP |
+| **WoolyPooly** | `stratum+tcp://pool.woolypooly.com:55555` | TCP |
+
+### Ergo (Autolykos2)
+
+| Pool | URL | Protocol |
+|------|-----|----------|
+| **2Miners** | `stratum+tcp://erg.2miners.com:8888` | TCP |
+| **HeroMiners** | `stratum+tcp://de.ergo.herominers.com:1180` | TCP |
+| **Nanopool** | `stratum+tcp://ergo-eu1.nanopool.org:11111` | TCP |
+| **WoolyPooly** | `stratum+tcp://pool.woolypooly.com:3100` | TCP |
+
+### IronFish (FishHash)
+
+| Pool | URL | Protocol |
+|------|-----|----------|
+| **HeroMiners** | `stratum+tcp://ironfish.herominers.com:1145` | TCP |
+| **HeroMiners DE** | `stratum+tcp://de.ironfish.herominers.com:1145` | TCP |
+
+The launch scripts use explicit `stratum+ssl://` or `stratum+tcp://` prefixes so they do not depend on any local `config.toml` TLS setting.
 
 ## Support Diagnostics
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.4.1 (2026-05-21)
+
+### Added
+- Added release launch scripts for Autolykos2 (ERG) and FishHash (IRON).
+- Added an automated release-launcher test that blocks stale pool ports and prefix-less pool URLs.
+
+### Changed
+- Updated release packaging so every `.bat` and `.sh` launcher is included, not only RVN launchers.
+- Updated public pool examples to use explicit `stratum+tcp://` or `stratum+ssl://` prefixes.
+
+### Fixed
+- Fixed stale RVN launch script endpoints for HeroMiners, Nanopool, Suprnova, and WoolyPooly.
+- Fixed the default 2Miners RVN TCP config example to use port 6060.
+
 ## v1.4.0 (2026-05-21)
 
 ### Added
