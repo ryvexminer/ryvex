@@ -2,6 +2,12 @@
 
 Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.7.0 is a support-focused release that makes redacted troubleshooting reports easier to create and share safely.
 
+## Ryvex in action
+
+![Ryvex CLI mining session](docs/images/ryvex-in-action.png)
+
+![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
+
 ## What is new in v1.7.0
 
 - **One-command setup** - create a usable `config.toml` for RVN, ERG, or IRON from the CLI.
