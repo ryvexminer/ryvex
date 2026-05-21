@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.3.0 (2026-05-21)
+
+### Added
+- Added benchmark-mode KawPoW grid autotune with fixed live-mining defaults.
+- Added benchmark JSON autotune reporting for tested candidates, scoring, and selected launch settings.
+
+### Changed
+- Kept live mining on conservative fixed launch settings unless the user manually applies benchmark guidance.
+- Updated RTX 3070 validation guidance around practical DAG-safe memory tuning.
+
+### Fixed
+- Prevented autotune candidate changes from reusing stale CUDA ping-pong state.
+- Preserved exact nonce accounting when applying benchmark launch plans.
+
 ## v1.2.0 (2026-05-20)
 
 ### Added

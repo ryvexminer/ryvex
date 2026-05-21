@@ -35,7 +35,7 @@ tls = true
 - **NVRTC Runtime Kernels** — Compiles optimized CUDA code per ProgPoW period with dual-kernel rolling cache (zero stalls on period changes)
 - **Native SASS Compilation** — Fatbin with native SASS for Pascal, Turing, Ampere, Ada, and Blackwell GPUs
 - **Fast DAG** — 20s cold generation, 2s from disk cache, real-time progress display during generation
-- **GPU-Aware Tuning** — Auto-detects your GPU architecture (Pascal to Blackwell) and adapts kernel parameters
+- **Benchmark Autotune** — Tests safe KawPoW grid candidates in benchmark mode and reports the selected launch settings
 - **Double-Buffered Pipeline** — Overlapped kernel execution and result readback
 - **NiceHash Support** — Full KawPoW_NiceHash_v1.0 protocol
 - **HiveOS Ready** — Custom miner package included
@@ -64,6 +64,8 @@ Options:
   -d, --devices <DEVICES>     GPUs to use, e.g. "0,2" [default: all]
       --benchmark             Benchmark mode (60s, no pool)
       --benchmark-duration <S> Benchmark duration in seconds [default: 60]
+      --benchmark-json <PATH> Write a benchmark JSON report
+      --autotune              Run KawPoW grid autotune during benchmark mode
       --flush-dag             Delete DAG cache and regenerate
       --api-port <PORT>       HTTP API port [default: 8080]
       --no-api                Disable HTTP API
@@ -93,25 +95,25 @@ Set `tls = true` in config.toml when using an SSL port, `tls = false` for TCP.
 
 | Setting | Range | Notes |
 |---------|-------|-------|
-| Memory | +800 to +1000 | Start low, increase gradually |
-| Core | -100 to -200 | Reduces power without losing hashrate |
+| Memory | +800 to +900 | Start low, increase gradually; validate DAG generation after changes |
+| Core | +0 or modest undervolt profile | Keep simple unless your own card proves a better stable profile |
 | Power Limit | 60-70% | Best efficiency sweet spot |
 
 *Reduce memory OC if you get rejected shares. Every GPU is different.*
 
 ## Performance
 
-Benchmarked on RTX 3070 (OC +950/-150/PL60%, driver 596.21, ravenminer SSL):
+Validated on RTX 3070 (OC +900/+0/PL60%, driver 596.21, Ravenminer SSL):
 
-| Metric | Ryvex | Leading Alternative |
-|--------|-------|---------------------|
-| Hashrate | 23.7 MH/s | 23.9 MH/s |
-| Power | 131W | 131W |
-| Efficiency | 181 kH/W | 182 kH/W |
-| DAG (cold) | 20s | 18s |
-| DAG (cached) | **2s** | 18s |
-| Pool latency | 33ms | 35ms |
-| Share rate | 100% (0 rejected) | 98% |
+| Metric | Result |
+|--------|--------|
+| Late 5m hashrate | 24.72-25.08 MH/s |
+| Power | 131W |
+| Efficiency | 194-195 kH/W |
+| DAG (cold) | 20.74s |
+| DAG (cached) | 1.5-2s |
+| Pool latency | 35-45ms typical |
+| Live validation | 172 accepted, 0 invalid, 1 stale job at block change |
 
 *Performance varies by GPU model, driver, cooling, and OC settings.*
 
