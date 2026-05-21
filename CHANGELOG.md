@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.4.0 (2026-05-21)
+
+### Added
+- Added kernel-only KawPoW autotune profiles saved from benchmark JSON reports.
+- Added CLI commands to create, list, and apply autotune profiles.
+- Added live profile monitoring with rollback to baseline launch settings.
+- Added profile validation status to `/api/stats`.
+
+### Changed
+- Kept default live mining behavior unchanged unless an autotune profile is explicitly selected.
+- Documented that autotune profiles do not change GPU clocks, fan speed, voltage, or power limit.
+
 ## v1.3.2 (2026-05-21)
 
 ### Added

@@ -42,12 +42,19 @@ Example RVN/KawPoW session on an RTX 3070: accepted shares, live hashrate, power
 
 The built-in dashboard shows hashrate, shares, GPU stats, pool latency, session profit, and live mining status at `http://localhost:8081`.
 
+## KawPoW Autotune Profiles
+
+Run `--benchmark -a kawpow --autotune --benchmark-json autotune.json`, then save the selected result with `--autotune-profile-create NAME --from-benchmark autotune.json`. Apply it later with `--autotune-profile NAME`.
+
+Autotune profiles adjust Ryvex kernel launch settings only. They do not change GPU clocks, fan speed, voltage, or power limit, and Ryvex rolls back to baseline launch settings if live validation fails.
+
 ## Features
 
 - **NVRTC Runtime Kernels** — Compiles optimized CUDA code per ProgPoW period with dual-kernel rolling cache (zero stalls on period changes)
 - **Native SASS Compilation** — Fatbin with native SASS for Pascal, Turing, Ampere, Ada, and Blackwell GPUs
 - **Fast DAG** — 20s cold generation, 2s from disk cache, real-time progress display during generation
 - **Benchmark Autotune** — Tests safe KawPoW grid candidates in benchmark mode and reports the selected launch settings
+- **Applied Autotune Profiles** — Saves a benchmark result as a named KawPoW launch profile and applies it explicitly with live rollback
 - **Double-Buffered Pipeline** — Overlapped kernel execution and result readback
 - **NiceHash Support** — Full KawPoW_NiceHash_v1.0 protocol
 - **HiveOS Ready** — Custom miner package included
@@ -79,6 +86,12 @@ Options:
       --benchmark-duration <S> Benchmark duration in seconds [default: 60]
       --benchmark-json <PATH> Write a benchmark JSON report
       --autotune              Run KawPoW grid autotune during benchmark mode
+      --autotune-profile-create <NAME>
+                              Create a KawPoW autotune profile from a benchmark JSON report
+      --from-benchmark <PATH> Benchmark JSON report used by --autotune-profile-create
+      --autotune-profile-list List saved KawPoW autotune profiles
+      --autotune-profile <NAME>
+                              Apply a saved KawPoW autotune profile to live mining
       --flush-dag             Delete DAG cache and regenerate
       --api-port <PORT>       HTTP API port [default: 8080]
       --no-api                Disable HTTP API

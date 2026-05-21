@@ -21,7 +21,7 @@ algorithm = "kawpow"
 
 # Ravencoin (KawPoW) — 2miners primary (TCP)
 [[pools]]
-url = "rvn.2miners.com:6060"
+url = "rvn.2miners.com:15555"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
 tls = false
@@ -166,19 +166,29 @@ dag_cache_save = true
 # Benchmark duration in seconds (used with --benchmark flag)
 benchmark_duration_secs = 60
 
+# Optional active autotune profile snapshot.
+# Disabled by default. Autotune profiles adjust Ryvex kernel launch settings only;
+# they never change GPU clocks, fan speed, voltage, or power limit.
+# [mining.applied_autotune_profile]
+# enabled = false
+# name = ""
+
 # === Advanced Tuning (optional) ===
 # Most users should leave defaults.
 # Optional KawPoW autotune is disabled unless explicitly enabled.
 # You can also run a one-off report with:
 #   ryvex --benchmark -a kawpow --autotune --benchmark-json autotune.json
+# Then save and apply the selected software launch profile with:
+#   ryvex --autotune-profile-create rtx3070-efficient --from-benchmark autotune.json
+#   ryvex --config config.toml --autotune-profile rtx3070-efficient
 # [mining.tuning]
 # kawpow_burst = 1            # CUDA kernels queued before sync (1-4, higher = more throughput, >2 risks TDR on Windows)
 # kawpow_grid_mult = 12       # Grid multiplier for CUDA launches (default 12, clamped to 12)
 # kawpow_autotune = false     # Enable KawPoW grid autotune in benchmark mode
 # kawpow_autotune_grid_min = 6   # Lowest grid multiplier to benchmark during autotune
 # kawpow_autotune_grid_max = 12  # Highest grid multiplier to benchmark during autotune
-# kawpow_autotune_nvrtc_max_registers = 0  # Reserved for a later release; v1.3 grid autotune keeps compiler defaults
-# kawpow_autotune_adjust_intensity = false # Reserved for a later release; v1.3 keeps gpu.intensity fixed
+# kawpow_autotune_nvrtc_max_registers = 0  # Reserved for a later release; v1.4 grid autotune keeps compiler defaults
+# kawpow_autotune_adjust_intensity = false # Reserved for a later release; v1.4 keeps gpu.intensity fixed
 # kawpow_autotune_duration_secs = 30       # Seconds per autotune benchmark candidate
 # kawpow_precompile = true    # Pre-compile next ProgPoW period kernel in background (eliminates 10-15s stall)
 # kawpow_cpu_verify = "adaptive"  # CPU share verification: "adaptive" (default), "always", "off"
