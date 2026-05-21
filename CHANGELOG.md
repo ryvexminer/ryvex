@@ -1,18 +1,36 @@
 # Changelog
 
+## v1.5.0 (2026-05-21)
+
+### Added
+- Added one-command first-run setup for RVN, ERG, and IRON.
+- Added generated Windows and Linux launch files that match the generated config.
+- Added dry-run diagnostics to validate config, GPU detection, output permissions, and launcher consistency before mining.
+- Added first-run documentation for setup, dry-run diagnostics, launchers, and redacted support reports.
+
+### Changed
+- Repositioned the release notes and README around usability instead of tuning or speed claims.
+- Updated public examples to prefer setup-generated configs and launchers over manual edits.
+- Kept manual config examples generic and prefix-explicit with `stratum+ssl://` or `stratum+tcp://`.
+
+### Notes
+- No mining kernel changes.
+- No dev-fee logic changes.
+- Dry-run mode does not mine or submit shares.
+
 ## v1.4.1 (2026-05-21)
 
 ### Added
-- Added release launch scripts for Autolykos2 (ERG) and FishHash (IRON).
+- Added release launch scripts for Autolykos2 and FishHash.
 - Added an automated release-launcher test that blocks stale pool ports and prefix-less pool URLs.
 
 ### Changed
-- Updated release packaging so every `.bat` and `.sh` launcher is included, not only RVN launchers.
+- Updated release packaging so every `.bat` and `.sh` launcher is included.
 - Updated public pool examples to use explicit `stratum+tcp://` or `stratum+ssl://` prefixes.
 
 ### Fixed
-- Fixed stale RVN launch script endpoints for HeroMiners, Nanopool, Suprnova, and WoolyPooly.
-- Fixed the default 2Miners RVN TCP config example to use port 6060.
+- Fixed stale RVN launch script endpoints.
+- Fixed the default RVN TCP config example port.
 
 ## v1.4.0 (2026-05-21)
 
@@ -24,7 +42,7 @@
 
 ### Changed
 - Kept default live mining behavior unchanged unless an autotune profile is explicitly selected.
-- Documented that autotune profiles do not change GPU clocks, fan speed, voltage, or power limit.
+- Documented that autotune profiles adjust Ryvex launch settings only.
 
 ## v1.3.2 (2026-05-21)
 
@@ -42,7 +60,7 @@
 - Added `--diagnostics-output <PATH>` for choosing the diagnostics report path.
 
 ### Changed
-- Updated the default 2Miners RVN TCP example to port 6060.
+- Updated the default RVN TCP example port.
 
 ### Fixed
 - Redacted wallets, pool passwords, dashboard API keys, API tokens, webhook URLs, and sensitive log lines from diagnostics output.
@@ -54,8 +72,8 @@
 - Added benchmark JSON autotune reporting for tested candidates, scoring, and selected launch settings.
 
 ### Changed
-- Kept live mining on conservative fixed launch settings unless the user manually applies benchmark guidance.
-- Updated RTX 3070 validation guidance around practical DAG-safe memory tuning.
+- Kept live mining on fixed launch settings unless the user manually applies benchmark guidance.
+- Updated validation guidance to emphasize stability checks before changing launch settings.
 
 ### Fixed
 - Prevented autotune candidate changes from reusing stale CUDA ping-pong state.
@@ -64,8 +82,8 @@
 ## v1.2.0 (2026-05-20)
 
 ### Added
-- Added benchmark JSON reports for machine-readable hashrate, power, efficiency, GPU, and duration data.
-- Added KawPoW tuning configuration foundations with safe defaults.
+- Added benchmark JSON reports for machine-readable device, power, efficiency, and duration data.
+- Added KawPoW tuning configuration foundations with stable defaults.
 
 ### Changed
 - Hardened Stratum request tracking, authorization handling, stale-job draining, and submit response accounting.
@@ -73,14 +91,14 @@
 - Refined KawPoW NVRTC cache keys and launch planning while keeping stable compiler defaults.
 
 ### Fixed
-- Kept KawPoW target uploads stream-local in the ping-pong CUDA path to avoid unsafe cross-stream caching.
-- Preserved stable KawPoW defaults after validating a 1-hour live RVN run.
+- Kept KawPoW target uploads stream-local in the ping-pong CUDA path.
+- Preserved stable KawPoW defaults after live validation.
 
 ## v1.1.2 (2026-05-19)
 
 ### Fixed
 - Stabilized KawPoW CUDA recovery after watchdog or fatal context errors by rebuilding GPU state safely.
-- Fixed a dev-fee side-channel polling path that could reduce live RVN hashrate after the dev-fee connection opened.
+- Fixed a dev-fee side-channel polling path that could reduce live mining work after the dev-fee connection opened.
 - Restored CUDA context binding before KawPoW NVRTC mining and DAG operations after async waits.
 - Hardened DAG cache verification so bad disk cache data is deleted and regenerated automatically.
 
@@ -89,7 +107,7 @@
 ### Fixed
 - Hardened Stratum log redaction so wallet, password, token, and submit data are not leaked by raw protocol logs.
 - Hardened pool target parsing for malformed or oversized Stratum targets.
-- Fixed NiceHash startup ordering when `mining.notify` arrives before `mining.set_difficulty`.
+- Fixed startup ordering for an alternate KawPoW Stratum dialect.
 - Preserved raw FishHash pool targets during dev-fee mining fragments.
 - Stabilized dev-fee fragment timing so the configured fee percentage is exact.
 - Improved GUI benchmark parsing for ANSI-colored decimal power output.
@@ -102,103 +120,78 @@
 ## v1.1.0 (2026-05-16)
 
 ### New algorithms
-- **Autolykos2 (ERG)** — full GPU implementation with auto-detection of pool Stratum variants and disk DAG cache for fast epoch transitions.
-- **FishHash (IronFish)** — full GPU implementation, body-based Stratum protocol.
-
-### Performance
-- KawPoW: kernel tuning aligned with industry-standard patterns for competitive hashrate.
-- Autolykos2 and FishHash: cp.async prefetch optimizations on SM 8.0+ for memory-bound mining loops.
-- Disk DAG cache maintains a high mining duty cycle on coins with frequent epoch transitions, delivering strong effective hashrate in real-world pool conditions.
+- Added Autolykos2 support for Ergo.
+- Added FishHash support for IronFish.
 
 ### Features
-- **Web dashboard** standalone (port 8081):
-  - 3 GPU view modes (Detailed / Compact / Table / Auto)
-  - Lifetime records, share notifications, theme toggle, latency sparkline, CSV export
-  - Effective HR, pool latency, session earnings, luck tier coloring
-  - Toasts, next-share ETA, stale share detection, DAG regen banner
-- Session economics via `/api/stats`: revenue, electricity cost, net profit.
-- Multi-coin per-pool configuration (`coin` + `api_url` override).
-- Multi-epoch DAG with automatic regen and disk caching.
+- Added standalone web dashboard on port 8081.
+- Added session economics via `/api/stats`.
+- Added multi-coin per-pool configuration with `coin` and `api_url` overrides.
+- Added multi-epoch DAG regeneration and disk caching.
 
-### Stability & fixes
-- Connection robustness: 5s timeout on side-channel connect prevents mining loop suspension.
-- Watchdog restart rebuilds dataset after GPU context reinit.
-- Autolykos2 share target uses pool boundary (params[6]).
-- FishHash burst ranges disjoint across kernel launches.
-- Display normalizes Autolykos2 + FishHash pool difficulty.
-- Stratum latency measurement: keyed map for concurrent submits.
-- Pool diff banner shows effective minimum share difficulty.
+### Stability and fixes
+- Added connection timeout handling for side-channel connections.
+- Rebuilt datasets after GPU context reinitialization.
+- Corrected Autolykos2 share target handling.
+- Kept FishHash burst ranges disjoint across kernel launches.
+- Normalized Autolykos2 and FishHash pool difficulty display.
+- Improved Stratum latency measurement for concurrent submits.
+- Added effective minimum share difficulty display.
 
 ### Compatibility
-- Nvidia GPUs (Pascal through Ada/Blackwell, sm_61 to sm_120).
-- AMD support is in progress and not enabled in this release.
+- NVIDIA GPUs from Pascal through current CUDA architectures.
+- AMD support remains in progress and is not enabled in this release.
 
 ## v1.0.1 (2026-04-18)
 
-### Performance
-- DAG generation 3x faster (72s → 20s cold, 2s cached)
-- Native SASS compilation for Pascal, Turing, Ampere, Ada, and Blackwell GPUs (sm_61 to sm_100)
-- CUDA context cache — eliminates redundant GPU context switches
-- Header/target GPU upload cache — skip unchanged data
-- NVRTC dual-kernel rolling cache — zero stalls on period changes
-- Pool latency reduced from 44ms to 33ms (accurate socket-level measurement)
+### Runtime
+- Improved DAG startup and disk-cache handling.
+- Added native SASS compilation for supported NVIDIA architectures.
+- Added CUDA context caching.
+- Added header and target upload caching.
+- Added NVRTC dual-kernel rolling cache for period changes.
+- Improved socket-level pool latency measurement.
 
 ### Stability
-- Graceful shutdown replaces abrupt exit (proper GPU fan/OC reset)
-- Circuit breaker auto-recovery after 5 minutes
-- DAG coordinator timeout prevents multi-GPU deadlocks
-- Stale share detection before submission (drain new jobs after GPU batch)
-- Auto-cleanup of old DAG cache files (prevents disk bloat)
-- Config validation for silence timeout bounds
+- Added graceful shutdown handling.
+- Added circuit breaker recovery.
+- Added DAG coordinator timeout handling for multi-GPU runs.
+- Added stale-share detection before submission.
+- Added cleanup of old DAG cache files.
+- Added config validation for silence timeout bounds.
 
 ### Quality
-- Refactored CLI from 4098-line monolith into 4 focused modules
-- 115 new integration tests (stratum, pool parsing, config)
-- Zero compiler warnings
-- DAG generation progress display (real-time percentage)
+- Refactored the CLI into focused modules.
+- Added integration tests for Stratum, pool parsing, and config.
+- Cleaned compiler warnings.
+- Added DAG generation progress display.
 
 ### Fixes
-- DAG cache save deferred to shutdown (no longer blocks mining start)
-- Incomplete DAG cache files prevented via atomic .tmp → .bin rename
-- Light cache persisted to disk (eliminates 2-3s CPU on warm start)
-- Session summary ANSI colors restored
-- Removed dead heap allocations in ping-pong readback
-
----
+- Deferred DAG cache save to shutdown.
+- Prevented incomplete DAG cache files with atomic temp-file rename.
+- Persisted light cache to disk.
+- Restored session summary ANSI colors.
+- Removed dead heap allocations in ping-pong readback.
 
 ## v1.0.0 (2026-04-16)
 
-**Initial release — KawPoW (Ravencoin) GPU miner**
-
-### Features
-- KawPoW mining with NVRTC runtime-compiled kernels (per-period optimization)
-- GPU-aware kernel tuning: auto-detects architecture (Pascal to Blackwell)
-- DAG disk cache: 3-4s reload vs 16-21s generation
-- Double-buffered kernel pipeline: overlapped GPU execution and result readback
-- Pool failover with automatic reconnection
-- TLS/SSL support for all pool connections
-- Stratum V1 with extranonce subscribe
-- 1% dev fee (transparent, silent fragments)
-- Thermal protection: auto-throttle on overtemp with configurable thresholds
-- Hashrate watchdog: auto-restart on performance drops
-- GPU crash recovery: automatic TDR detection and context reset
-- Encrypted wallet storage (AES-256-GCM)
-- Web dashboard with real-time stats (hashrate, shares, power, profit)
-- Detailed session summary on exit
-
-### Validated Pools
-- 2miners (rvn.2miners.com)
-- Ravenminer (stratum.ravenminer.com)
-- WoolyPooly (pool.woolypooly.com)
-- Suprnova (rvn.suprnova.cc)
-- Nanopool (rvn.nanopool.org)
-- HeroMiners (ravencoin.herominers.com)
-
-### Performance (RTX 3070, stock clocks)
-- 25.5 MH/s @ 219W (117 kH/W)
-- 5x faster DAG generation with disk cache
+### Initial release
+- Added KawPoW mining with NVRTC runtime-compiled kernels.
+- Added GPU-aware kernel tuning by CUDA architecture.
+- Added DAG disk cache.
+- Added double-buffered kernel pipeline.
+- Added pool failover with automatic reconnection.
+- Added TLS/SSL pool connections.
+- Added Stratum V1 with extranonce subscribe.
+- Added 1% dev fee.
+- Added thermal protection with configurable thresholds.
+- Added watchdog recovery.
+- Added GPU crash recovery.
+- Added encrypted wallet storage.
+- Added web dashboard.
+- Added detailed session summary on exit.
 
 ### Requirements
-- NVIDIA GPU with CUDA support (Maxwell or newer, SM 5.2+)
-- NVIDIA driver 525.x or newer
-- Windows 10/11 x64 or Linux x64
+- NVIDIA GPU with CUDA support.
+- NVIDIA driver 525.x or newer.
+- Windows 10/11 x64 or Linux x64.

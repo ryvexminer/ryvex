@@ -1,89 +1,111 @@
-# Ryvex - High-Performance GPU Miner
+# Ryvex v1.5.0
 
-NVIDIA CUDA miner with runtime-optimized kernels, built-in web dashboard, and enterprise-grade reliability.
+Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.5.0 focuses on first-run setup, generated launchers, and dry-run diagnostics.
 
-## Supported Algorithms
+## Quick start
 
-| Algorithm | Coin | Dev Fee |
-|-----------|------|---------|
-| **KawPoW** | Ravencoin (RVN) | 1% |
-| **Autolykos2** | Ergo (ERG) | 1% |
-| **FishHash** | IronFish (IRON) | 1% |
+### 1. Run setup
 
-## Quick Start
+Windows:
 
-1. Download the latest release from [Releases](https://github.com/ryvexminer/ryvex/releases)
-2. Extract the archive
-3. Edit a launch script (e.g. `RVN-2miners.bat`, `ERG-2miners.bat`, or `IRON-herominers.bat`) and replace the placeholder wallet with your wallet address
-4. Double-click the script to start mining
-
-**Or use config.toml:**
-```toml
-algorithm = "kawpow"
-
-[[pools]]
-url = "stratum+ssl://rvn.2miners.com:16060"
-wallet = "YOUR_RVN_WALLET"
-tls = true
+```powershell
+.\ryvex.exe --setup --coin RVN --wallet YOUR_RVN_WALLET --worker my-rig
 ```
+
+Linux:
+
+```bash
+./ryvex --setup --coin RVN --wallet YOUR_RVN_WALLET --worker my-rig
+```
+
+Use `--coin ERG` or `--coin IRON` for the other supported coins. Setup creates `config.toml` and matching launch files for your platform.
+
+### 2. Run dry-run diagnostics
+
+Windows:
+
+```powershell
+.\ryvex.exe --dry-run --config config.toml
+```
+
+Linux:
+
+```bash
+./ryvex --dry-run --config config.toml
+```
+
+Dry-run mode checks the local setup before mining. It does not mine or submit shares.
+
+### 3. Start mining
+
+Use the generated `.bat` file on Windows or `.sh` file on Linux. You can also start directly:
+
+Windows:
+
+```powershell
+.\ryvex.exe --config config.toml
+```
+
+Linux:
+
 ```bash
 ./ryvex --config config.toml
 ```
 
-## Ryvex in Action
+## Supported algorithms
 
-![Ryvex mining RVN on an RTX 3070](docs/images/ryvex-in-action.png)
+| Coin | Setup value | Algorithm | Dev fee |
+|------|-------------|-----------|---------|
+| Ravencoin | `RVN` | `kawpow` | 1% |
+| Ergo | `ERG` | `autolykos2` | 1% |
+| IronFish | `IRON` | `fishhash` | 1% |
 
-Example RVN/KawPoW session on an RTX 3070: accepted shares, live hashrate, power, efficiency, pool latency, and uptime.
+## Manual config
 
-## Web Dashboard
+The setup command is recommended for first run. Manual configs should use explicit Stratum prefixes:
 
-![Ryvex web dashboard full view](docs/images/ryvex-web-dashboard-full.png)
+```toml
+worker_name = "my-rig"
+algorithm = "kawpow"
 
-The built-in dashboard shows hashrate, shares, GPU stats, pool latency, session profit, and live mining status at `http://localhost:8081`.
+[[pools]]
+url = "stratum+ssl://pool.example.com:1234"
+wallet = "YOUR_WALLET"
+tls = true
+```
 
-## KawPoW Autotune Profiles
-
-Run `--benchmark -a kawpow --autotune --benchmark-json autotune.json`, then save the selected result with `--autotune-profile-create NAME --from-benchmark autotune.json`. Apply it later with `--autotune-profile NAME`.
-
-Autotune profiles adjust Ryvex kernel launch settings only. They do not change GPU clocks, fan speed, voltage, or power limit, and Ryvex rolls back to baseline launch settings if live validation fails.
+Use `stratum+ssl://` for TLS endpoints and `stratum+tcp://` for plaintext endpoints.
 
 ## Features
 
-- **NVRTC Runtime Kernels** — Compiles optimized CUDA code per ProgPoW period with dual-kernel rolling cache (zero stalls on period changes)
-- **Native SASS Compilation** — Fatbin with native SASS for Pascal, Turing, Ampere, Ada, and Blackwell GPUs
-- **Fast DAG** — 20s cold generation, 2s from disk cache, real-time progress display during generation
-- **Benchmark Autotune** — Tests safe KawPoW grid candidates in benchmark mode and reports the selected launch settings
-- **Applied Autotune Profiles** — Saves a benchmark result as a named KawPoW launch profile and applies it explicitly with live rollback
-- **Double-Buffered Pipeline** — Overlapped kernel execution and result readback
-- **NiceHash Support** — Full KawPoW_NiceHash_v1.0 protocol
-- **HiveOS Ready** — Custom miner package included
-- **Pool Failover** — Automatic reconnection with backup pool support
-- **Stale Share Prevention** — Detects new blocks before submitting outdated shares
-- **TLS/SSL** — Encrypted pool connections on supported SSL endpoints
-- **Thermal Protection** — Auto-throttle and shutdown on overtemp
-- **GPU Crash Recovery** — Automatic TDR detection, context reset, and DAG regeneration
-- **Encrypted Wallets** — AES-256-GCM wallet encryption in config file
-- **Support Diagnostics** — Redacted CLI, dashboard, and HTTP API JSON reports for support without exposing wallets, passwords, API tokens, or webhooks
-- **Web Dashboard** — Real-time hashrate, shares, GPU stats, and profit at `http://localhost:8081` (auto-starts, no setup)
-- **HTTP API** — JSON API at `http://localhost:8080` for monitoring and integration
-- **API auth** — use `Authorization: Bearer <api_token>` or `X-API-Key: <api_token>` for remote HTTP API access
+- **One-command setup** - writes a usable config for RVN, ERG, or IRON.
+- **Generated launchers** - creates Windows and Linux launch files that match the generated config.
+- **Dry-run diagnostics** - validates config, GPU detection, output paths, and launcher consistency before mining.
+- **Pool failover** - reconnects to backup pools when configured.
+- **Stale share prevention** - detects new jobs before submitting outdated work.
+- **Encrypted wallets** - AES-256-GCM wallet encryption for config files.
+- **Support diagnostics** - redacted reports for support without raw wallets, passwords, API tokens, or webhook URLs.
+- **Web dashboard** - local dashboard at `http://localhost:8081`.
+- **HTTP API** - JSON API at `http://localhost:8080` for local monitoring and integration.
 
-## CLI Options
+## CLI options
 
-```
+```text
 Usage: ryvex [OPTIONS]
 
 Options:
   -c, --config <CONFIG>       Config file [default: config.toml]
-  -u, --wallet <WALLET>       Wallet address (overrides config)
-  -o, --pool <POOL>           Pool URL (host:port, stratum+tcp://host:port, or stratum+ssl://host:port)
-  -p, --pass <PASSWORD>       Pool password (e.g. "d=1" for difficulty)
-  -a, --algo <ALGO>           Mining algorithm [default: kawpow]
-  -n, --worker <WORKER>       Worker name (visible on pool)
-  -d, --devices <DEVICES>     GPUs to use, e.g. "0,2" [default: all]
-      --benchmark             Benchmark mode (60s, no pool)
-      --benchmark-duration <S> Benchmark duration in seconds [default: 60]
+      --setup                 Create config and launchers, then exit
+      --coin <COIN>           Coin for setup: RVN, ERG, or IRON
+  -u, --wallet <WALLET>       Wallet address for setup or mining override
+  -o, --pool <POOL>           Pool URL override
+  -p, --pass <PASSWORD>       Pool password
+  -a, --algo <ALGO>           Mining algorithm: kawpow, autolykos2, fishhash
+  -n, --worker <WORKER>       Worker name
+  -d, --devices <DEVICES>     GPUs to use, e.g. "0,2"
+      --dry-run               Validate setup without mining
+      --benchmark             Benchmark mode without a pool
+      --benchmark-duration <S> Benchmark duration in seconds
       --benchmark-json <PATH> Write a benchmark JSON report
       --autotune              Run KawPoW grid autotune during benchmark mode
       --autotune-profile-create <NAME>
@@ -99,120 +121,51 @@ Options:
       --diagnostics           Write a redacted diagnostics JSON report and exit
       --diagnostics-output <PATH>
                               Diagnostics report path
-      --config-key <KEY>      Encryption key (or env RYVEX_CONFIG_KEY)
+      --config-key <KEY>      Encryption key, or env RYVEX_CONFIG_KEY
       --encrypt-config        Encrypt wallets in config and exit
       --profile <NAME>        Load a mining profile
-      --gpu-algo <GPU_ALGO>   Algo per GPU, e.g. "0:kawpow,1:kawpow"
+      --gpu-algo <GPU_ALGO>   Algorithm per GPU, e.g. "0:kawpow,1:autolykos2"
   -h, --help                  Print help
   -V, --version               Print version
 ```
 
-## Validated Pools
+## Support diagnostics
 
-### Ravencoin (KawPoW)
+Generate a redacted diagnostics report:
 
-| Pool | URL | Protocol |
-|------|-----|----------|
-| **2Miners** | `stratum+ssl://rvn.2miners.com:16060` | SSL |
-| **Ravenminer** | `stratum+ssl://stratum.ravenminer.com:13838` | SSL |
-| **HeroMiners** | `stratum+tcp://ravencoin.herominers.com:10240` | TCP |
-| **Nanopool** | `stratum+tcp://rvn-eu1.nanopool.org:10400` | TCP |
-| **Suprnova** | `stratum+tcp://rvn.suprnova.cc:8888` | TCP |
-| **WoolyPooly** | `stratum+tcp://pool.woolypooly.com:55555` | TCP |
-
-### Ergo (Autolykos2)
-
-| Pool | URL | Protocol |
-|------|-----|----------|
-| **2Miners** | `stratum+tcp://erg.2miners.com:8888` | TCP |
-| **HeroMiners** | `stratum+tcp://de.ergo.herominers.com:1180` | TCP |
-| **Nanopool** | `stratum+tcp://ergo-eu1.nanopool.org:11111` | TCP |
-| **WoolyPooly** | `stratum+tcp://pool.woolypooly.com:3100` | TCP |
-
-### IronFish (FishHash)
-
-| Pool | URL | Protocol |
-|------|-----|----------|
-| **HeroMiners** | `stratum+tcp://ironfish.herominers.com:1145` | TCP |
-| **HeroMiners DE** | `stratum+tcp://de.ironfish.herominers.com:1145` | TCP |
-
-The launch scripts use explicit `stratum+ssl://` or `stratum+tcp://` prefixes so they do not depend on any local `config.toml` TLS setting.
-
-## Support Diagnostics
-
-If you need help, generate a redacted diagnostics report:
-
-```bash
-ryvex.exe --diagnostics --diagnostics-output ryvex-diagnostics.json
+```powershell
+.\ryvex.exe --diagnostics --diagnostics-output ryvex-diagnostics.json
 ```
 
-You can also export the same redacted report from the local web dashboard at `http://localhost:8081`.
-
-The report includes version, OS, GPU, driver, redacted config, config warnings, and recent redacted logs. It does not include raw wallets, pool passwords, dashboard API keys, API tokens, webhook URLs, or raw DAG/cache files.
-
-## Recommended Overclock (KawPoW)
-
-| Setting | Range | Notes |
-|---------|-------|-------|
-| Memory | +800 to +900 | Start low, increase gradually; validate DAG generation after changes |
-| Core | +0 or modest undervolt profile | Keep simple unless your own card proves a better stable profile |
-| Power Limit | 60-70% | Best efficiency sweet spot |
-
-*Reduce memory OC if you get rejected shares. Every GPU is different.*
-
-## Performance
-
-Validated on RTX 3070 (OC +900/+0/PL60%, driver 596.21, Ravenminer SSL):
-
-| Metric | Result |
-|--------|--------|
-| Late 5m hashrate | 24.72-25.08 MH/s |
-| Power | 131W |
-| Efficiency | 194-195 kH/W |
-| DAG (cold) | 20.74s |
-| DAG (cached) | 1.5-2s |
-| Pool latency | 35-45ms typical |
-| Live validation | 172 accepted, 0 invalid, 1 stale job at block change |
-
-*Performance varies by GPU model, driver, cooling, and OC settings.*
-
-## Requirements
-
-- NVIDIA GPU with CUDA support (GTX 9xx through RTX 50xx)
-  - Native SASS: Pascal (GTX 10xx), Turing (RTX 20xx), Ampere (RTX 30xx), Ada (RTX 40xx), Blackwell (RTX 50xx)
-  - PTX JIT fallback: Maxwell (GTX 9xx) and future architectures
-- NVIDIA driver 525.x or newer
-- Windows 10/11 x64 or Linux x64
-
-## Antivirus Notice
-
-GPU miners are commonly flagged by antivirus software as "CoinMiner" due to heuristic detection (GPU usage + stratum protocol). This is a **false positive** — all GPU miners trigger this.
-
-**To exclude Ryvex from your antivirus:**
-- **Windows Defender:** Settings > Virus & threat protection > Exclusions > Add folder exclusion
-- **Other AV:** Add the Ryvex folder to your exclusion list
-
-See [Antivirus Exclusion Guide](docs/antivirus-exclusion.md) for detailed instructions per AV vendor.
+You can also export the same report from the local web dashboard at `http://localhost:8081`.
 
 ## Verification
 
-Each release includes SHA256 checksums. Verify your download:
+Each release includes SHA-256 checksums. Verify your download before first launch:
 
-**Windows (PowerShell):**
+Windows:
+
 ```powershell
-Get-FileHash ryvex.exe -Algorithm SHA256
+Get-FileHash .\ryvex.exe -Algorithm SHA256
 ```
 
-**Linux:**
+Linux:
+
 ```bash
 sha256sum ryvex
 ```
 
-Compare with `SHA256SUMS.txt` in the release.
+Compare the result with the checksum file included in the release.
+
+## Requirements
+
+- NVIDIA GPU with CUDA support.
+- NVIDIA driver 525.x or newer.
+- Windows 10/11 x64 or Linux x64.
 
 ## Support
 
-- [GitHub Issues](https://github.com/ryvexminer/ryvex/issues) — Bug reports and feature requests
+- GitHub Issues: https://github.com/ryvexminer/ryvex/issues
 
 ## License
 
