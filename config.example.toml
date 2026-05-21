@@ -21,7 +21,7 @@ algorithm = "kawpow"
 
 # Ravencoin (KawPoW) — 2miners primary (TCP)
 [[pools]]
-url = "rvn.2miners.com:15555"
+url = "rvn.2miners.com:6060"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
 tls = false

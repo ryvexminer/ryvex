@@ -57,6 +57,7 @@ The built-in dashboard shows hashrate, shares, GPU stats, pool latency, session 
 - **Thermal Protection** — Auto-throttle and shutdown on overtemp
 - **GPU Crash Recovery** — Automatic TDR detection, context reset, and DAG regeneration
 - **Encrypted Wallets** — AES-256-GCM wallet encryption in config file
+- **Support Diagnostics** — Redacted JSON report for support without exposing wallets, passwords, API tokens, or webhooks
 - **Web Dashboard** — Real-time hashrate, shares, GPU stats, and profit at `http://localhost:8081` (auto-starts, no setup)
 - **HTTP API** — JSON API at `http://localhost:8080` for monitoring and integration
 - **API auth** — use `Authorization: Bearer <api_token>` or `X-API-Key: <api_token>` for remote HTTP API access
@@ -82,6 +83,9 @@ Options:
       --api-port <PORT>       HTTP API port [default: 8080]
       --no-api                Disable HTTP API
       --dashboard-port <P>    Web dashboard port [default: 8081, 0=off]
+      --diagnostics           Write a redacted diagnostics JSON report and exit
+      --diagnostics-output <PATH>
+                              Diagnostics report path
       --config-key <KEY>      Encryption key (or env RYVEX_CONFIG_KEY)
       --encrypt-config        Encrypt wallets in config and exit
       --profile <NAME>        Load a mining profile
@@ -94,7 +98,7 @@ Options:
 
 | Pool | URL | TCP Port | SSL Port |
 |------|-----|----------|----------|
-| **2Miners** | rvn.2miners.com | 15555 | 16060 |
+| **2Miners** | rvn.2miners.com | 6060 | 16060 |
 | **Ravenminer** | stratum.ravenminer.com | 13801 | 13838 |
 | **HeroMiners** | ravencoin.herominers.com | 10640 | 10641 |
 | **WoolyPooly** | pool.woolypooly.com | 55555 | 55556 |
@@ -102,6 +106,16 @@ Options:
 | **Nanopool** | rvn-eu1.nanopool.org | 12641 | 12643 |
 
 Set `tls = true` in config.toml when using an SSL port, `tls = false` for TCP.
+
+## Support Diagnostics
+
+If you need help, generate a redacted diagnostics report:
+
+```bash
+ryvex.exe --diagnostics --diagnostics-output ryvex-diagnostics.json
+```
+
+The report includes version, OS, GPU, driver, redacted config, config warnings, and recent redacted logs. It does not include raw wallets, pool passwords, dashboard API keys, API tokens, webhook URLs, or raw DAG/cache files.
 
 ## Recommended Overclock (KawPoW)
 

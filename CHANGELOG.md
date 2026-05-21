@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.3.1 (2026-05-21)
+
+### Added
+- Added `--diagnostics` to write a redacted JSON support report and exit.
+- Added `--diagnostics-output <PATH>` for choosing the diagnostics report path.
+
+### Changed
+- Updated the default 2Miners RVN TCP example to port 6060.
+
+### Fixed
+- Redacted wallets, pool passwords, dashboard API keys, API tokens, webhook URLs, and sensitive log lines from diagnostics output.
+
 ## v1.3.0 (2026-05-21)
 
 ### Added
