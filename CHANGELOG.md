@@ -5,8 +5,8 @@
 ### Added
 - Added one-command first-run setup for RVN, ERG, and IRON.
 - Added generated Windows and Linux launch files that match the generated config.
-- Added dry-run diagnostics to validate config, GPU detection, output permissions, and launcher consistency before mining.
-- Added first-run documentation for setup, dry-run diagnostics, launchers, and redacted support reports.
+- Added preflight diagnostics to validate config, GPU detection, and pool settings before mining.
+- Added first-run documentation for setup, preflight diagnostics, launchers, and redacted support reports.
 
 ### Changed
 - Repositioned the release notes and README around usability instead of tuning or speed claims.
@@ -16,7 +16,7 @@
 ### Notes
 - No mining kernel changes.
 - No dev-fee logic changes.
-- Dry-run mode does not mine or submit shares.
+- Preflight mode does not mine or submit shares.
 
 ## v1.4.1 (2026-05-21)
 

@@ -1,6 +1,6 @@
 # Ryvex v1.5.0
 
-Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.5.0 focuses on first-run setup, generated launchers, and dry-run diagnostics.
+Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.5.0 focuses on first-run setup, generated launchers, and preflight diagnostics.
 
 ## Quick start
 
@@ -9,32 +9,32 @@ Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. 
 Windows:
 
 ```powershell
-.\ryvex.exe --setup --coin RVN --wallet YOUR_RVN_WALLET --worker my-rig
+.\ryvex.exe --first-run-setup --setup-coin RVN --setup-wallet YOUR_RVN_WALLET --setup-worker my-rig
 ```
 
 Linux:
 
 ```bash
-./ryvex --setup --coin RVN --wallet YOUR_RVN_WALLET --worker my-rig
+./ryvex --first-run-setup --setup-coin RVN --setup-wallet YOUR_RVN_WALLET --setup-worker my-rig
 ```
 
-Use `--coin ERG` or `--coin IRON` for the other supported coins. Setup creates `config.toml` and matching launch files for your platform.
+Use `--setup-coin ERG` or `--setup-coin IRON` for the other supported coins. Setup creates `config.toml` and matching launch files for your platform.
 
-### 2. Run dry-run diagnostics
+### 2. Run preflight diagnostics
 
 Windows:
 
 ```powershell
-.\ryvex.exe --dry-run --config config.toml
+.\ryvex.exe --preflight --config config.toml
 ```
 
 Linux:
 
 ```bash
-./ryvex --dry-run --config config.toml
+./ryvex --preflight --config config.toml
 ```
 
-Dry-run mode checks the local setup before mining. It does not mine or submit shares.
+Preflight mode checks the local setup before mining. It does not mine or submit shares.
 
 ### 3. Start mining
 
@@ -80,7 +80,7 @@ Use `stratum+ssl://` for TLS endpoints and `stratum+tcp://` for plaintext endpoi
 
 - **One-command setup** - writes a usable config for RVN, ERG, or IRON.
 - **Generated launchers** - creates Windows and Linux launch files that match the generated config.
-- **Dry-run diagnostics** - validates config, GPU detection, output paths, and launcher consistency before mining.
+- **Preflight diagnostics** - validates config, GPU detection, and pool settings before mining.
 - **Pool failover** - reconnects to backup pools when configured.
 - **Stale share prevention** - detects new jobs before submitting outdated work.
 - **Encrypted wallets** - AES-256-GCM wallet encryption for config files.
@@ -95,15 +95,18 @@ Usage: ryvex [OPTIONS]
 
 Options:
   -c, --config <CONFIG>       Config file [default: config.toml]
-      --setup                 Create config and launchers, then exit
-      --coin <COIN>           Coin for setup: RVN, ERG, or IRON
-  -u, --wallet <WALLET>       Wallet address for setup or mining override
+      --first-run-setup       Create config and launchers, then exit
+      --setup-coin <COIN>     Coin for setup: RVN, ERG, or IRON
+      --setup-wallet <WALLET>
+                              Wallet address for setup
+      --setup-pool <POOL>     Pool preset or full Stratum URL for setup
   -o, --pool <POOL>           Pool URL override
   -p, --pass <PASSWORD>       Pool password
   -a, --algo <ALGO>           Mining algorithm: kawpow, autolykos2, fishhash
-  -n, --worker <WORKER>       Worker name
+      --setup-worker <WORKER>
+                              Worker name for setup
   -d, --devices <DEVICES>     GPUs to use, e.g. "0,2"
-      --dry-run               Validate setup without mining
+      --preflight             Validate setup without mining
       --benchmark             Benchmark mode without a pool
       --benchmark-duration <S> Benchmark duration in seconds
       --benchmark-json <PATH> Write a benchmark JSON report
