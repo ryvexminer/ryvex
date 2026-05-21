@@ -57,7 +57,7 @@ The built-in dashboard shows hashrate, shares, GPU stats, pool latency, session 
 - **Thermal Protection** — Auto-throttle and shutdown on overtemp
 - **GPU Crash Recovery** — Automatic TDR detection, context reset, and DAG regeneration
 - **Encrypted Wallets** — AES-256-GCM wallet encryption in config file
-- **Support Diagnostics** — Redacted JSON report for support without exposing wallets, passwords, API tokens, or webhooks
+- **Support Diagnostics** — Redacted CLI, dashboard, and HTTP API JSON reports for support without exposing wallets, passwords, API tokens, or webhooks
 - **Web Dashboard** — Real-time hashrate, shares, GPU stats, and profit at `http://localhost:8081` (auto-starts, no setup)
 - **HTTP API** — JSON API at `http://localhost:8080` for monitoring and integration
 - **API auth** — use `Authorization: Bearer <api_token>` or `X-API-Key: <api_token>` for remote HTTP API access
@@ -114,6 +114,8 @@ If you need help, generate a redacted diagnostics report:
 ```bash
 ryvex.exe --diagnostics --diagnostics-output ryvex-diagnostics.json
 ```
+
+You can also export the same redacted report from the local web dashboard at `http://localhost:8081`.
 
 The report includes version, OS, GPU, driver, redacted config, config warnings, and recent redacted logs. It does not include raw wallets, pool passwords, dashboard API keys, API tokens, webhook URLs, or raw DAG/cache files.
 

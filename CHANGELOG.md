@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.3.2 (2026-05-21)
+
+### Added
+- Added a local web dashboard diagnostics export button.
+- Added `/api/diagnostics` for authenticated HTTP API diagnostics export.
+
+### Changed
+- Reused the same redaction model for CLI, dashboard, and HTTP diagnostics.
+
 ## v1.3.1 (2026-05-21)
 
 ### Added
