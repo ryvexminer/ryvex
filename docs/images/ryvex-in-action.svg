@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="630" viewBox="0 0 1120 630" role="img" aria-labelledby="title desc">
+  <title id="title">Ryvex live RVN mining session</title>
+  <desc id="desc">Terminal-style screenshot showing Ryvex mining Ravencoin with accepted shares, hashrate, power, efficiency, pool latency, and uptime.</desc>
+  <rect width="1120" height="630" rx="10" fill="#0b0b0b"/>
+  <rect x="1" y="1" width="1118" height="628" rx="10" fill="none" stroke="#3a3d44" stroke-width="2"/>
+  <rect x="1" y="1" width="1118" height="39" rx="10" fill="#27292f"/>
+  <rect x="1" y="29" width="1118" height="12" fill="#27292f"/>
+  <rect x="14" y="10" width="18" height="18" rx="2" fill="#111317" stroke="#777b86"/>
+  <text x="22" y="24" text-anchor="middle" font-family="Consolas, 'Cascadia Mono', monospace" font-size="13" fill="#f1f1f1">C</text>
+  <text x="46" y="25" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#f3f4f6">Ryvex - RVN / KawPoW mining</text>
+  <circle cx="1045" cy="20" r="5" fill="#d7d9df"/>
+  <rect x="1080" y="15" width="10" height="10" fill="none" stroke="#d7d9df" stroke-width="1.5"/>
+  <path d="M1107 15 L1097 25 M1097 15 L1107 25" stroke="#d7d9df" stroke-width="1.5"/>
+
+  <g font-family="Consolas, 'Cascadia Mono', monospace" font-size="16">
+    <text x="12" y="65"><tspan fill="#8a8d94">[08:14:18]</tspan><tspan fill="#8a8d94"> GPU0 </tspan><tspan fill="#f8e58c">Share found!</tspan></text>
+    <text x="12" y="85"><tspan fill="#8a8d94">[08:14:18]</tspan><tspan fill="#8a8d94"> GPU0 </tspan><tspan fill="#22ff3f">Share #197 accepted</tspan><tspan fill="#8a8d94"> (38ms) - diff 563.87M </tspan><tspan fill="#f2e84d">Luck:117%</tspan></text>
+    <text x="12" y="105"><tspan fill="#8a8d94">[08:14:19]</tspan><tspan fill="#28ff3f"> 24.03/24.36 MH/s</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#25d7ff">A:197 R:0</tspan><tspan fill="#22ff3f"> 5%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#ffd028">65C 131W 62%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#bf46ff">185kH/W</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#23d53a">pool 35ms</tspan><tspan fill="#8a8d94"> | 42m02s</tspan></text>
+    <text x="12" y="125"><tspan fill="#8a8d94">[08:14:28]</tspan><tspan fill="#27d9ff"> [RVN] New block #4375778</tspan><tspan fill="#8a8d94"> | epoch 583</tspan></text>
+    <text x="12" y="145"><tspan fill="#8a8d94">[08:14:28]</tspan><tspan fill="#d8d8d8"> Pool difficulty: 469.77M -&gt; 1.08G</tspan></text>
+
+    <text x="62" y="165" fill="#9a9da4">[Time]    HR / 5m avg     | Shares Luck | Temp Power Fan Eff    | Pool   | Uptime</text>
+    <text x="108" y="185" fill="#9a9da4">Core:885MHz | Mem:7701MHz | Pool diff:1.08G | Best:44.54G | Luck:98%</text>
+
+    <text x="12" y="205"><tspan fill="#8a8d94">[08:14:29]</tspan><tspan fill="#28ff3f"> 24.24/24.35 MH/s</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#25d7ff">A:197 R:0</tspan><tspan fill="#22ff3f"> 25%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#ffd028">65C 131W 62%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#bf46ff">185kH/W</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#23d53a">pool 35ms</tspan><tspan fill="#8a8d94"> | 42m12s</tspan></text>
+    <text x="12" y="225"><tspan fill="#8a8d94">[08:14:39]</tspan><tspan fill="#28ff3f"> 24.30/24.35 MH/s</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#25d7ff">A:197 R:0</tspan><tspan fill="#22ff3f"> 47%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#ffd028">65C 131W 62%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#bf46ff">185kH/W</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#23d53a">pool 35ms</tspan><tspan fill="#8a8d94"> | 42m22s</tspan></text>
+    <text x="12" y="245"><tspan fill="#8a8d94">[08:14:49]</tspan><tspan fill="#28ff3f"> 24.28/24.34 MH/s</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#25d7ff">A:197 R:0</tspan><tspan fill="#22ff3f"> 69%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#ffd028">65C 131W 62%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#bf46ff">185kH/W</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#23d53a">pool 35ms</tspan><tspan fill="#8a8d94"> | 42m32s</tspan></text>
+    <text x="12" y="265"><tspan fill="#8a8d94">[08:14:52]</tspan><tspan fill="#8a8d94"> GPU0 </tspan><tspan fill="#f8e58c">Share found!</tspan></text>
+    <text x="12" y="285"><tspan fill="#8a8d94">[08:14:52]</tspan><tspan fill="#8a8d94"> GPU0 </tspan><tspan fill="#22ff3f">Share #198 accepted</tspan><tspan fill="#8a8d94"> (36ms) - diff 549.22G </tspan><tspan fill="#22ff3f">Luck:79%</tspan><tspan fill="#e348ff">  New best!</tspan></text>
+    <text x="12" y="305"><tspan fill="#8a8d94">[08:14:59]</tspan><tspan fill="#8a8d94"> GPU0 </tspan><tspan fill="#f8e58c">Share found!</tspan></text>
+    <text x="12" y="325"><tspan fill="#8a8d94">[08:14:59]</tspan><tspan fill="#8a8d94"> GPU0 </tspan><tspan fill="#22ff3f">Share #199 accepted</tspan><tspan fill="#8a8d94"> (39ms) - diff 1.43G </tspan><tspan fill="#22ff3f">Luck:15%</tspan></text>
+    <text x="12" y="345"><tspan fill="#8a8d94">[08:15:00]</tspan><tspan fill="#28ff3f"> 23.11/24.31 MH/s</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#25d7ff">A:199 R:0</tspan><tspan fill="#22ff3f"> 65%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#ffd028">65C 131W 62%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#bf46ff">183kH/W</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#23d53a">pool 36ms</tspan><tspan fill="#8a8d94"> | 42m42s</tspan></text>
+
+    <text x="62" y="385" fill="#9a9da4">[Time]    HR / 5m avg     | Shares Luck | Temp Power Fan Eff    | Pool   | Uptime</text>
+    <text x="108" y="405" fill="#9a9da4">Core:915MHz | Mem:7701MHz | Pool diff:1.08G | Best:549.22G | Luck:97%</text>
+
+    <text x="12" y="445"><tspan fill="#8a8d94">[08:15:30]</tspan><tspan fill="#28ff3f"> 24.56/24.24 MH/s</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#25d7ff">A:199 R:0</tspan><tspan fill="#22ff3f"> 69%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#ffd028">66C 131W 62%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#bf46ff">184kH/W</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#23d53a">pool 36ms</tspan><tspan fill="#8a8d94"> | 43m12s</tspan></text>
+    <text x="12" y="465"><tspan fill="#8a8d94">[08:15:31]</tspan><tspan fill="#8a8d94"> GPU0 </tspan><tspan fill="#f8e58c">Share found!</tspan></text>
+    <text x="12" y="485"><tspan fill="#8a8d94">[08:15:31]</tspan><tspan fill="#8a8d94"> GPU0 </tspan><tspan fill="#22ff3f">Share #200 accepted</tspan><tspan fill="#8a8d94"> (35ms) - diff 1.86G </tspan><tspan fill="#22ff3f">Luck:71%</tspan></text>
+    <text x="12" y="505"><tspan fill="#8a8d94">[08:15:40]</tspan><tspan fill="#28ff3f"> 24.26/24.23 MH/s</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#25d7ff">A:200 R:0</tspan><tspan fill="#22ff3f"> 18%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#ffd028">66C 131W 62%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#bf46ff">184kH/W</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#23d53a">pool 35ms</tspan><tspan fill="#8a8d94"> | 43m22s</tspan></text>
+    <text x="12" y="525"><tspan fill="#8a8d94">[08:15:40]</tspan><tspan fill="#8a8d94"> GPU0 </tspan><tspan fill="#f8e58c">Share found!</tspan></text>
+    <text x="12" y="545"><tspan fill="#8a8d94">[08:15:40]</tspan><tspan fill="#8a8d94"> GPU0 </tspan><tspan fill="#22ff3f">Share #201 accepted</tspan><tspan fill="#8a8d94"> (37ms) - diff 5.09G </tspan><tspan fill="#22ff3f">Luck:20%</tspan></text>
+    <text x="12" y="565"><tspan fill="#8a8d94">[08:15:50]</tspan><tspan fill="#28ff3f"> 25.05/24.21 MH/s</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#25d7ff">A:201 R:0</tspan><tspan fill="#22ff3f"> 21%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#ffd028">66C 131W 62%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#bf46ff">186kH/W</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#23d53a">pool 35ms</tspan><tspan fill="#8a8d94"> | 43m32s</tspan></text>
+    <text x="12" y="585"><tspan fill="#8a8d94">[08:16:00]</tspan><tspan fill="#28ff3f"> 25.27/24.20 MH/s</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#25d7ff">A:201 R:0</tspan><tspan fill="#22ff3f"> 44%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#ffd028">66C 131W 62%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#bf46ff">188kH/W</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#23d53a">pool 35ms</tspan><tspan fill="#8a8d94"> | 43m42s</tspan></text>
+    <text x="12" y="605"><tspan fill="#8a8d94">[08:16:10]</tspan><tspan fill="#28ff3f"> 24.45/24.19 MH/s</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#25d7ff">A:201 R:0</tspan><tspan fill="#22ff3f"> 65%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#ffd028">65C 131W 63%</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#bf46ff">188kH/W</tspan><tspan fill="#d8d8d8"> | </tspan><tspan fill="#23d53a">pool 35ms</tspan><tspan fill="#8a8d94"> | 43m52s</tspan></text>
+  </g>
+</svg>

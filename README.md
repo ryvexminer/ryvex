@@ -30,6 +30,12 @@ tls = true
 ./ryvex --config config.toml
 ```
 
+## Ryvex in Action
+
+![Ryvex mining RVN on an RTX 3070](docs/images/ryvex-in-action.svg)
+
+Example RVN/KawPoW session on an RTX 3070: accepted shares, live hashrate, power, efficiency, pool latency, and uptime.
+
 ## Features
 
 - **NVRTC Runtime Kernels** — Compiles optimized CUDA code per ProgPoW period with dual-kernel rolling cache (zero stalls on period changes)
