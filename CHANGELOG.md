@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.7.2 (2026-05-22)
+
+### Fixed
+- Fixed HiveOS packaging so `ryvex.sig` is generated from the exact Linux binary placed inside the HiveOS archive.
+- Updated the release publisher to rebuild HiveOS after signing the canonical Linux binary, before checksums are generated.
+- Added a regression test to prevent stale HiveOS signatures from being shipped again.
+
+### Notes
+- No mining kernel changes.
+- No dev-fee logic changes.
+- This hotfix replaces the v1.7.1 HiveOS package, whose signature did not match the packaged binary.
+
 ## v1.7.1 (2026-05-22)
 
 ### Fixed
