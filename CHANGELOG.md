@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.7.1 (2026-05-22)
+
+### Fixed
+- Fixed Linux and HiveOS release packaging validation so packaged binaries stay executable.
+- Fixed HiveOS release packaging so the miner signature is included with the binary.
+- Disabled the stale tag-triggered GitHub release workflow path that could publish incomplete no-CUDA archives.
+- Clarified checksum instructions for archive-level SHA-256 verification.
+
+### Notes
+- No mining kernel changes.
+- No dev-fee logic changes.
+- This is a packaging and release-safety hotfix for v1.7.0.
+
 ## v1.7.0 (2026-05-21)
 
 ### Added

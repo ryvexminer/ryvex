@@ -1,6 +1,6 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.7.0 is a support-focused release that makes redacted troubleshooting reports easier to create and share safely.
+Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.7.1 is a packaging and release-safety hotfix for v1.7.0.
 
 ## Ryvex in action
 
@@ -8,13 +8,14 @@ Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. 
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## What is new in v1.7.0
+## What is new in v1.7.1
 
 - **One-command setup** - create a usable `config.toml` for RVN, ERG, or IRON from the CLI.
 - **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
 - **Preflight diagnostics** - check config syntax, GPU detection, and pool settings before mining.
 - **Support reports** - export a redacted support JSON without raw wallets, pool passwords, API tokens, or webhook URLs.
 - **Web dashboard** - local status view at `http://localhost:8081`.
+- **Release package fixes** - Linux and HiveOS archives are validated so packaged binaries stay executable.
 
 ## Supported algorithms
 
@@ -184,21 +185,27 @@ ryvex [OPTIONS]
 
 Mining software can be flagged by antivirus heuristics because it uses GPU compute and Stratum networking. Add an exclusion for the Ryvex folder before first launch if your security software quarantines miner binaries.
 
-Each release includes SHA-256 checksums:
+Each release includes `SHA256SUMS.txt` with SHA-256 checksums for the downloaded archive files. Verify the archive before extracting it; do not hash the extracted binary for this check.
 
 Windows:
 
 ```powershell
-Get-FileHash .\ryvex.exe -Algorithm SHA256
+Get-FileHash .\ryvex-vX.Y.Z-windows-x86_64.zip -Algorithm SHA256
 ```
 
 Linux:
 
 ```bash
-sha256sum ryvex
+sha256sum ryvex-vX.Y.Z-linux-x86_64.tar.gz
 ```
 
-Compare the result with the checksum file included in the release.
+HiveOS:
+
+```bash
+sha256sum ryvex-vX.Y.Z-hiveos.tar.gz
+```
+
+Compare the result with the matching archive line in `SHA256SUMS.txt`.
 
 ## Requirements
 

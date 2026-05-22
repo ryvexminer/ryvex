@@ -130,21 +130,26 @@ No major miner signs their binaries. The industry standard is SHA-256 checksums,
 
 ## Verify download integrity
 
-Each release includes `SHA256SUMS.txt`. Verify your download matches:
+Each release includes `SHA256SUMS.txt`. It hashes the downloaded archives, not the extracted binaries. Verify the archive before extracting it:
 
 **Windows (PowerShell):**
 ```powershell
-Get-FileHash ryvex.exe -Algorithm SHA256
+Get-FileHash .\ryvex-vX.Y.Z-windows-x86_64.zip -Algorithm SHA256
 ```
 
 **Windows (CMD):**
 ```cmd
-certutil -hashfile ryvex.exe SHA256
+certutil -hashfile ryvex-vX.Y.Z-windows-x86_64.zip SHA256
 ```
 
 **Linux:**
 ```bash
-sha256sum ryvex
+sha256sum ryvex-vX.Y.Z-linux-x86_64.tar.gz
 ```
 
-Compare the output with the hash in `SHA256SUMS.txt` from the [release page](https://github.com/ryvexminer/ryvex/releases).
+**HiveOS:**
+```bash
+sha256sum ryvex-vX.Y.Z-hiveos.tar.gz
+```
+
+Compare the output with the matching archive line in `SHA256SUMS.txt` from the [release page](https://github.com/ryvexminer/ryvex/releases).
