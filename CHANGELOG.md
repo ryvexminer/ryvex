@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.7.3 (2026-05-22)
+
+### Fixed
+- Added `--password <PASSWORD>` as a visible alias for the existing `--pass <PASSWORD>` pool password option.
+- Added a preflight regression test so the alias remains accepted before mining starts and does not print the password value.
+
+### Notes
+- No mining kernel changes.
+- No Stratum behavior changes.
+- No dev-fee logic changes.
+
 ## v1.7.2 (2026-05-22)
 
 ### Fixed
