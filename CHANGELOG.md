@@ -1,5 +1,25 @@
 # Changelog
 
+## v1.8.0 (2026-05-23)
+
+### Added
+- Added a runtime health verdict in `/api/stats` so Ryvex can explain whether mining is warming up, healthy, affected by pool display lag, or needs attention.
+- Added matching health wording to the terminal session summary, local dashboard, and support reports.
+- Added support-report health context to the dashboard diagnostics endpoint.
+
+### Changed
+- Pool-effective hashrate now uses pool-assigned accepted-share credit instead of lucky best-share difficulty.
+- Stale timing responses such as `job not found` are treated as timing/stale events instead of actionable low-difficulty failures.
+- Updated the GUI Ravenminer TCP preset to the current TCP endpoint while keeping the SSL preset on `13838`.
+
+### Validation
+- Live Ravenminer SSL validation passed with accepted shares, zero rejects, zero stale shares, no GPU restarts, and a final `healthy` verdict.
+
+### Notes
+- No mining kernel changes.
+- No dev-fee logic changes.
+- No privileged GPU overclocking or admin-only controls were added.
+
 ## v1.7.3 (2026-05-22)
 
 ### Fixed

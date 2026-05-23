@@ -1,6 +1,6 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.7.3 is a CLI compatibility patch.
+Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.8.0 adds runtime health diagnostics for clearer support and pool-status troubleshooting.
 
 ## Ryvex in action
 
@@ -8,16 +8,16 @@ Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. 
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## What is new in v1.7.3
+## What is new in v1.8.0
 
-- **Pool password alias** - `--password <PASSWORD>` now works as a visible alias for the existing `--pass <PASSWORD>` option.
-- **HiveOS signature fix** - the HiveOS archive now signs the exact binary included in the package.
+- **Health verdict** - Ryvex now reports whether mining is warming up, healthy, affected by pool display lag, or needs attention.
+- **Better pool-effective hashrate** - accepted-share credit now uses the pool-assigned share difficulty instead of lucky best-share difficulty.
+- **Clearer support reports** - exported support reports include a health section without exposing wallets, passwords, API tokens, or webhook URLs.
+- **Terminal and dashboard health wording** - the same health status appears in the terminal summary and local dashboard.
 - **One-command setup** - create a usable `config.toml` for RVN, ERG, or IRON from the CLI.
 - **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
 - **Preflight diagnostics** - check config syntax, GPU detection, and pool settings before mining.
-- **Support reports** - export a redacted support JSON without raw wallets, pool passwords, API tokens, or webhook URLs.
 - **Web dashboard** - local status view at `http://localhost:8081`.
-- **Release package fixes** - Linux and HiveOS archives are validated so packaged binaries stay executable.
 
 ## Supported algorithms
 
