@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.8.1 (2026-05-23)
+
+### Fixed
+- Aligned `Luck` with pool-style effort semantics: `100%` is expected work, lower is luckier, and higher means more work than expected.
+- Kept accepted share `diff` visible without using unusually strong share difficulty to inflate the Luck value.
+- Updated terminal, session summary, and local dashboard wording so Luck has one consistent meaning.
+
+### Validation
+- Live Ravenminer SSL validation passed for the corrected Luck display with accepted shares and zero rejects.
+
+### Notes
+- No mining kernel changes.
+- No dev-fee logic changes.
+- No privileged GPU overclocking or admin-only controls were added.
+
 ## v1.8.0 (2026-05-23)
 
 ### Added

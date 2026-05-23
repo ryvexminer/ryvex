@@ -1,6 +1,6 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.8.0 adds runtime health diagnostics for clearer support and pool-status troubleshooting.
+Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.8.1 aligns Luck display with pool-style effort semantics for clearer mining feedback.
 
 ## Ryvex in action
 
@@ -8,12 +8,12 @@ Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. 
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## What is new in v1.8.0
+## What is new in v1.8.1
 
-- **Health verdict** - Ryvex now reports whether mining is warming up, healthy, affected by pool display lag, or needs attention.
-- **Better pool-effective hashrate** - accepted-share credit now uses the pool-assigned share difficulty instead of lucky best-share difficulty.
-- **Clearer support reports** - exported support reports include a health section without exposing wallets, passwords, API tokens, or webhook URLs.
-- **Terminal and dashboard health wording** - the same health status appears in the terminal summary and local dashboard.
+- **Pool-style Luck** - Luck now follows the pool convention: `100%` is expected, lower is luckier, higher means more work than expected.
+- **Clearer share display** - accepted share `diff` remains visible, but it no longer inflates Luck when a strong share is found.
+- **Terminal and dashboard consistency** - CLI lines, session summary, and local dashboard use the same Luck meaning.
+- **Live validated** - short Ravenminer SSL validation passed with accepted shares and zero rejects.
 - **One-command setup** - create a usable `config.toml` for RVN, ERG, or IRON from the CLI.
 - **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
 - **Preflight diagnostics** - check config syntax, GPU detection, and pool settings before mining.
