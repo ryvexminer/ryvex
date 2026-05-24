@@ -1,6 +1,6 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.8.1 aligns Luck display with pool-style effort semantics for clearer mining feedback.
+Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.9.0 adds public release verification assets, trust documentation, benchmark notes, and an RVN pool compatibility matrix.
 
 ## Ryvex in action
 
@@ -8,12 +8,12 @@ Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. 
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## What is new in v1.8.1
+## What is new in v1.9.0
 
-- **Pool-style Luck** - Luck now follows the pool convention: `100%` is expected, lower is luckier, higher means more work than expected.
-- **Clearer share display** - accepted share `diff` remains visible, but it no longer inflates Luck when a strong share is found.
-- **Terminal and dashboard consistency** - CLI lines, session summary, and local dashboard use the same Luck meaning.
-- **Live validated** - short Ravenminer SSL validation passed with accepted shares and zero rejects.
+- **Download verification** - release archives now include checksum and binary signature verification guidance.
+- **Public signing assets** - the Ryvex Ed25519 public key and verification helper are shipped with release packages.
+- **Benchmark notes** - RVN/KawPoW validation notes document the test GPU, settings, hashrate, power, and temperature.
+- **Pool compatibility** - RVN pool smoke-test results are documented for the packaged launch endpoints.
 - **One-command setup** - create a usable `config.toml` for RVN, ERG, or IRON from the CLI.
 - **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
 - **Preflight diagnostics** - check config syntax, GPU detection, and pool settings before mining.
@@ -185,9 +185,16 @@ ryvex [OPTIONS]
 
 ## Antivirus notice
 
-Mining software can be flagged by antivirus heuristics because it uses GPU compute and Stratum networking. Add an exclusion for the Ryvex folder before first launch if your security software quarantines miner binaries.
+Mining software can be flagged by antivirus heuristics because it uses GPU compute and Stratum networking. Verify Ryvex before running it or creating antivirus exclusions.
 
-Each release includes `SHA256SUMS.txt` with SHA-256 checksums for the downloaded archive files. Verify the archive before extracting it; do not hash the extracted binary for this check.
+Each release includes archive checksums and binary signatures:
+
+- `SHA256SUMS.txt` verifies downloaded archives.
+- `ryvex.sig` verifies the extracted binary.
+- `ryvex-ed25519-public-key.txt` contains the release public key.
+- `verify-release-signature.py` verifies the binary signature.
+
+Verify the archive before extracting it; do not hash the extracted binary for the archive checksum step.
 
 Windows:
 
@@ -208,6 +215,30 @@ sha256sum ryvex-vX.Y.Z-hiveos.tar.gz
 ```
 
 Compare the result with the matching archive line in `SHA256SUMS.txt`.
+
+After extraction, verify the binary signature:
+
+Windows:
+
+```powershell
+python .\verify-release-signature.py --binary .\ryvex.exe --signature .\ryvex.sig --public-key .\ryvex-ed25519-public-key.txt
+```
+
+Linux:
+
+```bash
+python3 ./verify-release-signature.py --binary ./ryvex --signature ./ryvex.sig --public-key ./ryvex-ed25519-public-key.txt
+```
+
+Expected result:
+
+```text
+OK: signature valid
+```
+
+Only add antivirus exclusions after checksum and signature verification pass.
+
+Additional trust-pack documentation is shipped in release archives under `docs/`, including download verification, release trust notes, the RVN benchmark pack, and the RVN pool compatibility matrix.
 
 ## Requirements
 

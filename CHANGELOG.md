@@ -1,5 +1,21 @@
 # Changelog
 
+## v1.9.0 (2026-05-24)
+
+### Added
+- Added public download verification documentation covering archive checksums and extracted binary signatures.
+- Added the Ryvex Ed25519 public key as a public verification asset.
+- Added a release signature verifier script for `ryvex.sig`.
+- Added a public RVN/KawPoW benchmark pack and RVN pool compatibility matrix.
+
+### Changed
+- Updated antivirus guidance to verify downloads before creating exclusions.
+- Updated release packaging to include and upload public verification assets.
+
+### Notes
+- No mining kernel changes.
+- No dev-fee logic changes.
+
 ## v1.8.1 (2026-05-23)
 
 ### Fixed

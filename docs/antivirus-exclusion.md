@@ -1,18 +1,26 @@
-# Antivirus Exclusion Guide
+﻿# Antivirus Exclusion Guide
 
 ## Why is Ryvex flagged?
 
-All GPU miners are flagged by antivirus heuristics. The detection pattern is:
+GPU miners can be flagged by antivirus heuristics. The detection pattern is:
 
 - CUDA/GPU API calls (`cuDeviceGet`, `cuModuleLoad`)
 - Stratum network protocol (mining pool communication)
 - High GPU utilization
 
-These behaviors match the "CoinMiner" heuristic signature. This is a **false positive** — it's the same detection that flags every major GPU miner.
+These behaviors can match "CoinMiner" heuristic signatures. A detection can be a false positive, but do not treat that label as proof that a file is safe.
 
-No major miner signs their binaries. The industry standard is SHA-256 checksums, which are included in every Ryvex release (`SHA256SUMS.txt`).
+Do not use an antivirus label alone to decide whether a file is safe. Each release includes archive checksums and binary signatures. Verify both before running the miner or creating antivirus exclusions.
 
-> **Important:** Add the exclusion *before* running Ryvex. If the file was already quarantined, restore it first, then add the exclusion.
+Before creating an exclusion or restoring a quarantined file:
+
+1. Check the archive against `SHA256SUMS.txt`.
+2. Extract the archive.
+3. Verify the extracted binary with `ryvex.sig`.
+
+See `docs/verify-download.md` for the full verification flow.
+
+> **Important:** Only add an exclusion for a Ryvex folder after the checksum and signature checks pass. If the file was already quarantined, restore it only after verification.
 
 ---
 
@@ -31,7 +39,7 @@ No major miner signs their binaries. The industry standard is SHA-256 checksums,
 2. Click **Protection history**
 3. Find the quarantined Ryvex file > click **Restore**
 
-> Defender may re-enable real-time protection after Windows Update — re-check exclusions after major updates.
+> Defender may re-enable real-time protection after Windows Update - re-check exclusions after major updates.
 
 ---
 
@@ -130,7 +138,9 @@ No major miner signs their binaries. The industry standard is SHA-256 checksums,
 
 ## Verify download integrity
 
-Each release includes `SHA256SUMS.txt`. It hashes the downloaded archives, not the extracted binaries. Verify the archive before extracting it:
+Each release includes `SHA256SUMS.txt`, `ryvex.sig`, `ryvex-ed25519-public-key.txt`, and `verify-release-signature.py`.
+
+`SHA256SUMS.txt` hashes the downloaded archives, not the extracted binaries. Verify the archive before extracting it:
 
 **Windows (PowerShell):**
 ```powershell
@@ -153,3 +163,17 @@ sha256sum ryvex-vX.Y.Z-hiveos.tar.gz
 ```
 
 Compare the output with the matching archive line in `SHA256SUMS.txt` from the [release page](https://github.com/ryvexminer/ryvex/releases).
+
+After extraction, verify the binary signature:
+
+**Windows:**
+```powershell
+python .\verify-release-signature.py --binary .\ryvex.exe --signature .\ryvex.sig --public-key .\ryvex-ed25519-public-key.txt
+```
+
+**Linux:**
+```bash
+python3 ./verify-release-signature.py --binary ./ryvex --signature ./ryvex.sig --public-key ./ryvex-ed25519-public-key.txt
+```
+
+The expected result is `OK: signature valid`.
