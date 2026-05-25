@@ -6,7 +6,7 @@
 # Worker name (identifies this miner on the pool)
 worker_name = "rig1"
 
-# Mining algorithm — supported values: "kawpow" (RVN), "autolykos2" (ERG), "fishhash" (IRON)
+# Mining algorithm — supported values: "kawpow" (RVN), "autolykos2" (ERG), "fishhash" (IRON), "progpowz" (ZANO)
 algorithm = "kawpow"
 
 # === Mining Pools ===
@@ -42,7 +42,7 @@ tls = false
 is_backup = true
 coin = "RVN"
 
-# To mine Ergo or IronFish, remove or comment the active Ravencoin pools
+# To mine Ergo, IronFish, or Zano, remove or comment the active Ravencoin pools
 # before changing algorithm, then use only pools from the matching section below.
 
 # --- Ergo (Autolykos2) - replacement pool examples ---
@@ -73,6 +73,23 @@ coin = "RVN"
 # tls = false
 # is_backup = false
 # coin = "IRON"
+
+# --- Zano (ProgPowZ) - replacement pool example ---
+# [[pools]]
+# url = "stratum+tcp://zano.alphapool.tech:5336"
+# wallet = "YOUR_ZANO_WALLET_HERE"
+# password = "x"
+# tls = false
+# is_backup = false
+# coin = "ZANO"
+
+# [[pools]]
+# url = "stratum+tcp://zano.cedric-crispin.com:4424"
+# wallet = "YOUR_ZANO_WALLET_HERE"
+# password = "x"
+# tls = false
+# is_backup = true
+# coin = "ZANO"
 
 # === GPU Configuration ===
 [gpu]

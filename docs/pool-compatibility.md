@@ -58,3 +58,10 @@ New release claims should use fresh accepted-share validation if pool URLs, port
 | --- | --- | --- | --- |
 | HeroMiners TCP | `stratum+tcp://ironfish.herominers.com:1145` | Pending live accepted-share validation | Run `--preflight` first, then complete a live validation window before claiming acceptance. |
 | HeroMiners EU TCP | `stratum+tcp://de.ironfish.herominers.com:1145` | Pending live accepted-share validation | Run `--preflight` first, then complete a live validation window before claiming acceptance. |
+
+## ZANO
+
+| Pool preset | Endpoint | Evidence status | Notes |
+| --- | --- | --- | --- |
+| AlphaPool TCP | `stratum+tcp://zano.alphapool.tech:5336` | Pending live accepted-share validation | Run `--preflight` first, then complete a live validation window before claiming acceptance. |
+| Cedric Crispin TCP | `stratum+tcp://zano.cedric-crispin.com:4424` | Pending live accepted-share validation | Run `--preflight` first, then complete a live validation window before claiming acceptance. |

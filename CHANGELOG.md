@@ -3,13 +3,13 @@
 ## v1.11.0 (2026-05-25)
 
 ### Changed
-- Tightened release hygiene for internal protocol fixture work without changing the public algorithm list.
-- Added stricter fixture redaction and deterministic parser checks around hidden protocol scaffolding.
-- Kept the public release surface focused on the validated RVN, ERG, and IRON workflows.
+- Added public ProgPowZ/Zano mining support through the `progpowz` algorithm.
+- Added EthProxy/getWork login, work polling, and submit handling for Zano pools.
+- Added ZANO first-run setup presets, config examples, release launchers, and dev-fee routing.
+- Tightened release hygiene and deterministic parser checks around the new protocol path.
 
 ### Notes
-- No public mining algorithm changes.
-- No dev-fee logic changes.
+- ZANO pool compatibility starts as a test-candidate path until fresh accepted-share evidence is recorded.
 
 ## v1.10.0 (2026-05-25)
 

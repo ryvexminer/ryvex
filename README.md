@@ -1,6 +1,6 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.11.0 is a test candidate that keeps the public miner focused on validated algorithms while tightening release hygiene, fixture safety, and first-run reliability.
+Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, IronFish, and Zano. v1.11.0 is a test candidate that adds ProgPowZ/Zano mining while tightening release hygiene, fixture safety, and first-run reliability.
 
 ## Ryvex in action
 
@@ -10,7 +10,8 @@ Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. 
 
 ## Release focus in v1.11.0
 
-- **One-command setup** - create a usable `config.toml` for RVN, ERG, or IRON from the CLI.
+- **ProgPowZ/Zano mining** - add `progpowz` as the ZANO mining algorithm with EthProxy/getWork pool handling.
+- **One-command setup** - create a usable `config.toml` for RVN, ERG, IRON, or ZANO from the CLI.
 - **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
 - **Preflight endpoint diagnostics** - check config syntax, GPU discovery, pool URL shape, DNS, TCP reachability, TLS mode, and certificate validation before mining.
 - **Protocol readiness checks** - after transport checks pass, preflight verifies Stratum subscribe, authorization, and first-job parsing without mining.
@@ -26,6 +27,7 @@ Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. 
 | Ravencoin | `RVN` | `kawpow` |
 | Ergo | `ERG` | `autolykos2` |
 | IronFish | `IRON` | `fishhash` |
+| Zano | `ZANO` | `progpowz` |
 
 All algorithms use a 1% dev fee.
 
@@ -49,7 +51,7 @@ Linux:
 ./ryvex --first-run-setup --setup-coin RVN --setup-wallet YOUR_RVN_WALLET --setup-worker my-rig
 ```
 
-Use `--setup-coin ERG` or `--setup-coin IRON` for the other supported coins. Setup writes `config.toml` and generated launch files for the selected coin. The setup output prints the exact paths.
+Use `--setup-coin ERG`, `--setup-coin IRON`, or `--setup-coin ZANO` for the other supported coins. Setup writes `config.toml` and generated launch files for the selected coin. The setup output prints the exact paths.
 
 ### 3. Check the install before mining
 
@@ -146,13 +148,13 @@ ryvex [OPTIONS]
 
   -c, --config <CONFIG>       Config file [default: config.toml]
       --first-run-setup       Create config and launchers, then exit
-      --setup-coin <COIN>     Coin for setup: RVN, ERG, or IRON
+      --setup-coin <COIN>     Coin for setup: RVN, ERG, IRON, or ZANO
       --setup-wallet <WALLET>
                               Wallet address for setup
       --setup-pool <POOL>     Pool preset or full Stratum URL for setup
   -o, --pool <POOL>           Pool URL override
   -p, --pass <PASSWORD>       Pool password [aliases: --password]
-  -a, --algo <ALGO>           Mining algorithm: kawpow, autolykos2, fishhash
+  -a, --algo <ALGO>           Mining algorithm: kawpow, autolykos2, fishhash, progpowz
       --setup-worker <WORKER>
                               Worker name for setup
   -d, --devices <DEVICES>     GPUs to use, e.g. "0,2"
@@ -182,7 +184,7 @@ ryvex [OPTIONS]
       --config-key <KEY>      Encryption key, or env RYVEX_CONFIG_KEY
       --encrypt-config        Encrypt wallets in config and exit
       --profile <NAME>        Load a mining profile
-      --gpu-algo <GPU_ALGO>   Algorithm per GPU, e.g. "0:kawpow,1:autolykos2"
+      --gpu-algo <GPU_ALGO>   Algorithm per GPU, e.g. "0:kawpow,1:progpowz"
   -h, --help                  Print help
   -V, --version               Print version
 ```
