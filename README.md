@@ -1,6 +1,6 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.9.0 adds public release verification assets, trust documentation, benchmark notes, and an RVN pool compatibility matrix.
+Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. v1.10.0 focuses on first-run reliability: guided setup, preflight endpoint diagnostics, troubleshooting, and compatibility evidence that separates validated results from pending checks.
 
 ## Ryvex in action
 
@@ -8,15 +8,15 @@ Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, and IronFish. 
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## What is new in v1.9.0
+## Release focus in v1.10.0
 
-- **Download verification** - release archives now include checksum and binary signature verification guidance.
-- **Public signing assets** - the Ryvex Ed25519 public key and verification helper are shipped with release packages.
-- **Benchmark notes** - RVN/KawPoW validation notes document the test GPU, settings, hashrate, power, and temperature.
-- **Pool compatibility** - RVN pool smoke-test results are documented for the packaged launch endpoints.
 - **One-command setup** - create a usable `config.toml` for RVN, ERG, or IRON from the CLI.
 - **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
-- **Preflight diagnostics** - check config syntax, GPU detection, and pool settings before mining.
+- **Preflight endpoint diagnostics** - check config syntax, GPU discovery, pool URL shape, DNS, TCP reachability, TLS mode, and certificate validation before mining.
+- **Protocol readiness checks** - after transport checks pass, preflight verifies Stratum subscribe, authorization, and first-job parsing without mining.
+- **Pool compatibility evidence** - documented rows distinguish accepted-share evidence from pending validation.
+- **Troubleshooting guide** - first-run pool, network, TLS, authorization, and support-report guidance is included in release docs.
+- **Download verification** - release archives include checksum and binary signature verification guidance.
 - **Web dashboard** - local status view at `http://localhost:8081`.
 
 ## Supported algorithms
@@ -65,7 +65,7 @@ Linux:
 ./ryvex --preflight --config config.toml
 ```
 
-Preflight mode does not mine or submit shares. It validates the local setup and reports issues to fix before launch.
+Preflight mode does not mine or submit shares. It validates the local setup, checks pool transport endpoints, then probes Stratum subscribe, authorization, and first-job parsing when transport is reachable.
 
 ### 4. Start Ryvex
 
@@ -105,11 +105,15 @@ Use `stratum+ssl://` for TLS endpoints and `stratum+tcp://` for plaintext endpoi
 
 - config parsing and required fields;
 - selected algorithm and coin mapping;
-- pool URL prefix format;
-- GPU discovery;
-- pool URL prefix format.
+- GPU discovery without launching mining kernels;
+- pool endpoint URL shape, including explicit `stratum+tcp://` or `stratum+ssl://`, host, port, and no embedded wallet or query string;
+- DNS resolution and TCP reachability for configured pool endpoints;
+- TLS negotiation and certificate validation for TLS endpoints;
+- Stratum protocol readiness after transport passes: subscribe confirmation, authorization response, and a parseable first job.
 
-Fix any reported issue, then run `--preflight` again before starting the miner.
+Plaintext TCP endpoints show TLS and certificate checks as not run. Protocol checks are skipped when URL, DNS, TCP, TLS, or certificate failures block transport.
+
+Fix any reported issue, then run `--preflight` again before starting the miner. See [Troubleshooting](docs/troubleshooting.md) for first-run fixes and [Pool Compatibility Evidence](docs/pool-compatibility.md) for validation status by coin.
 
 ## Support report
 
@@ -238,7 +242,7 @@ OK: signature valid
 
 Only add antivirus exclusions after checksum and signature verification pass.
 
-Additional trust-pack documentation is shipped in release archives under `docs/`, including download verification, release trust notes, the RVN benchmark pack, and the RVN pool compatibility matrix.
+Additional documentation is shipped in release archives under `docs/`, including download verification, release trust notes, antivirus guidance, troubleshooting, and pool compatibility evidence.
 
 ## Requirements
 

@@ -19,45 +19,40 @@ algorithm = "kawpow"
 
 # --- Ravencoin (KawPoW) ---
 
-# Ravencoin (KawPoW) — 2Miners primary (TCP)
+# Ravencoin (KawPoW) - 2Miners primary (SSL)
 [[pools]]
-url = "stratum+tcp://rvn.2miners.com:6060"
+url = "stratum+ssl://rvn.2miners.com:16060"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
-tls = false
+tls = true
 is_backup = false
-# coin = "RVN"            # optional: coin symbol mined on this pool. One algorithm
+coin = "RVN"             # optional: coin symbol mined on this pool. One algorithm
 #                         # can serve several coins (e.g. KawPoW on zpool: RVN, MEWC,
 #                         # NEOX, AIPG...). Defaults to the algorithm's canonical coin.
 # api_url = "https://rvn.2miners.com/api/accounts/YOUR_WALLET"
 #                         # optional: pool HTTP API for pool-reported hashrate + balance,
 #                         # polled every 60s. See the "Pool HTTP API" section below.
 
-# Ravencoin (KawPoW) — HeroMiners backup (TCP)
+# Ravencoin (KawPoW) - HeroMiners backup (TCP)
 [[pools]]
 url = "stratum+tcp://ravencoin.herominers.com:10240"
 wallet = "YOUR_RAVENCOIN_WALLET_HERE"
 password = "x"
 tls = false
 is_backup = true
+coin = "RVN"
 
-# TLS pool example (stratum+ssl://)
-# The stratum+ssl:// prefix automatically enables TLS even if tls = false
-# [[pools]]
-# url = "stratum+ssl://rvn.2miners.com:16060"
-# wallet = "YOUR_RAVENCOIN_WALLET_HERE"
-# password = "x"
-# tls = true
-# ssl_verify = true       # false = accept self-signed certificates
-# is_backup = true
+# To mine Ergo or IronFish, remove or comment the active Ravencoin pools
+# before changing algorithm, then use only pools from the matching section below.
 
-# --- Ergo (Autolykos2) — uncomment and set algorithm = "autolykos2" ---
+# --- Ergo (Autolykos2) - replacement pool examples ---
 # [[pools]]
 # url = "stratum+tcp://erg.2miners.com:8888"
 # wallet = "YOUR_ERGO_WALLET_HERE"
 # password = "x"
 # tls = false
 # is_backup = false
+# coin = "ERG"
 # # 2miners ERG uses a high baseline difficulty — pre-set to avoid rejected shares at startup:
 # # [mining.tuning]
 # # target_multiplier = 4.0
@@ -68,14 +63,16 @@ is_backup = true
 # password = "x"
 # tls = false
 # is_backup = true
+# coin = "ERG"
 
-# --- IronFish (FishHash) — uncomment and set algorithm = "fishhash" ---
+# --- IronFish (FishHash) - replacement pool example ---
 # [[pools]]
 # url = "stratum+tcp://ironfish.herominers.com:1145"
 # wallet = "YOUR_IRONFISH_WALLET_HERE"
 # password = "x"
 # tls = false
 # is_backup = false
+# coin = "IRON"
 
 # === GPU Configuration ===
 [gpu]

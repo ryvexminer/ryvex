@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.10.0 (2026-05-25)
+
+### Added
+- Added pool preflight diagnostics that report endpoint, TLS, authentication, and GPU readiness before mining starts.
+- Added troubleshooting and compatibility notes for common first-run connection and launcher setup issues.
+
+### Changed
+- Refreshed bundled endpoint reliability for supported algorithms.
+- Refreshed launcher and configuration defaults used by first-run setup.
+
+### Fixed
+- Improved endpoint selection reliability when multiple bundled connection modes are available.
+- Made first-run diagnostics clearer when a pool, TLS, wallet, or driver setting needs attention.
+
+### Notes
+- No mining kernel changes.
+
 ## v1.9.0 (2026-05-24)
 
 ### Added
