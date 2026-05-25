@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.11.0 (2026-05-25)
+
+### Changed
+- Tightened release hygiene for internal protocol fixture work without changing the public algorithm list.
+- Added stricter fixture redaction and deterministic parser checks around hidden protocol scaffolding.
+- Kept the public release surface focused on the validated RVN, ERG, and IRON workflows.
+
+### Notes
+- No public mining algorithm changes.
+- No dev-fee logic changes.
+
 ## v1.10.0 (2026-05-25)
 
 ### Added
