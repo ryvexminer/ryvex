@@ -31,7 +31,7 @@ A pending row means the endpoint is included in setup presets or documentation, 
 | Worker names | `trust-*` test workers |
 | Pool password | `x` |
 
-New v1.10.0 claims should use fresh accepted-share validation if pool URLs, ports, Stratum handling, submit formatting, or mining kernels changed after this baseline.
+New release claims should use fresh accepted-share validation if pool URLs, ports, Stratum handling, submit formatting, or mining kernels changed after this baseline.
 
 ## RVN
 

@@ -1,12 +1,12 @@
-# Ryvex v1.9.0 Benchmark Pack
+# RVN/KawPoW Benchmark Evidence
 
-This page records one reproducible RVN/KawPoW validation run. It is not a profitability promise and it is not a claim about every GPU or pool.
+This page records one reproducible RVN/KawPoW validation run from the last public benchmark baseline. It is not a profitability promise and it is not a claim about every GPU or pool.
 
 ## Test Setup
 
 | Field | Value |
 | --- | --- |
-| Ryvex binary | `ryvex 1.9.0` |
+| Ryvex binary recorded | `ryvex 1.9.0` |
 | Date | 2026-05-24 |
 | Algorithm | KawPoW |
 | Coin | RVN |
@@ -50,3 +50,4 @@ The config file provided the local wallet and normal miner defaults. Benchmark m
 - Share counts are not meaningful in benchmark mode because no pool was used.
 - Different drivers, cards, cooling, power limits, and memory clocks can produce different results.
 - Public comparison should use reproducible settings, not lucky share count.
+- New benchmark claims should use a fresh run from the release binary being announced.
