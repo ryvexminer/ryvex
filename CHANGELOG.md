@@ -1,15 +1,18 @@
 # Changelog
 
-## v1.11.0 (2026-05-25)
+## v1.11.0 (2026-05-26)
 
 ### Changed
 - Added public ProgPowZ/Zano mining support through the `progpowz` algorithm.
 - Added EthProxy/getWork login, work polling, and submit handling for Zano pools.
 - Added ZANO first-run setup presets, config examples, release launchers, and dev-fee routing.
+- Expanded ZANO release presets to HeroMiners, AlphaPool EU, WoolyPooly, LuckyPool, and Cedric Crispin.
+- Added a per-period NVRTC ProgPowZ hot path; RTX 3070 validation improved from ~1.31 MH/s to ~23-25 MH/s live.
+- Normalized `zano:` wallet URI prefixes before EthProxy pool login.
 - Tightened release hygiene and deterministic parser checks around the new protocol path.
 
 ### Notes
-- ZANO pool compatibility starts as a test-candidate path until fresh accepted-share evidence is recorded.
+- HeroMiners ZANO live validation passed on 2026-05-25 with 2 accepted shares and 0 rejected shares.
 
 ## v1.10.0 (2026-05-25)
 

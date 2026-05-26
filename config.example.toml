@@ -76,7 +76,7 @@ coin = "RVN"
 
 # --- Zano (ProgPowZ) - replacement pool example ---
 # [[pools]]
-# url = "stratum+tcp://zano.alphapool.tech:5336"
+# url = "stratum+tcp://de.zano.herominers.com:1110"
 # wallet = "YOUR_ZANO_WALLET_HERE"
 # password = "x"
 # tls = false
@@ -84,7 +84,31 @@ coin = "RVN"
 # coin = "ZANO"
 
 # [[pools]]
+# url = "stratum+tcp://eu1.alphapool.tech:5336"
+# wallet = "YOUR_ZANO_WALLET_HERE"
+# password = "x"
+# tls = false
+# is_backup = true
+# coin = "ZANO"
+
+# [[pools]]
+# url = "stratum+tcp://pool.woolypooly.com:3146"
+# wallet = "YOUR_ZANO_WALLET_HERE"
+# password = "x"
+# tls = false
+# is_backup = true
+# coin = "ZANO"
+
+# [[pools]]
 # url = "stratum+tcp://zano.cedric-crispin.com:4424"
+# wallet = "YOUR_ZANO_WALLET_HERE"
+# password = "x,d=64000000"
+# tls = false
+# is_backup = true
+# coin = "ZANO"
+
+# [[pools]]
+# url = "stratum+tcp://zano.luckypool.io:8866"
 # wallet = "YOUR_ZANO_WALLET_HERE"
 # password = "x"
 # tls = false
@@ -198,6 +222,7 @@ benchmark_duration_secs = 60
 # [mining.tuning]
 # kawpow_burst = 1            # CUDA kernels queued before sync (1-4, higher = more throughput, >2 risks TDR on Windows)
 # kawpow_grid_mult = 12       # Grid multiplier for CUDA launches (default 12, clamped to 12)
+# progpowz_grid_mult = 12     # Grid multiplier for ProgPowZ CUDA launches (default 12, internal tuning)
 # kawpow_autotune = false     # Enable KawPoW grid autotune in benchmark mode
 # kawpow_autotune_grid_min = 6   # Lowest grid multiplier to benchmark during autotune
 # kawpow_autotune_grid_max = 12  # Highest grid multiplier to benchmark during autotune

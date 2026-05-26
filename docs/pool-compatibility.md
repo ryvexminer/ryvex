@@ -20,15 +20,15 @@ A pending row means the endpoint is included in setup presets or documentation, 
 
 | Field | Value |
 | --- | --- |
-| Evidence date | 2026-05-24 |
-| Evidence source | RVN accepted-share smoke tests from the release launcher baseline |
-| Ryvex binary recorded | `ryvex 1.8.1` |
+| Evidence dates | 2026-05-24 to 2026-05-25 |
+| Evidence source | RVN accepted-share smoke tests plus ZANO HeroMiners ProgPowZ live validation |
+| Ryvex binaries recorded | `ryvex 1.8.1` baseline rows; `ryvex 1.11.0` ZANO HeroMiners row |
 | GPU | NVIDIA GeForce RTX 3070, 8 GB |
 | NVIDIA driver | 596.21 |
 | Power limit | 60% |
 | Core offset | +0 MHz |
 | Memory offset | +900 MHz |
-| Worker names | `trust-*` test workers |
+| Worker names | `trust-*` and `ryvex-test` test workers |
 | Pool password | `x` |
 
 New release claims should use fresh accepted-share validation if pool URLs, ports, Stratum handling, submit formatting, or mining kernels changed after this baseline.
@@ -63,5 +63,8 @@ New release claims should use fresh accepted-share validation if pool URLs, port
 
 | Pool preset | Endpoint | Evidence status | Notes |
 | --- | --- | --- | --- |
-| AlphaPool TCP | `stratum+tcp://zano.alphapool.tech:5336` | Pending live accepted-share validation | Run `--preflight` first, then complete a live validation window before claiming acceptance. |
-| Cedric Crispin TCP | `stratum+tcp://zano.cedric-crispin.com:4424` | Pending live accepted-share validation | Run `--preflight` first, then complete a live validation window before claiming acceptance. |
+| HeroMiners TCP | `stratum+tcp://de.zano.herominers.com:1110` | Accepted-share validation passed on 2026-05-25 | RTX 3070 live run: epoch 123 DAG ready in 4.4s, ~23-25 MH/s after warmup, 2 accepted, 0 rejected. |
+| AlphaPool EU TCP | `stratum+tcp://eu1.alphapool.tech:5336` | Accepted-share validation passed on 2026-05-25 | RTX 3070 live run: epoch 123 DAG ready in 4.2s, 1 accepted, 0 rejected. |
+| WoolyPooly TCP | `stratum+tcp://pool.woolypooly.com:3146` | Accepted-share validation passed on 2026-05-25 | RTX 3070 live run: epoch 123 DAG ready in 4.3s, 2 accepted, 0 rejected. |
+| LuckyPool TCP | `stratum+tcp://zano.luckypool.io:8866` | Accepted-share validation passed on 2026-05-25 | RTX 3070 live run: epoch 123 DAG ready in 4.3s, 12 accepted, 0 rejected. |
+| Cedric Crispin TCP | `stratum+tcp://zano.cedric-crispin.com:4424` | Accepted-share validation passed on 2026-05-25 with `x,d=64000000` | The release launcher pins the documented low-difficulty password so a single GPU can validate shares quickly. |
