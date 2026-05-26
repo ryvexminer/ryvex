@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.13.0 (2026-05-26)
+
+### Changed
+- Centralized the pool miner identity string and send `Ryvex/<version>` on Stratum subscribe paths so compatible pools can display Ryvex by name.
+- Send the same `Ryvex/<version>` miner agent as EthProxy login metadata for ProgPowZ/ZANO pools using pool-compatible top-level `agent` and `worker` fields, with an automatic retry using the historical two-parameter login if a pool rejects the extension.
+
+### Validation
+- Added Stratum protocol tests for the miner agent format on standard and NiceHash subscribe paths.
+- Added EthProxy request and connection tests for the agent login shape and legacy-login fallback.
+- Validated short login/getWork probes with the agent metadata on five configured ZANO pool endpoints without submitting shares, then matched the LuckyPool-recognized ZANO login metadata shape.
+- Validated a live LuckyPool ZANO run after the release-version bump with accepted shares, no rejected shares reported, and pool API recognition as `Ryvex/1.13.0`.
+
 ## v1.11.0 (2026-05-26)
 
 ### Changed

@@ -1,6 +1,6 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, IronFish, and Zano. v1.11.0 is a test candidate that adds ProgPowZ/Zano mining while tightening release hygiene, fixture safety, and first-run reliability.
+Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, IronFish, and Zano. v1.13.0 improves pool-side miner identification while keeping the ProgPowZ/Zano mining path and release-safety checks from the previous cycle.
 
 ## Ryvex in action
 
@@ -8,10 +8,11 @@ Ryvex is a multi-algorithm NVIDIA CUDA miner for Ravencoin, Ergo, IronFish, and 
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## Release focus in v1.11.0
+## Release focus in v1.13.0
 
-- **ProgPowZ/Zano mining** - add `progpowz` as the ZANO mining algorithm with EthProxy/getWork pool handling.
-- **Broader ZANO pool presets** - ship launchers for HeroMiners, AlphaPool EU, WoolyPooly, LuckyPool, and Cedric Crispin.
+- **Pool dashboard recognition** - send `Ryvex/<version>` consistently on Stratum, NiceHash-style Stratum, IronFish, and ZANO EthProxy login paths.
+- **ZANO miner-agent compatibility** - use the EthProxy `agent` and `worker` metadata shape validated on LuckyPool so compatible dashboards can show Ryvex by name.
+- **Safe EthProxy fallback** - retry the historical two-parameter ZANO login if a pool rejects optional miner-agent metadata.
 - **One-command setup** - create a usable `config.toml` for RVN, ERG, IRON, or ZANO from the CLI.
 - **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
 - **Preflight endpoint diagnostics** - check config syntax, GPU discovery, pool URL shape, DNS, TCP reachability, TLS mode, and certificate validation before mining.
