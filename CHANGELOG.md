@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.14.0 (2026-05-27)
+
+### Added
+- Added FIRO/FiroPoW as a CPU-reference RC path for controlled pool-test preparation, not as validated support.
+- Added a placeholder-only FIRO setup preset and launcher for the WoolyPooly TCP route that passed Ryvex preflight.
+- Added FIRO job parsing, setup validation, API coin tags, and dashboard labels so preflight and capture runs report the intended coin and algorithm.
+- Added FIRO Stratum capture and fixture guards for subscribe, authorize, difficulty, extranonce/session updates, and two notify messages without submitting work.
+
+### Validation
+- Added FIRO algorithm tests for metadata, registry exposure, bounded CPU reference hashing, result records, reference vectors, and CUDA guardrails.
+- Added FIRO config, launcher, release-surface, and Stratum protocol tests that keep wallets placeholder-only and block overclaiming before live pool validation.
+- Validated the packaged FIRO TCP preflight route through DNS, TCP, authorization, and first-job parsing without mining; additional endpoints remain internal transport/protocol candidates, not release launchers.
+
+### Notes
+- FIRO/FiroPoW CUDA mining is not enabled in this RC.
+- FIRO dev fee remains disabled until a live pool route and share submission format are validated.
+
 ## v1.13.0 (2026-05-26)
 
 ### Changed

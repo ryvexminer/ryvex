@@ -6,7 +6,7 @@
 # Worker name (identifies this miner on the pool)
 worker_name = "rig1"
 
-# Mining algorithm — supported values: "kawpow" (RVN), "autolykos2" (ERG), "fishhash" (IRON), "progpowz" (ZANO)
+# Mining algorithm — supported values: "kawpow" (RVN), "autolykos2" (ERG), "fishhash" (IRON), "progpowz" (ZANO), "firopow" (FIRO/KIIRO pool-test RC)
 algorithm = "kawpow"
 
 # === Mining Pools ===
@@ -42,7 +42,8 @@ tls = false
 is_backup = true
 coin = "RVN"
 
-# To mine Ergo, IronFish, or Zano, remove or comment the active Ravencoin pools
+# To mine Ergo, IronFish, Zano, or FiroPoW pool-test RC profiles (FIRO/KIIRO),
+# remove or comment the active Ravencoin pools
 # before changing algorithm, then use only pools from the matching section below.
 
 # --- Ergo (Autolykos2) - replacement pool examples ---
@@ -114,6 +115,36 @@ coin = "RVN"
 # tls = false
 # is_backup = true
 # coin = "ZANO"
+
+# --- Firo (FiroPoW CPU reference RC) - approved pool-test preset ---
+# FIRO is included here only for controlled preflight and pool-capture validation.
+# CUDA mining and the FIRO dev-fee route remain disabled until live pool validation is complete.
+# [[pools]]
+# url = "stratum+tcp://pool.woolypooly.com:3104"
+# wallet = "YOUR_FIRO_WALLET_HERE"
+# password = "x"
+# tls = false
+# is_backup = false
+# coin = "FIRO"
+
+# --- Kiirocoin (FiroPoW pool-test RC) - replacement pool examples ---
+# KIIRO uses FiroPoW in this pool-test RC, but it is a separate coin profile from FIRO.
+# These launch routes are for controlled pool validation until accepted shares are proven.
+# [[pools]]
+# url = "stratum+ssl://stratum-eu.rplant.xyz:17098"
+# wallet = "YOUR_KIIRO_WALLET_HERE"
+# password = "x"
+# tls = true
+# is_backup = false
+# coin = "KIIRO"
+
+# [[pools]]
+# url = "stratum+tcp://stratum-eu.rplant.xyz:7098"
+# wallet = "YOUR_KIIRO_WALLET_HERE"
+# password = "x"
+# tls = false
+# is_backup = true
+# coin = "KIIRO"
 
 # === GPU Configuration ===
 [gpu]

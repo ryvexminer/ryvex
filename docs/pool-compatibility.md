@@ -20,9 +20,9 @@ A pending row means the endpoint is included in setup presets or documentation, 
 
 | Field | Value |
 | --- | --- |
-| Evidence dates | 2026-05-24 to 2026-05-25 |
-| Evidence source | RVN accepted-share smoke tests plus ZANO HeroMiners ProgPowZ live validation |
-| Ryvex binaries recorded | `ryvex 1.8.1` baseline rows; `ryvex 1.11.0` ZANO HeroMiners row |
+| Evidence dates | 2026-05-24 to 2026-05-27 |
+| Evidence source | RVN accepted-share smoke tests, ZANO live validation, FIRO preflight-only validation, and KIIRO transport preflight |
+| Ryvex binaries recorded | `ryvex 1.8.1` baseline rows; `ryvex 1.11.0` ZANO rows; `ryvex 1.14.0` FIRO/KIIRO preflight rows |
 | GPU | NVIDIA GeForce RTX 3070, 8 GB |
 | NVIDIA driver | 596.21 |
 | Power limit | 60% |
@@ -68,3 +68,21 @@ New release claims should use fresh accepted-share validation if pool URLs, port
 | WoolyPooly TCP | `stratum+tcp://pool.woolypooly.com:3146` | Accepted-share validation passed on 2026-05-25 | RTX 3070 live run: epoch 123 DAG ready in 4.3s, 2 accepted, 0 rejected. |
 | LuckyPool TCP | `stratum+tcp://zano.luckypool.io:8866` | Accepted-share validation passed on 2026-05-25 | RTX 3070 live run: epoch 123 DAG ready in 4.3s, 12 accepted, 0 rejected. |
 | Cedric Crispin TCP | `stratum+tcp://zano.cedric-crispin.com:4424` | Accepted-share validation passed on 2026-05-25 with `x,d=64000000` | The release launcher pins the documented low-difficulty password so a single GPU can validate shares quickly. |
+
+## FIRO
+
+FIRO/FiroPoW is RC-only in v1.14.0. These rows are preflight evidence, not accepted-share evidence.
+
+| Pool preset | Endpoint | Evidence status | Notes |
+| --- | --- | --- | --- |
+| WoolyPooly TCP | `stratum+tcp://pool.woolypooly.com:3104` | Preflight validation passed on 2026-05-27 | DNS, TCP, Stratum authorization, and first-job parsing passed with `--preflight`; no mining and no share submission were performed. |
+
+## KIIRO
+
+KIIRO/FiroPoW is RC-only in v1.14.0. These rows are transport/preflight evidence,
+not accepted-share evidence.
+
+| Pool preset | Endpoint | Evidence status | Notes |
+| --- | --- | --- | --- |
+| Rplant SSL | `stratum+ssl://stratum-eu.rplant.xyz:17098` | Transport passed on 2026-05-27 | DNS and TCP reachability passed from the validation host. Run `--preflight`, then a live validation window before claiming share acceptance. |
+| Rplant TCP | `stratum+tcp://stratum-eu.rplant.xyz:7098` | Transport passed on 2026-05-27 | DNS and TCP reachability passed from the validation host. Run `--preflight`, then a live validation window before claiming share acceptance. |
