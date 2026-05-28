@@ -1,6 +1,6 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, Zano, and FiroPoW coins, with NVIDIA CUDA mining on the validated algorithms. v1.14.1 adds the corrected public FiroPoW release: KIIRO has short accepted-share validation, FIRO has a separate compatible profile for validation, and all public FiroPoW routes use the standard 1% dev fee.
+Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, Zano, and FiroPoW coins, with NVIDIA CUDA mining on the validated algorithms. v1.14.2 is a patch hotfix for fail-closed DAG handling: KIIRO keeps short accepted-share validation, FIRO has a separate compatible profile for validation, and all public FiroPoW routes use the standard 1% dev fee.
 
 ## Ryvex in action
 
@@ -8,8 +8,9 @@ Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, Zano, and FiroPo
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## Release focus in v1.14.1
+## Release focus in v1.14.2
 
+- **Fail-closed DAG handling** - stop mining immediately when a DAG or dataset cannot be prepared, with a visible CLI error instead of invalid hashrate output.
 - **FiroPoW CUDA mining** - expose `firopow` for FIRO and KIIRO coin profiles; KIIRO has short live accepted-share validation on Rplant SSL, while FIRO remains a compatible validation profile pending longer FIRO pool evidence.
 - **Mandatory FiroPoW dev fee** - add separate FIRO and KIIRO dev-fee wallets and pool bundles so FiroPoW uses the same 1% commercial dev fee as other production algorithms.
 - **FiroPoW launchers** - add placeholder-only FIRO and KIIRO launch files for controlled validation; additional endpoints stay internal until their protocol route is confirmed.

@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.14.2 (2026-05-28)
+
+### Fixed
+- Stop mining immediately when DAG or dataset preparation fails instead of continuing with invalid hashrate output.
+- Surface the exact dataset preparation failure in the CLI and set the shared stop flag so deterministic VRAM failures do not restart repeatedly.
+
+### Validation
+- Added a regression guard that requires dataset preparation failures to stop the worker before hashing.
+- Re-ran the all-algorithm public v1.14.1 regression matrix before this hotfix: KawPoW/RVN, Autolykos2/ERG, FishHash/IRON, ProgPowZ/ZANO, and FiroPoW/KIIRO passed local CUDA benchmark checks under the recorded PL60 profile.
+- Verified FIRO epoch 650 validation on the RTX 3070 test machine now fails closed with an insufficient-VRAM message instead of displaying fake hashrate.
+
 ## v1.14.1 (2026-05-28)
 
 ### Fixed

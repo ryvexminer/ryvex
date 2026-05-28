@@ -21,8 +21,8 @@ A pending row means the endpoint is included in setup presets or documentation, 
 | Field | Value |
 | --- | --- |
 | Evidence dates | 2026-05-24 to 2026-05-27 |
-| Evidence source | RVN accepted-share smoke tests, ZANO live validation, FIRO preflight-only validation, and KIIRO transport preflight |
-| Ryvex binaries recorded | `ryvex 1.8.1` baseline rows; `ryvex 1.11.0` ZANO rows; `ryvex 1.14.1` FIRO/KIIRO rows |
+| Evidence source | RVN accepted-share smoke tests, ZANO live validation, FIRO preflight-only validation, KIIRO transport preflight, and v1.14.2 fail-closed FIRO DAG validation |
+| Ryvex binaries recorded | `ryvex 1.8.1` baseline rows; `ryvex 1.11.0` ZANO rows; `ryvex 1.14.1` FIRO/KIIRO rows; `ryvex 1.14.2` FIRO fail-closed validation |
 | GPU | NVIDIA GeForce RTX 3070, 8 GB |
 | NVIDIA driver | 596.21 |
 | Power limit | 60% |
@@ -71,15 +71,15 @@ New release claims should use fresh accepted-share validation if pool URLs, port
 
 ## FIRO
 
-FIRO/FiroPoW has a separate v1.14.1 coin profile and dev-fee route. Current FIRO rows are preflight evidence, not accepted-share evidence.
+FIRO/FiroPoW has a separate coin profile and dev-fee route. Current FIRO rows are preflight evidence plus v1.14.2 fail-closed validation on the RTX 3070 test machine, not accepted-share evidence.
 
 | Pool preset | Endpoint | Evidence status | Notes |
 | --- | --- | --- | --- |
-| WoolyPooly TCP | `stratum+tcp://pool.woolypooly.com:3104` | Preflight validation passed on 2026-05-27 | DNS, TCP, Stratum authorization, and first-job parsing passed with `--preflight`; no mining and no share submission were performed. |
+| WoolyPooly TCP | `stratum+tcp://pool.woolypooly.com:3104` | Preflight validation passed on 2026-05-27; v1.14.2 fail-closed DAG validation passed on 2026-05-28 | DNS, TCP, Stratum authorization, and first-job parsing passed with `--preflight`; live epoch 650 on the RTX 3070 test machine reported insufficient VRAM and stopped cleanly before hashing. |
 
 ## KIIRO
 
-KIIRO/FiroPoW has short accepted-share validation in v1.14.1. These rows are still short validation windows, not long-duration pool-side benchmarks.
+KIIRO/FiroPoW has short accepted-share validation. These rows are still short validation windows, not long-duration pool-side benchmarks.
 
 | Pool preset | Endpoint | Evidence status | Notes |
 | --- | --- | --- | --- |
