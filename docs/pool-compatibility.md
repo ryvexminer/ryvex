@@ -22,7 +22,7 @@ A pending row means the endpoint is included in setup presets or documentation, 
 | --- | --- |
 | Evidence dates | 2026-05-24 to 2026-05-27 |
 | Evidence source | RVN accepted-share smoke tests, ZANO live validation, FIRO preflight-only validation, and KIIRO transport preflight |
-| Ryvex binaries recorded | `ryvex 1.8.1` baseline rows; `ryvex 1.11.0` ZANO rows; `ryvex 1.14.0` FIRO/KIIRO preflight rows |
+| Ryvex binaries recorded | `ryvex 1.8.1` baseline rows; `ryvex 1.11.0` ZANO rows; `ryvex 1.14.1` FIRO/KIIRO rows |
 | GPU | NVIDIA GeForce RTX 3070, 8 GB |
 | NVIDIA driver | 596.21 |
 | Power limit | 60% |
@@ -71,7 +71,7 @@ New release claims should use fresh accepted-share validation if pool URLs, port
 
 ## FIRO
 
-FIRO/FiroPoW is RC-only in v1.14.0. These rows are preflight evidence, not accepted-share evidence.
+FIRO/FiroPoW has a separate v1.14.1 coin profile and dev-fee route. Current FIRO rows are preflight evidence, not accepted-share evidence.
 
 | Pool preset | Endpoint | Evidence status | Notes |
 | --- | --- | --- | --- |
@@ -79,10 +79,9 @@ FIRO/FiroPoW is RC-only in v1.14.0. These rows are preflight evidence, not accep
 
 ## KIIRO
 
-KIIRO/FiroPoW is RC-only in v1.14.0. These rows are transport/preflight evidence,
-not accepted-share evidence.
+KIIRO/FiroPoW has short accepted-share validation in v1.14.1. These rows are still short validation windows, not long-duration pool-side benchmarks.
 
 | Pool preset | Endpoint | Evidence status | Notes |
 | --- | --- | --- | --- |
-| Rplant SSL | `stratum+ssl://stratum-eu.rplant.xyz:17098` | Transport passed on 2026-05-27 | DNS and TCP reachability passed from the validation host. Run `--preflight`, then a live validation window before claiming share acceptance. |
-| Rplant TCP | `stratum+tcp://stratum-eu.rplant.xyz:7098` | Transport passed on 2026-05-27 | DNS and TCP reachability passed from the validation host. Run `--preflight`, then a live validation window before claiming share acceptance. |
+| Rplant SSL | `stratum+ssl://stratum-eu.rplant.xyz:17098` | Accepted-share validation passed on 2026-05-27 | Short RTX 3070 live runs reached accepted shares with 0 rejected shares; use longer pool-side windows for benchmark comparisons. |
+| Rplant TCP | `stratum+tcp://stratum-eu.rplant.xyz:7098` | Transport passed on 2026-05-27 | DNS and TCP reachability passed from the validation host. Prefer Rplant SSL unless testing TCP specifically. |

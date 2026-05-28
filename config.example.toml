@@ -6,7 +6,7 @@
 # Worker name (identifies this miner on the pool)
 worker_name = "rig1"
 
-# Mining algorithm — supported values: "kawpow" (RVN), "autolykos2" (ERG), "fishhash" (IRON), "progpowz" (ZANO), "firopow" (FIRO/KIIRO pool-test RC)
+# Mining algorithm — supported values: "kawpow" (RVN), "autolykos2" (ERG), "fishhash" (IRON), "progpowz" (ZANO), "firopow" (FIRO/KIIRO, 1% dev fee)
 algorithm = "kawpow"
 
 # === Mining Pools ===
@@ -42,7 +42,7 @@ tls = false
 is_backup = true
 coin = "RVN"
 
-# To mine Ergo, IronFish, Zano, or FiroPoW pool-test RC profiles (FIRO/KIIRO),
+# To mine Ergo, IronFish, Zano, or FiroPoW profiles (FIRO/KIIRO, 1% dev fee),
 # remove or comment the active Ravencoin pools
 # before changing algorithm, then use only pools from the matching section below.
 
@@ -116,9 +116,9 @@ coin = "RVN"
 # is_backup = true
 # coin = "ZANO"
 
-# --- Firo (FiroPoW CPU reference RC) - approved pool-test preset ---
-# FIRO is included here only for controlled preflight and pool-capture validation.
-# CUDA mining and the FIRO dev-fee route remain disabled until live pool validation is complete.
+# --- Firo (FiroPoW) - replacement pool example ---
+# FIRO uses a separate FiroPoW coin profile and dev-fee route from KIIRO.
+# Live FIRO accepted-share validation is still pending; use this profile for controlled FIRO pool validation.
 # [[pools]]
 # url = "stratum+tcp://pool.woolypooly.com:3104"
 # wallet = "YOUR_FIRO_WALLET_HERE"
@@ -127,9 +127,9 @@ coin = "RVN"
 # is_backup = false
 # coin = "FIRO"
 
-# --- Kiirocoin (FiroPoW pool-test RC) - replacement pool examples ---
-# KIIRO uses FiroPoW in this pool-test RC, but it is a separate coin profile from FIRO.
-# These launch routes are for controlled pool validation until accepted shares are proven.
+# --- Kiirocoin (FiroPoW) - replacement pool examples ---
+# KIIRO uses FiroPoW, but it is a separate coin profile from FIRO.
+# Rplant SSL has short accepted-share validation; longer pool-side runs are still recommended.
 # [[pools]]
 # url = "stratum+ssl://stratum-eu.rplant.xyz:17098"
 # wallet = "YOUR_KIIRO_WALLET_HERE"

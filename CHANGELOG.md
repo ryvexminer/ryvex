@@ -1,9 +1,23 @@
 # Changelog
 
+## v1.14.1 (2026-05-28)
+
+### Fixed
+- Enforced the standard 1% commercial dev fee on public FiroPoW mining routes.
+- Added separate FIRO and KIIRO dev-fee wallets and pool bundles so FiroPoW does not run as a free public algorithm.
+- Routed FiroPoW dev-fee selection by algorithm and coin profile so KIIRO uses its own route instead of the FIRO route.
+
+### Validation
+- Added regression tests that require FiroPoW dev-fee wallets, pool bundles, startup banner reporting, and coin-specific route selection for FIRO and KIIRO.
+- Kept public performance wording conservative: KIIRO has short accepted-share validation, while FIRO remains a compatible validation profile pending longer FIRO pool evidence.
+
 ## v1.14.0 (2026-05-27)
 
+### Release status
+- Withdrawn and superseded by v1.14.1 before normal rollout. Do not use v1.14.0 packages.
+
 ### Added
-- Added FIRO/FiroPoW as a CPU-reference RC path for controlled pool-test preparation, not as validated support.
+- Added FIRO/FiroPoW as a controlled pool-test preparation path.
 - Added a placeholder-only FIRO setup preset and launcher for the WoolyPooly TCP route that passed Ryvex preflight.
 - Added FIRO job parsing, setup validation, API coin tags, and dashboard labels so preflight and capture runs report the intended coin and algorithm.
 - Added FIRO Stratum capture and fixture guards for subscribe, authorize, difficulty, extranonce/session updates, and two notify messages without submitting work.
@@ -14,8 +28,7 @@
 - Validated the packaged FIRO TCP preflight route through DNS, TCP, authorization, and first-job parsing without mining; additional endpoints remain internal transport/protocol candidates, not release launchers.
 
 ### Notes
-- FIRO/FiroPoW CUDA mining is not enabled in this RC.
-- FIRO dev fee remains disabled until a live pool route and share submission format are validated.
+- Superseded by v1.14.1.
 
 ## v1.13.0 (2026-05-26)
 

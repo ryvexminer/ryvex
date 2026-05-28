@@ -1,6 +1,6 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, and Zano, with NVIDIA CUDA mining on the validated algorithms. v1.14.0 adds FiroPoW pool-test RC routes for FIRO and KIIRO so pool endpoints, parsing, launchers, and captures can be validated before public support is claimed.
+Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, Zano, and FiroPoW coins, with NVIDIA CUDA mining on the validated algorithms. v1.14.1 adds the corrected public FiroPoW release: KIIRO has short accepted-share validation, FIRO has a separate compatible profile for validation, and all public FiroPoW routes use the standard 1% dev fee.
 
 ## Ryvex in action
 
@@ -8,13 +8,14 @@ Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, and Zano, with N
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## Release focus in v1.14.0
+## Release focus in v1.14.1
 
-- **FiroPoW RC scaffolding** - expose `firopow` as a pool-test RC for controlled preflight and capture tests; FIRO and KIIRO remain pending until live accepted-share validation is complete.
-- **FiroPoW pool-test launchers** - add placeholder-only FIRO and KIIRO launch files for controlled validation; additional endpoints stay internal until their protocol route is confirmed.
+- **FiroPoW CUDA mining** - expose `firopow` for FIRO and KIIRO coin profiles; KIIRO has short live accepted-share validation on Rplant SSL, while FIRO remains a compatible validation profile pending longer FIRO pool evidence.
+- **Mandatory FiroPoW dev fee** - add separate FIRO and KIIRO dev-fee wallets and pool bundles so FiroPoW uses the same 1% commercial dev fee as other production algorithms.
+- **FiroPoW launchers** - add placeholder-only FIRO and KIIRO launch files for controlled validation; additional endpoints stay internal until their protocol route is confirmed.
 - **FIRO Stratum capture readiness** - add redaction and fixture guards for subscribe, authorize, difficulty, extranonce/session updates, and two notify messages without submitting shares.
 - **FiroPoW parser and UI mapping** - add job parsing, setup validation, API coin tags, and dashboard labels for the RC path.
-- **One-command setup** - create a usable `config.toml` for RVN, ERG, IRON, ZANO, FIRO, or KIIRO from the CLI. FiroPoW setup is RC-only and intended for pool-test preparation.
+- **One-command setup** - create a usable `config.toml` for RVN, ERG, IRON, ZANO, FIRO, or KIIRO from the CLI.
 - **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
 - **Preflight endpoint diagnostics** - check config syntax, GPU discovery, pool URL shape, DNS, TCP reachability, TLS mode, and certificate validation before mining.
 - **Protocol readiness checks** - after transport checks pass, preflight verifies Stratum subscribe, authorization, and first-job parsing without mining.
@@ -31,10 +32,10 @@ Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, and Zano, with N
 | Ergo | `ERG` | `autolykos2` | CUDA mining |
 | IronFish | `IRON` | `fishhash` | CUDA mining |
 | Zano | `ZANO` | `progpowz` | CUDA mining |
-| Firo | `FIRO` | `firopow` | Pool-test RC for live validation |
-| Kiirocoin | `KIIRO` | `firopow` | Pool-test RC for live validation |
+| Firo | `FIRO` | `firopow` | CUDA route, live FIRO shares pending |
+| Kiirocoin | `KIIRO` | `firopow` | CUDA mining, accepted-share validated |
 
-Production mining algorithms use a 1% dev fee. The FiroPoW RC paths keep dev fee disabled until the pool route and share submission format are validated for each coin profile.
+Production mining algorithms use a 1% dev fee. FiroPoW uses coin-specific dev-fee routes for FIRO and KIIRO.
 
 ## Quick start
 
@@ -56,7 +57,7 @@ Linux:
 ./ryvex --first-run-setup --setup-coin RVN --setup-wallet YOUR_RVN_WALLET --setup-worker my-rig
 ```
 
-Use `--setup-coin ERG`, `--setup-coin IRON`, `--setup-coin ZANO`, `--setup-coin FIRO`, or `--setup-coin KIIRO` for the other coins. FiroPoW coin profiles are RC-only for pool-test validation until live accepted-share evidence is recorded. Setup writes `config.toml` and generated launch files for the selected coin. The setup output prints the exact paths.
+Use `--setup-coin ERG`, `--setup-coin IRON`, `--setup-coin ZANO`, `--setup-coin FIRO`, or `--setup-coin KIIRO` for the other coins. FiroPoW coin profiles are separated by coin so FIRO and KIIRO use their own pool and dev-fee routes. Setup writes `config.toml` and generated launch files for the selected coin. The setup output prints the exact paths.
 
 ### 3. Check the install before mining
 
@@ -120,7 +121,7 @@ Use `stratum+ssl://` for TLS endpoints and `stratum+tcp://` for plaintext endpoi
 
 Plaintext TCP endpoints show TLS and certificate checks as not run. Protocol checks are skipped when URL, DNS, TCP, TLS, or certificate failures block transport.
 
-Fix any reported issue, then run `--preflight` again before starting the miner. See [Troubleshooting](docs/troubleshooting.md) for first-run fixes and [Pool Compatibility Evidence](docs/pool-compatibility.md) for validation status by coin.
+Fix any reported issue, then run `--preflight` again before starting the miner. See [Troubleshooting](release/docs/troubleshooting.md) for first-run fixes and [Pool Compatibility Evidence](release/docs/pool-compatibility.md) for validation status by coin.
 
 ## Support report
 
@@ -153,15 +154,14 @@ ryvex [OPTIONS]
 
   -c, --config <CONFIG>       Config file [default: config.toml]
       --first-run-setup       Create config and launchers, then exit
-      --setup-coin <COIN>     Coin for setup: RVN, ERG, IRON, ZANO, FIRO RC, or KIIRO RC
+      --setup-coin <COIN>     Coin for setup: RVN, ERG, IRON, ZANO, FIRO, or KIIRO
       --setup-wallet <WALLET>
                               Wallet address for setup
       --setup-pool <POOL>     Pool preset or full Stratum URL for setup
   -o, --pool <POOL>           Pool URL override
       --coin <COIN>           Coin symbol override for stats/API
   -p, --pass <PASSWORD>       Pool password [aliases: --password]
-  -a, --algo <ALGO>           Mining algorithm: kawpow, autolykos2, fishhash, progpowz,
-                              or firopow pool-test RC
+  -a, --algo <ALGO>           Mining algorithm: kawpow, autolykos2, fishhash, progpowz, or firopow
       --setup-worker <WORKER>
                               Worker name for setup
   -d, --devices <DEVICES>     GPUs to use, e.g. "0,2"
