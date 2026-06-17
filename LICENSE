@@ -1,25 +1,26 @@
-Ryvex Miner - Proprietary Software License
+Ryvex - Proprietary Software License
 
 Copyright (c) 2026 Ryvex. All rights reserved.
 
-This software is provided as-is for personal and commercial mining use.
+This software and associated documentation files (the "Software") are the
+proprietary property of the copyright holder. The Software is licensed, not
+sold.
 
-You MAY:
-- Use this software to mine cryptocurrency on your own hardware
-- Copy and distribute the unmodified binary and associated files
-- Run multiple instances on hardware you own or operate
+PERMITTED:
+- Use the Software for personal or commercial mining operations
+- Run the Software on any number of machines you own or control
 
-You MAY NOT:
-- Reverse engineer, decompile, or disassemble the software
-- Modify, patch, or create derivative works of the binary
-- Remove or circumvent any licensing, copy protection, or usage restrictions
-- Redistribute modified versions of the software
-- Use this software for any unlawful purpose
+NOT PERMITTED:
+- Modify, reverse engineer, decompile, or disassemble the Software
+- Redistribute, sublicense, sell, or share the Software or any part of it
+- Remove, disable, or circumvent the developer fee mechanism
+- Create derivative works based on the Software
+- Use the Software to build competing products
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+COPYRIGHT HOLDER BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES ARISING FROM THE USE OF THE SOFTWARE.
+
+For licensing inquiries: ryvex@free.fr

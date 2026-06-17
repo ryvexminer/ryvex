@@ -1,6 +1,6 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, Zano, and FiroPoW coins, with NVIDIA CUDA mining on the validated algorithms. v1.14.2 is a patch hotfix for fail-closed DAG handling: KIIRO keeps short accepted-share validation, FIRO has a separate compatible profile for validation, and all public FiroPoW routes use the standard 1% dev fee.
+Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, Zano, FiroPoW, and Pearl coins, with NVIDIA CUDA mining. v1.15.0 adds Pearl (PRL) mining on NVIDIA Ampere GPUs (RTX 30 series), raises Pearl hashrate, and improves the live stats display.
 
 ## Ryvex in action
 
@@ -8,15 +8,12 @@ Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, Zano, and FiroPo
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## Release focus in v1.14.2
+## Release focus in v1.15.0
 
-- **Fail-closed DAG handling** - stop mining immediately when a DAG or dataset cannot be prepared, with a visible CLI error instead of invalid hashrate output.
-- **FiroPoW CUDA mining** - expose `firopow` for FIRO and KIIRO coin profiles; KIIRO has short live accepted-share validation on Rplant SSL, while FIRO remains a compatible validation profile pending longer FIRO pool evidence.
-- **Mandatory FiroPoW dev fee** - add separate FIRO and KIIRO dev-fee wallets and pool bundles so FiroPoW uses the same 1% commercial dev fee as other production algorithms.
-- **FiroPoW launchers** - add placeholder-only FIRO and KIIRO launch files for controlled validation; additional endpoints stay internal until their protocol route is confirmed.
-- **FIRO Stratum capture readiness** - add redaction and fixture guards for subscribe, authorize, difficulty, extranonce/session updates, and two notify messages without submitting shares.
-- **FiroPoW parser and UI mapping** - add job parsing, setup validation, API coin tags, and dashboard labels for the RC path.
-- **One-command setup** - create a usable `config.toml` for RVN, ERG, IRON, ZANO, FIRO, or KIIRO from the CLI.
+- **Pearl (PRL) mining** - new `pearl` algorithm for NVIDIA Ampere GPUs (RTX 30 series), with a coin profile, pool preset, and the mandatory 1% dev fee over SSL.
+- **Higher Pearl hashrate** - about 11% faster on RTX 30 series with a steadier wall rate.
+- **Cleaner live stats** - per-share difficulty, luck, hashrate, and pool difficulty now show with correct auto-scaled units for high-difficulty algorithms.
+- **One-command setup** - create a usable `config.toml` for RVN, ERG, IRON, ZANO, FIRO, KIIRO, or PRL from the CLI.
 - **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
 - **Preflight endpoint diagnostics** - check config syntax, GPU discovery, pool URL shape, DNS, TCP reachability, TLS mode, and certificate validation before mining.
 - **Protocol readiness checks** - after transport checks pass, preflight verifies Stratum subscribe, authorization, and first-job parsing without mining.
@@ -35,8 +32,11 @@ Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, Zano, and FiroPo
 | Zano | `ZANO` | `progpowz` | CUDA mining |
 | Firo | `FIRO` | `firopow` | CUDA route, live FIRO shares pending |
 | Kiirocoin | `KIIRO` | `firopow` | CUDA mining, accepted-share validated |
+| Pearl | `PRL` | `pearl` | CUDA mining, NVIDIA Ampere only (RTX 30 series) |
 
 Production mining algorithms use a 1% dev fee. FiroPoW uses coin-specific dev-fee routes for FIRO and KIIRO.
+
+Pearl requires an NVIDIA Ampere GPU (RTX 30 series). The other algorithms run across the supported NVIDIA range.
 
 ## Quick start
 
@@ -58,7 +58,7 @@ Linux:
 ./ryvex --first-run-setup --setup-coin RVN --setup-wallet YOUR_RVN_WALLET --setup-worker my-rig
 ```
 
-Use `--setup-coin ERG`, `--setup-coin IRON`, `--setup-coin ZANO`, `--setup-coin FIRO`, or `--setup-coin KIIRO` for the other coins. FiroPoW coin profiles are separated by coin so FIRO and KIIRO use their own pool and dev-fee routes. Setup writes `config.toml` and generated launch files for the selected coin. The setup output prints the exact paths.
+Use `--setup-coin ERG`, `--setup-coin IRON`, `--setup-coin ZANO`, `--setup-coin FIRO`, `--setup-coin KIIRO`, or `--setup-coin PRL` for the other coins. FiroPoW coin profiles are separated by coin so FIRO and KIIRO use their own pool and dev-fee routes. Setup writes `config.toml` and generated launch files for the selected coin. The setup output prints the exact paths.
 
 ### 3. Check the install before mining
 
@@ -155,14 +155,14 @@ ryvex [OPTIONS]
 
   -c, --config <CONFIG>       Config file [default: config.toml]
       --first-run-setup       Create config and launchers, then exit
-      --setup-coin <COIN>     Coin for setup: RVN, ERG, IRON, ZANO, FIRO, or KIIRO
+      --setup-coin <COIN>     Coin for setup: RVN, ERG, IRON, ZANO, FIRO, KIIRO, or PRL
       --setup-wallet <WALLET>
                               Wallet address for setup
       --setup-pool <POOL>     Pool preset or full Stratum URL for setup
   -o, --pool <POOL>           Pool URL override
       --coin <COIN>           Coin symbol override for stats/API
   -p, --pass <PASSWORD>       Pool password [aliases: --password]
-  -a, --algo <ALGO>           Mining algorithm: kawpow, autolykos2, fishhash, progpowz, or firopow
+  -a, --algo <ALGO>           Mining algorithm: kawpow, autolykos2, fishhash, progpowz, firopow, or pearl
       --setup-worker <WORKER>
                               Worker name for setup
   -d, --devices <DEVICES>     GPUs to use, e.g. "0,2"
@@ -259,6 +259,7 @@ Additional documentation is shipped in release archives under `docs/`, including
 - NVIDIA GPU with CUDA support.
 - NVIDIA driver 525.x or newer.
 - Windows 10/11 x64 or Linux x64.
+- Pearl (`pearl`) additionally requires an NVIDIA Ampere GPU (RTX 30 series).
 
 ## License
 

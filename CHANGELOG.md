@@ -1,5 +1,27 @@
 # Changelog
 
+## v1.15.0 (2026-06-15)
+
+### Added
+- **Pearl / NoisyGEMM algorithm** - new production CUDA backend (`ws_gemm` kernel, SM86 / Ampere) with cp.async multistage 4-stage pipeline, panel-interleaved fragment layout, and warp-cooperative jackpot fold. Default backend for Pearl mining.
+- Pearl coin profile and `pearl` / `noisygemm` algorithm aliases in setup and CLI.
+- Pearl dev-fee bundle on SSL transport for the mandatory 1% commercial dev fee.
+
+### Improved
+- Full workspace quality gates pass with zero exceptions: clippy `-D warnings`, fmt check, workspace tests, english-only shipping rule.
+- Updated `--help` documentation URL to the public release repository.
+- Code style and idiomatic Rust cleanup across the CLI and algorithms crates.
+
+### Fixed
+- All dev-fee routes now use SSL/TLS transport: ZANO, FIRO, and KIIRO moved off cleartext stratum to SSL endpoints so the dev wallet is never sent in the clear.
+- ZANO mining: honor the EthProxy login extranonce and seed the dev-fee nonce counter away from the user range, eliminating duplicate-share rejects when the dev-fee fragment shares a pool with the user.
+- Pearl: persist the CUDA session and prefetch next-salt matrix roots across batches to smooth wall-hashrate dips.
+- Display: hashrate and pool difficulty now auto-scale to TH/s and PH for Pearl-scale algorithms (no more "47673725 MH/s" or "3818411G"), and DAG-less algorithms (Pearl) no longer print spurious "Generating DAG for epoch ..." messages.
+
+### Validation
+- Fresh accepted-share runs recorded for every public algorithm before this tag.
+- Security, protocol, UX, and legal audits run against the release candidate before packaging.
+
 ## v1.14.2 (2026-05-28)
 
 ### Fixed

@@ -6,7 +6,7 @@
 # Worker name (identifies this miner on the pool)
 worker_name = "rig1"
 
-# Mining algorithm — supported values: "kawpow" (RVN), "autolykos2" (ERG), "fishhash" (IRON), "progpowz" (ZANO), "firopow" (FIRO/KIIRO, 1% dev fee)
+# Mining algorithm — supported values: "kawpow" (RVN), "autolykos2" (ERG), "fishhash" (IRON), "progpowz" (ZANO), "firopow" (FIRO/KIIRO, 1% dev fee), "pearl" (PRL, NVIDIA Ampere / RTX 30 series, 1% dev fee)
 algorithm = "kawpow"
 
 # === Mining Pools ===
