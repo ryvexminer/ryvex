@@ -1,26 +1,27 @@
 # Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, Zano, FiroPoW, and Pearl coins, with NVIDIA CUDA mining. v1.15.0 adds Pearl (PRL) mining on NVIDIA Ampere GPUs (RTX 30 series), raises Pearl hashrate, and improves the live stats display.
+Ryvex is a multi-algorithm NVIDIA CUDA GPU miner for Ravencoin, Ergo, IronFish, Zano, FiroPoW coins, and Pearl. v1.15.0 brings the new Pearl/NoisyGEMM algorithm to the production roster, plus a full quality and security audit pass across the entire codebase.
 
 ## Ryvex in action
 
-![Ryvex CLI mining session](docs/images/ryvex-in-action.png)
+![Pearl / NoisyGEMM live mining session](docs/images/pearl-noisygemm-live-run.png)
+
+Pearl / NoisyGEMM live CLI session with accepted shares on an RTX 3070 with +165 MHz core OC. Actual hashrate, power, thermals, latency, and share timing vary by GPU, tuning, pool, and network difficulty.
+
+![Ravencoin / KawPoW live mining session](docs/images/ryvex-in-action.png)
+
+Ravencoin / KawPoW live CLI session on an RTX 3070 with 60% power limit and +900 MHz memory OC.
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
 ## Release focus in v1.15.0
 
-- **Pearl (PRL) mining** - new `pearl` algorithm for NVIDIA Ampere GPUs (RTX 30 series), with a coin profile, pool preset, and the mandatory 1% dev fee over SSL.
-- **Higher Pearl hashrate** - about 11% faster on RTX 30 series with a steadier wall rate.
-- **Cleaner live stats** - per-share difficulty, luck, hashrate, and pool difficulty now show with correct auto-scaled units for high-difficulty algorithms.
-- **One-command setup** - create a usable `config.toml` for RVN, ERG, IRON, ZANO, FIRO, KIIRO, or PRL from the CLI.
-- **Generated launchers** - write matching Windows and Linux launch files for the selected coin and config.
-- **Preflight endpoint diagnostics** - check config syntax, GPU discovery, pool URL shape, DNS, TCP reachability, TLS mode, and certificate validation before mining.
-- **Protocol readiness checks** - after transport checks pass, preflight verifies Stratum subscribe, authorization, and first-job parsing without mining.
-- **Pool compatibility evidence** - documented rows distinguish accepted-share evidence from pending validation.
-- **Troubleshooting guide** - first-run pool, network, TLS, authorization, and support-report guidance is included in release docs.
-- **Download verification** - release archives include checksum and binary signature verification guidance.
-- **Web dashboard** - local status view at `http://localhost:8081`.
+- **New algorithm: Pearl / NoisyGEMM** - production-grade CUDA kernel (ws_gemm with cp.async multistage, panel-interleaved fragment layout). Live-validated on the live pool wall with accepted shares.
+- **Full security and protocol audit** - dedicated security, protocol, UX, and legal audit passes across all algorithms before this release.
+- **Quality gates** - the full Rust workspace passes `cargo clippy --workspace --all-targets -- -D warnings`, `cargo test --workspace`, `cargo fmt --check --all`, and the english-only shipping rule with zero exceptions.
+- **All-algorithm live validation** - fresh accepted-share runs recorded for every public algorithm before this tag.
+- **Dev fee 1%** - mandatory on every public mining route, including the new Pearl algorithm, on SSL/TLS transport where the pool supports it.
+- **All previous v1.14.x features** - fail-closed DAG handling, one-command setup, preflight endpoint diagnostics, protocol readiness checks, web dashboard, troubleshooting guide, and download verification continue to ship.
 
 ## Supported algorithms
 
@@ -30,13 +31,11 @@ Ryvex is a multi-algorithm miner for Ravencoin, Ergo, IronFish, Zano, FiroPoW, a
 | Ergo | `ERG` | `autolykos2` | CUDA mining |
 | IronFish | `IRON` | `fishhash` | CUDA mining |
 | Zano | `ZANO` | `progpowz` | CUDA mining |
-| Firo | `FIRO` | `firopow` | CUDA route, live FIRO shares pending |
+| Firo | `FIRO` | `firopow` | CUDA route, requires ≥ 10 GB VRAM (FIRO DAG exceeds 8 GB); live FIRO shares pending validation |
 | Kiirocoin | `KIIRO` | `firopow` | CUDA mining, accepted-share validated |
-| Pearl | `PRL` | `pearl` | CUDA mining, NVIDIA Ampere only (RTX 30 series) |
+| Pearl | `PRL` | `pearl` / `noisygemm` | CUDA mining (ws_gemm SM86), accepted-share validated |
 
-Production mining algorithms use a 1% dev fee. FiroPoW uses coin-specific dev-fee routes for FIRO and KIIRO.
-
-Pearl requires an NVIDIA Ampere GPU (RTX 30 series). The other algorithms run across the supported NVIDIA range.
+Production mining algorithms use a 1% dev fee on every public route.
 
 ## Quick start
 
@@ -259,7 +258,6 @@ Additional documentation is shipped in release archives under `docs/`, including
 - NVIDIA GPU with CUDA support.
 - NVIDIA driver 525.x or newer.
 - Windows 10/11 x64 or Linux x64.
-- Pearl (`pearl`) additionally requires an NVIDIA Ampere GPU (RTX 30 series).
 
 ## License
 
