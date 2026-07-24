@@ -1,4 +1,9 @@
-# Changelog
+﻿# Changelog
+
+## v1.16.1 (2026-07-24)
+
+### Fixed
+- Config-less mining: `ryvex --algo <algo> --pool <url> --wallet <addr>` now runs directly without a `config.toml`, like every other miner. When all three flags are present, Ryvex builds an in-memory config from the CLI identity instead of refusing to start; nothing is written to disk and `--first-run-setup` remains the persistence path. The refusal is kept (with the CLI trio now mentioned) when the wallet is missing.
 
 ## v1.16.0 (2026-07-23)
 
