@@ -1,6 +1,6 @@
-# Ryvex - GPU Miner
+﻿# Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm NVIDIA CUDA GPU miner for Ravencoin, Ergo, IronFish, Zano, FiroPoW coins, and Pearl. v1.15.0 brings the new Pearl/NoisyGEMM algorithm to the production roster, plus a full quality and security audit pass across the entire codebase.
+Ryvex is a multi-algorithm NVIDIA CUDA GPU miner for Ravencoin, Ergo, IronFish, Zano, FiroPoW coins, and Pearl. v1.16.0 brings multi-GPU nonce partitioning, a release-safe ProgPowZ/FiroPoW CUDA path, and validated head-to-head competitive results across multiple algorithms.
 
 ## Ryvex in action
 
@@ -14,14 +14,27 @@ Ravencoin / KawPoW live CLI session on an RTX 3070 with 60% power limit and +900
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## Release focus in v1.15.0
+## Release focus in v1.16.0
 
-- **New algorithm: Pearl / NoisyGEMM** - production-grade CUDA kernel (ws_gemm with cp.async multistage, panel-interleaved fragment layout). Live-validated on the live pool wall with accepted shares.
-- **Full security and protocol audit** - dedicated security, protocol, UX, and legal audit passes across all algorithms before this release.
-- **Quality gates** - the full Rust workspace passes `cargo clippy --workspace --all-targets -- -D warnings`, `cargo test --workspace`, `cargo fmt --check --all`, and the english-only shipping rule with zero exceptions.
-- **All-algorithm live validation** - fresh accepted-share runs recorded for every public algorithm before this tag.
-- **Dev fee 1%** - mandatory on every public mining route, including the new Pearl algorithm, on SSL/TLS transport where the pool supports it.
-- **All previous v1.14.x features** - fail-closed DAG handling, one-command setup, preflight endpoint diagnostics, protocol readiness checks, web dashboard, troubleshooting guide, and download verification continue to ship.
+- **Multi-GPU nonce partitioning** - Pearl/NoisyGEMM workers now partition work leases across 2/4/8 GPU topologies instead of repeating the same window/salt sequence, with disjoint seeds and standard extranonce placement.
+- **ProgPowZ release-safe CUDA path** - a provenance-safe warp-cooperative 16-lane search that reduces SM86 register usage from 128 to 106 and delivers +330.7% hashrate over the serial oracle.
+- **FiroPoW release-safe CUDA integration** - the authorized clean kernel and harness are integrated into the release-safe build while the legacy kernel remains excluded.
+- **FishHash queued-grid multiplier** - checked host-side grid multiplier validated with +49.4% hashrate improvement on SM86 via offline A/B/A.
+- **Validated head-to-head results** - Pearl wins +7.5% (1-GPU) and +3.9% (2-GPU) vs reference on Ampere; FiroPoW wins +35.5% vs TeamBlackMiner with +38.3% efficiency.
+- **Dev fee 1%** - mandatory on every public mining route, including ProgPowZ and FiroPoW release-safe paths, on SSL/TLS transport where the pool supports it.
+- **All previous v1.15.0 features** - Pearl/NoisyGEMM algorithm, full security audit pass, quality gates, preflight diagnostics, web dashboard, troubleshooting guide, and download verification continue to ship.
+
+## Competitive evidence
+
+| Algorithm | GPU | Ryvex | Reference | Delta |
+|------|------|------|-----------|-------|
+| Pearl 1-GPU | RTX 3060 | 58.0 TH/s | 54.0 TH/s | +7.5% |
+| Pearl 2-GPU | 2x RTX 3060 | 73.0 TH/s | 70.3 TH/s | +3.9% |
+| FiroPoW 1-GPU | RTX 3060 | 19.83 MH/s | 14.66 MH/s | +35.5% |
+| KawPoW 1-GPU | RTX 3060 | 21.35 MH/s | 21.93 MH/s | -2.6% |
+| FishHash 1-GPU | RTX 3080 | 41.50 MH/s | 42.55 MH/s | -2.5% |
+
+Head-to-head measurements use the same pool, same wallet, same GPU, same power limit, and alternating A/B/A legs with 300s duration. Evidence is recorded in the competitive evidence ledger with full ABA sequence, power telemetry, and share validation.
 
 ## Supported algorithms
 
@@ -31,9 +44,9 @@ Ravencoin / KawPoW live CLI session on an RTX 3070 with 60% power limit and +900
 | Ergo | `ERG` | `autolykos2` | CUDA mining |
 | IronFish | `IRON` | `fishhash` | CUDA mining |
 | Zano | `ZANO` | `progpowz` | CUDA mining |
-| Firo | `FIRO` | `firopow` | CUDA route, requires ≥ 10 GB VRAM (FIRO DAG exceeds 8 GB); live FIRO shares pending validation |
+| Firo | `FIRO` | `firopow` | CUDA mining, release-safe kernel |
 | Kiirocoin | `KIIRO` | `firopow` | CUDA mining, accepted-share validated |
-| Pearl | `PRL` | `pearl` / `noisygemm` | CUDA mining (ws_gemm SM86), accepted-share validated |
+| Pearl | `PRL` | `pearl` / `noisygemm` | CUDA mining (ws_gemm SM86), accepted-share validated, multi-GPU nonce partitioned |
 
 Production mining algorithms use a 1% dev fee on every public route.
 
