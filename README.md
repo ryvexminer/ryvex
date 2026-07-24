@@ -56,7 +56,17 @@ Production mining algorithms use a 1% dev fee on every public route.
 
 Extract the Windows `.zip` or Linux `.tar.gz` into a folder you can write to.
 
-### 2. Run setup
+### 2. Run setup (or mine directly from CLI flags)
+
+Since v1.16.1, a full CLI identity works without a config file, like every other miner:
+
+```
+ryvex --algo pearl --pool stratum+tcp://pearl-eu1.luckypool.io:3360 --wallet YOUR_PRL_WALLET.rig1
+```
+
+Nothing is written to disk in that mode. To persist a config, use setup:
+
+### 3. Run setup
 
 Windows:
 
@@ -72,7 +82,7 @@ Linux:
 
 Use `--setup-coin ERG`, `--setup-coin IRON`, `--setup-coin ZANO`, `--setup-coin FIRO`, `--setup-coin KIIRO`, or `--setup-coin PRL` for the other coins. FiroPoW coin profiles are separated by coin so FIRO and KIIRO use their own pool and dev-fee routes. Setup writes `config.toml` and generated launch files for the selected coin. The setup output prints the exact paths.
 
-### 3. Check the install before mining
+### 4. Check the install before mining
 
 Windows:
 
@@ -88,7 +98,7 @@ Linux:
 
 Preflight mode does not mine or submit shares. It validates the local setup, checks pool transport endpoints, then probes Stratum subscribe, authorization, and first-job parsing when transport is reachable.
 
-### 4. Start Ryvex
+### 5. Start Ryvex
 
 Use the generated `.bat` file on Windows or `.sh` file on Linux. You can also start manually:
 
