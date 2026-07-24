@@ -116,6 +116,18 @@ coin = "RVN"
 # is_backup = true
 # coin = "ZANO"
 
+# --- Zano solo mining through the official local daemon ---
+# Wait until the daemon is fully synchronized, then enable its loopback Stratum server:
+# zanod --stratum --stratum-miner-address=YOUR_ZANO_WALLET_HERE --stratum-bind-ip=127.0.0.1 --stratum-bind-port=11555
+# Ryvex automatically sends the wallet and worker in the daemon's separate login fields.
+# [[pools]]
+# url = "stratum+tcp://127.0.0.1:11555"
+# wallet = "YOUR_ZANO_WALLET_HERE"
+# password = "x"
+# tls = false
+# is_backup = false
+# coin = "ZANO"
+
 # --- Firo (FiroPoW) - replacement pool example ---
 # FIRO uses a separate FiroPoW coin profile and dev-fee route from KIIRO.
 # Live FIRO accepted-share validation is still pending; use this profile for controlled FIRO pool validation.
@@ -229,7 +241,9 @@ electricity_currency = "USD"
 # DAG cache: keep old DAG while generating new one ("auto", "true", "false")
 # Auto enables on GPUs with 12GB+ VRAM
 dag_cache = "auto"
-# Save DAG to disk for fast reload on next startup
+# Save reusable DAGs during clean shutdown for fast reload on next startup.
+# Retention is bounded to one current file per supported algorithm; the current
+# FiroPoW terminal DAG uses about 6.7 GiB. Use --flush-dag to remove all files.
 # Location: %LOCALAPPDATA%/ryvex/dag-cache/ (Windows) or ~/.local/share/ryvex/dag-cache/ (Linux)
 dag_cache_save = true
 # Benchmark duration in seconds (used with --benchmark flag)

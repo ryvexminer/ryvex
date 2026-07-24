@@ -1,26 +1,61 @@
 # Changelog
 
-## v1.15.0 (2026-06-15)
+## v1.16.0 (2026-07-23)
 
 ### Added
-- **Pearl / NoisyGEMM algorithm** - new production CUDA backend (`ws_gemm` kernel, SM86 / Ampere) with cp.async multistage 4-stage pipeline, panel-interleaved fragment layout, and warp-cooperative jackpot fold. Default backend for Pearl mining.
-- Pearl coin profile and `pearl` / `noisygemm` algorithm aliases in setup and CLI.
-- Pearl dev-fee bundle on SSL transport for the mandatory 1% commercial dev fee.
+- Pearl/NoisyGEMM multi-GPU work coordinator: independent workers now partition work leases instead of repeating the same window/salt sequence.
+- Multi-GPU dev-fee nonce partition: user and dev-fee nonce streams are partitioned across GPU workers for 2/4/8 topologies with disjoint seeds, standard extranonce placement, and reconnect reseeding.
+- ProgPowZ release-safe clean-room CUDA path: a provenance-safe replacement for the excluded legacy kernel, compiled only in release-safe builds, with a 16-lane warp-cooperative search that reduces SM86 register usage from 128 to 106 and stack from 3,120 B to 224 B.
+- FiroPoW release-safe CUDA integration: the authorized clean kernel and harness are integrated into the release-safe build while the legacy kernel remains excluded. FiroPoW dev fee is 1%; live FiroPoW pool validation is pending.
+- ProgPowZ shipped-module embedding: the normal CUDA module is loaded from embedded bytes rather than a filesystem path, with CUDA availability bound to the module cfg.
+- FishHash queued-grid multiplier: checked host-side `FISHHASH_QUEUED_GRID_MULTIPLIER=16` setting after an offline A/B/A confirming +49.4% hashrate on SM86.
+- Pearl reference-release freshness policy: H2H reference versions now bind exact release markers and asset checksums through package, preflight, controller, and A/B/A metadata.
+- Generic H2H evidence rail: manifest v3 binds every campaign to an exact reference version, comparison basis, pool route, fee status, source archive, and A/B/A metadata across Ampere SM86, Ada SM89, and Blackwell SM120.
+- Competitive evidence ledger: strict 288-cell matrix across 6 algorithms, 3 architectures, 1/2/4/8 GPU topologies, pool/solo, and stock/best-stable-same-power profiles.
+- NoisyGEMM runtime alias normalization: `noisygemm`, `noisy-gemm`, `noisy_gemm` all resolve to the registered `pearl` key.
 
-### Improved
-- Full workspace quality gates pass with zero exceptions: clippy `-D warnings`, fmt check, workspace tests, english-only shipping rule.
-- Updated `--help` documentation URL to the public release repository.
-- Code style and idiomatic Rust cleanup across the CLI and algorithms crates.
+### Changed
+- ProgPowZ clean search rewritten as warp-cooperative 16-lane layout with +330.7% hashrate and +240.8% efficiency improvement over the serial clean oracle on SM86.
+- Autolykos2 CUDA hot path optimized with 32-bit wrapped index-window extraction and header32 word-reuse, narrowing the Ada SM89 gap to -3.6%.
+- Pearl Ampere same-pool H2H validated: 2x RTX 3060 median 73.0 TH/s vs 70.3 TH/s reference (+3.9%), 1x RTX 3070 58.0 TH/s vs 54.0 TH/s (+7.5%).
+- ProgPowZ Blackwell SM120 offline benchmark: 2.79 MH/s, 117.6 W, 23.7 kH/W on release-safe clean CUDA.
 
 ### Fixed
-- All dev-fee routes now use SSL/TLS transport: ZANO, FIRO, and KIIRO moved off cleartext stratum to SSL endpoints so the dev wallet is never sent in the clear.
-- ZANO mining: honor the EthProxy login extranonce and seed the dev-fee nonce counter away from the user range, eliminating duplicate-share rejects when the dev-fee fragment shares a pool with the user.
-- Pearl: persist the CUDA session and prefetch next-salt matrix roots across batches to smooth wall-hashrate dips.
-- Display: hashrate and pool difficulty now auto-scale to TH/s and PH for Pearl-scale algorithms (no more "47673725 MH/s" or "3818411G"), and DAG-less algorithms (Pearl) no longer print spurious "Generating DAG for epoch ..." messages.
+- Independent CLI worker registries no longer repeat the same Pearl window/salt sequence across multi-GPU workers.
+- Dev-fee Stratum transport hardened: SSL-only for ZANO/ProgPowZ dev pools after audit S-1 found cleartext wallet leakage on TCP endpoints.
+- FiroPoW dev-fee TLS routes corrected: two invalid FIRO strict-TLS routes replaced with publicly trusted rplant endpoints.
+- Stratum client tries resolved pool addresses with short per-address timeouts so dead pool IPs do not consume the whole connection window.
+- `stratum+tcp://` URLs now override stale `tls = true` config; `stratum+ssl://` forces TLS on regardless of the `tls` field.
+
+## v1.15.1 (2026-06-18)
+
+### Fixed
+- Aligned GUI package and Tauri metadata with the v1.15.1 release line.
+- Replaced the GUI seed config's EUR-specific electricity setting with the neutral USD default while preserving legacy config compatibility.
+- Classified Pearl/LuckyPool stale-share `msg` responses as stale timing events and simplified the live CLI message.
+
+### Release hygiene
+- Added a Windows package privacy gate for local user paths, local account names, and PDB references in packaged binaries.
+- Added third-party notices for release compliance.
+
+## v1.15.0 (2026-06-16)
+
+### Added
+- **Pearl (PRL) mining** on NVIDIA Ampere GPUs (RTX 30 series), selectable with `-a pearl`. Includes the coin profile, pool preset, one-command setup, and the mandatory 1% dev fee over SSL.
+
+### Improved
+- Pearl hashrate raised about 11% on RTX 30 series, with a steadier wall rate.
+- Hashrate and pool difficulty now auto-scale their units (up to TH/s and PH) for high-difficulty algorithms.
+
+### Fixed
+- Pearl: accepted-share difficulty and luck now display correctly with proper units, and the new-block line shows the coin tag without an unused epoch field.
+- All dev-fee routes now use SSL/TLS so the dev wallet is never sent in cleartext.
+- Zano: fixed duplicate-share rejections that could occur when the dev fee shared a pool with your own wallet.
+- DAG-less algorithms (Pearl) no longer print spurious "Generating DAG" messages.
 
 ### Validation
-- Fresh accepted-share runs recorded for every public algorithm before this tag.
-- Security, protocol, UX, and legal audits run against the release candidate before packaging.
+- Fresh accepted-share runs verified for every public algorithm before this release.
+- Security, protocol, and UX review of the release candidate before packaging.
 
 ## v1.14.2 (2026-05-28)
 
@@ -73,7 +108,26 @@
 - Added Stratum protocol tests for the miner agent format on standard and NiceHash subscribe paths.
 - Added EthProxy request and connection tests for the agent login shape and legacy-login fallback.
 - Validated short login/getWork probes with the agent metadata on five configured ZANO pool endpoints without submitting shares, then matched the LuckyPool-recognized ZANO login metadata shape.
-- Validated a live LuckyPool ZANO run after the release-version bump with accepted shares, no rejected shares reported, and pool API recognition as `Ryvex/1.13.0`.
+- Validated a live LuckyPool ZANO run after the release-version bump with 10 accepted shares, no rejected shares reported, and pool API recognition as `Ryvex/1.13.0`.
+
+## v1.12.0 (unreleased)
+
+### Changed
+- Added a package-only release publisher mode so signed Windows, Linux, HiveOS archives and `SHA256SUMS.txt` can be regenerated locally without GitHub credentials or release creation.
+- Added a documented `dist/` retention policy and a non-destructive checker for final release artifacts, checksums, verification assets, and publication evidence.
+- Added a release package content checker for Windows, Linux, and HiveOS archives.
+- Added a release readiness checker that combines retention, package contents, archive checksum verification, release-script syntax checks, and optional release-launcher tests into one verdict.
+- Added a GitHub release asset checker that verifies remote asset names, sizes, upload state, download counts, and optional public download URL health.
+- Updated the release workflow so future package, deploy, and monitor phases use the readiness and remote verification gates.
+- Cleaned public workflow wording to keep market-miner comparisons generic and avoid profitability framing.
+- Translated legacy French workflow notes to English in the public workflow.
+
+### Validation
+- Added a release-script regression test that keeps package-only completion before GitHub token lookup.
+- Added a regression test that keeps the `dist/` retention checker non-destructive and aligned with the documented policy.
+- Added a regression test that keeps the release package content checker aligned with platform package expectations.
+- Added a regression test that keeps the release readiness checker wired to all local release gates.
+- Added a regression test that keeps the GitHub release asset checker aligned with remote asset expectations.
 
 ## v1.11.0 (2026-05-26)
 
@@ -239,6 +293,7 @@
 ### Notes
 - No mining kernel changes.
 - No protocol behavior changes.
+- Follow-up security and release reproducibility items are tracked in `docs/audits/audit-9-v1.5.1-release-hardening.md`.
 
 ## v1.5.0 (2026-05-21)
 
