@@ -1,6 +1,17 @@
-﻿# Ryvex - GPU Miner
+# Ryvex - GPU Miner
 
-Ryvex is a multi-algorithm NVIDIA CUDA GPU miner for Ravencoin, Ergo, IronFish, Zano, FiroPoW coins, and Pearl. v1.16.0 brings multi-GPU nonce partitioning, a release-safe ProgPowZ/FiroPoW CUDA path, and validated head-to-head competitive results across multiple algorithms.
+Ryvex is a multi-algorithm NVIDIA CUDA GPU miner for Ravencoin, Ergo, IronFish,
+Zano, FiroPoW coins (1% dev fee; FIRO exact-RC validation remains pending), and Pearl.
+The current development line is
+`v1.17.0-rc.1`; it is not published yet. Use the latest public release until
+the v1.17 validation and publication checklist are complete.
+
+> **RC validation status:** historical v1.17 pool H2H records include parity
+> and winner results at their recorded commits. They are comparison history,
+> not proof for the current RC commit. The remaining algorithms,
+> architectures, multi-GPU paths, and applicable solo paths remain listed as
+> to-prove, so this RC must not be used as a substitute for the latest public
+> release.
 
 ## Ryvex in action
 
@@ -14,39 +25,35 @@ Ravencoin / KawPoW live CLI session on an RTX 3070 with 60% power limit and +900
 
 ![Ryvex web dashboard](docs/images/ryvex-web-dashboard-full.png)
 
-## Release focus in v1.16.0
+## Release focus in v1.17
 
-- **Multi-GPU nonce partitioning** - Pearl/NoisyGEMM workers now partition work leases across 2/4/8 GPU topologies instead of repeating the same window/salt sequence, with disjoint seeds and standard extranonce placement.
-- **ProgPowZ release-safe CUDA path** - a provenance-safe warp-cooperative 16-lane search that reduces SM86 register usage from 128 to 106 and delivers +330.7% hashrate over the serial oracle.
-- **FiroPoW release-safe CUDA integration** - the authorized clean kernel and harness are integrated into the release-safe build while the legacy kernel remains excluded.
-- **FishHash queued-grid multiplier** - checked host-side grid multiplier validated with +49.4% hashrate improvement on SM86 via offline A/B/A.
-- **Validated head-to-head results** - Pearl wins +7.5% (1-GPU) and +3.9% (2-GPU) vs reference on Ampere; FiroPoW wins +35.5% vs TeamBlackMiner with +38.3% efficiency.
-- **Dev fee 1%** - mandatory on every public mining route, including ProgPowZ and FiroPoW release-safe paths, on SSL/TLS transport where the pool supports it.
-- **All previous v1.15.0 features** - Pearl/NoisyGEMM algorithm, full security audit pass, quality gates, preflight diagnostics, web dashboard, troubleshooting guide, and download verification continue to ship.
-
-## Competitive evidence
-
-| Algorithm | GPU | Ryvex | Reference | Delta |
-|------|------|------|-----------|-------|
-| Pearl 1-GPU | RTX 3060 | 58.0 TH/s | 54.0 TH/s | +7.5% |
-| Pearl 2-GPU | 2x RTX 3060 | 73.0 TH/s | 70.3 TH/s | +3.9% |
-| FiroPoW 1-GPU | RTX 3060 | 19.83 MH/s | 14.66 MH/s | +35.5% |
-| KawPoW 1-GPU | RTX 3060 | 21.35 MH/s | 21.93 MH/s | -2.6% |
-| FishHash 1-GPU | RTX 3080 | 41.50 MH/s | 42.55 MH/s | -2.5% |
-
-Head-to-head measurements use the same pool, same wallet, same GPU, same power limit, and alternating A/B/A legs with 300s duration. Evidence is recorded in the competitive evidence ledger with full ABA sequence, power telemetry, and share validation.
+- **Local control plane** - authenticated pause, resume, GPU restart, configured
+  pool selection, Profit Autopilot mode, and a safe audit timeline through the
+  CLI, HTTP API, and integrated WebUI.
+- **Conservative automation** - Profit Autopilot defaults to `dry_run`; it
+  fails closed when prices, hashrate, power, health, or candidates are unsafe.
+- **Private-by-design fleet view** - optional multi-rig summaries are read-only
+  and fetched server-side, so browsers never receive remote credentials.
+- **Validation boundary** - CLI, Core, Config, and integrated WebUI checks are
+  release gates. Exact KawPoW GPU/CPU checks, revision A/B/A, and short
+  two-device scaling are recorded on SM86, SM89, and SM120. The generated
+  KawPoW runtime remains opt-in. These results do not establish competitive
+  parity, live pool/solo stability, or prolonged restart stability; those
+  remain separate publication gates.
+- **Desktop GUI paused** - the Tauri/Svelte desktop application is not part of
+  the v1.17 release gate.
 
 ## Supported algorithms
 
-| Coin | Setup value | Algorithm | Status |
+| Coin | Setup value | Algorithm | Current v1.17 RC status |
 |------|-------------|-----------|--------|
-| Ravencoin | `RVN` | `kawpow` | CUDA mining |
-| Ergo | `ERG` | `autolykos2` | CUDA mining |
-| IronFish | `IRON` | `fishhash` | CUDA mining |
-| Zano | `ZANO` | `progpowz` | CUDA mining |
-| Firo | `FIRO` | `firopow` | CUDA mining, release-safe kernel |
-| Kiirocoin | `KIIRO` | `firopow` | CUDA mining, accepted-share validated |
-| Pearl | `PRL` | `pearl` / `noisygemm` | CUDA mining (ws_gemm SM86), accepted-share validated, multi-GPU nonce partitioned |
+| Ravencoin | `RVN` | `kawpow` | CUDA route; historical SM120 1-GPU pool H2H record; current RC validation pending |
+| Ergo | `ERG` | `autolykos2` | CUDA route; historical SM120 1-GPU pool H2H record; current RC validation pending |
+| IronFish | `IRON` | `fishhash` | CUDA route; historical SM120 1-GPU pool H2H record; current RC validation pending |
+| Zano | `ZANO` | `progpowz` | CUDA route; historical SM86 1-GPU pool H2H record; current RC validation pending |
+| Firo | `FIRO` | `firopow` | CUDA route, requires ≥ 10 GB VRAM; historical SM89 2-GPU pool H2H record; current RC validation pending |
+| Kiirocoin | `KIIRO` | `firopow` | CUDA route; historical accepted-share evidence exists, current RC validation pending |
+| Pearl | `PRL` | `pearl` / `noisygemm` | CUDA route (ws_gemm SM86); historical accepted-share evidence exists, current RC validation pending |
 
 Production mining algorithms use a 1% dev fee on every public route.
 
@@ -56,15 +63,25 @@ Production mining algorithms use a 1% dev fee on every public route.
 
 Extract the Windows `.zip` or Linux `.tar.gz` into a folder you can write to.
 
-### 2. Run setup (or mine directly from CLI flags)
+### 2. Run directly from CLI flags
 
-Since v1.16.1, a full CLI identity works without a config file, like every other miner:
+If you already know your algorithm, pool, and wallet, Ryvex can start without
+a `config.toml`.
 
+Windows:
+
+```powershell
+.\ryvex.exe --algo pearl --pool stratum+tcp://pearl-eu1.luckypool.io:3360 --wallet YOUR_PRL_WALLET.rig1
 ```
-ryvex --algo pearl --pool stratum+tcp://pearl-eu1.luckypool.io:3360 --wallet YOUR_PRL_WALLET.rig1
+
+Linux:
+
+```bash
+./ryvex --algo pearl --pool stratum+tcp://pearl-eu1.luckypool.io:3360 --wallet YOUR_PRL_WALLET.rig1
 ```
 
-Nothing is written to disk in that mode. To persist a config, use setup:
+Nothing is written to disk in this mode. Use `--first-run-setup` when you want
+Ryvex to create a persistent configuration and launchers.
 
 ### 3. Run setup
 
@@ -144,7 +161,7 @@ Use `stratum+ssl://` for TLS endpoints and `stratum+tcp://` for plaintext endpoi
 
 Plaintext TCP endpoints show TLS and certificate checks as not run. Protocol checks are skipped when URL, DNS, TCP, TLS, or certificate failures block transport.
 
-Fix any reported issue, then run `--preflight` again before starting the miner. See [Troubleshooting](release/docs/troubleshooting.md) for first-run fixes and [Pool Compatibility Evidence](release/docs/pool-compatibility.md) for validation status by coin.
+Fix any reported issue, then run `--preflight` again before starting the miner. See [Troubleshooting](docs/troubleshooting.md) for first-run fixes and [Pool Compatibility Evidence](docs/pool-compatibility.md) for historical endpoint evidence. It does not establish current v1.17 RC validation.
 
 ## Support report
 
@@ -169,6 +186,31 @@ http://localhost:8081
 The dashboard shows device status, shares, pool status, session estimates, and recent events. To disable it, start Ryvex with `--dashboard-port 0`.
 
 For remote access, set `bind_address = "0.0.0.0"` in the `[dashboard]` config section and protect the HTTP API with its configured token.
+
+## Local control client
+
+When a Ryvex miner is already running on the same machine, `ryvex control`
+queries or requests a change through its authenticated local API. It never
+starts a mining session. The client reads the user-private API token created by
+the running miner and writes one versioned JSON document to standard output.
+
+```text
+ryvex control status
+ryvex control timeline
+ryvex control pause
+ryvex control resume
+ryvex control restart --gpu 0
+ryvex control restart
+ryvex control switch-pool --pool 1
+ryvex control profit-mode --mode dry_run
+```
+
+Use `--api-port <PORT>` when the running miner uses a non-default local API
+port. Exit status is stable for scripts: `0` accepted or unchanged, `2` invalid
+arguments, `3` authentication, `4` unavailable local API, `5` safety or state
+rejection, and `1` unexpected failure. API credentials are never printed.
+Add `--json` to receive the same JSON error format for invalid control
+arguments.
 
 ## CLI options
 
