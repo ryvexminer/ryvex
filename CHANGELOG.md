@@ -1,5 +1,17 @@
 ﻿# Changelog
 
+## v1.17.0-rc.1 (2026-09-15)
+
+### Changed
+- Consolidated the v1.17 release candidate control and benchmark evidence paths.
+- Kept the release surface CLI-only while the desktop GUI remains paused.
+
+### Validation
+- The locked CLI workspace check and test suite pass on the official server candidate.
+- The Windows CUDA Pearl offline validation and isolated runner contract checks pass.
+- Architecture and multi GPU coverage remain subject to the dedicated Vast validation gate.
+
+
 ## v1.16.1 (2026-07-24)
 
 ### Fixed
@@ -22,7 +34,7 @@
 ### Changed
 - ProgPowZ clean search rewritten as warp-cooperative 16-lane layout with +330.7% hashrate and +240.8% efficiency improvement over the serial clean oracle on SM86.
 - Autolykos2 CUDA hot path optimized with 32-bit wrapped index-window extraction and header32 word-reuse, narrowing the Ada SM89 gap to -3.6%.
-- Pearl Ampere same-pool H2H validated: 2x RTX 3060 median 73.0 TH/s vs 70.3 TH/s reference (+3.9%), 1x RTX 3070 58.0 TH/s vs 54.0 TH/s (+7.5%).
+- Historical v1.16 Pearl Ampere same-pool H2H: 2x RTX 3060 median 73.0 TH/s vs 70.3 TH/s reference (+3.9%), 1x RTX 3070 58.0 TH/s vs 54.0 TH/s (+7.5%). This does not establish current v1.17 RC competitiveness.
 - ProgPowZ Blackwell SM120 offline benchmark: 2.79 MH/s, 117.6 W, 23.7 kH/W on release-safe clean CUDA.
 
 ### Fixed
