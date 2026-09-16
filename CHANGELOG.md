@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.17.1 (2026-09-16)
+
+### Fixed
+- Linux and HiveOS release builds now stop when required CUDA modules are
+  missing instead of silently producing a CPU-only package.
+- Release packaging validates the runtime capabilities before signing and
+  binds supplied Windows capability reports to the exact packaged binary.
+
+### Validation
+- The CUDA-enabled Linux program was built with CUDA 12.8 and completed a
+  short offline execution check on an NVIDIA RTX 3070.
+- This validates release integrity and startup on that test hardware only; it
+  does not claim profitability, every GPU architecture, or multi-GPU support.
+
+
 ## v1.17.0 (2026-09-16)
 
 ### Changed
