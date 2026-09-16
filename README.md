@@ -3,15 +3,16 @@
 Ryvex is a multi-algorithm NVIDIA CUDA GPU miner for Ravencoin, Ergo, IronFish,
 Zano, FiroPoW coins (1% dev fee; FIRO exact-RC validation remains pending), and Pearl.
 The current development line is
-`v1.17.0-rc.1`; it is not published yet. Use the latest public release until
+`v1.17.0`; it is not published yet. Use the latest public release until
 the v1.17 validation and publication checklist are complete.
 
-> **RC validation status:** historical v1.17 pool H2H records include parity
-> and winner results at their recorded commits. They are comparison history,
-> not proof for the current RC commit. The remaining algorithms,
-> architectures, multi-GPU paths, and applicable solo paths remain listed as
-> to-prove, so this RC must not be used as a substitute for the latest public
-> release.
+> **v1.17 validation status:** historical v1.17 pool H2H records include parity
+> and winner results at their recorded commits. A strict offline campaign at
+> exact source commit `7ab1e471c5ab4bd13343f44b986c8c1edf51387a` also measured
+> all six active algorithms on two Ada SM89 GPUs for 150 seconds with positive
+> rates on both GPUs. This proves execution on that Ada two-GPU setup only;
+> live pool/solo behavior, competitive parity, profitability, and other GPU
+> architectures remain separate release checks.
 
 ## Ryvex in action
 
@@ -45,15 +46,15 @@ Ravencoin / KawPoW live CLI session on an RTX 3070 with 60% power limit and +900
 
 ## Supported algorithms
 
-| Coin | Setup value | Algorithm | Current v1.17 RC status |
+| Coin | Setup value | Algorithm | Current v1.17 status |
 |------|-------------|-----------|--------|
-| Ravencoin | `RVN` | `kawpow` | CUDA route; historical SM120 1-GPU pool H2H record; current RC validation pending |
-| Ergo | `ERG` | `autolykos2` | CUDA route; historical SM120 1-GPU pool H2H record; current RC validation pending |
-| IronFish | `IRON` | `fishhash` | CUDA route; historical SM120 1-GPU pool H2H record; current RC validation pending |
-| Zano | `ZANO` | `progpowz` | CUDA route; historical SM86 1-GPU pool H2H record; current RC validation pending |
-| Firo | `FIRO` | `firopow` | CUDA route, requires ≥ 10 GB VRAM; historical SM89 2-GPU pool H2H record; current RC validation pending |
+| Ravencoin | `RVN` | `kawpow` | CUDA route; historical SM120 1-GPU pool H2H record; strict offline Ada 2-GPU execution measured; live/competitive validation pending |
+| Ergo | `ERG` | `autolykos2` | CUDA route; historical SM120 1-GPU pool H2H record; strict offline Ada 2-GPU execution measured; live/competitive validation pending |
+| IronFish | `IRON` | `fishhash` | CUDA route; historical SM120 1-GPU pool H2H record; strict offline Ada 2-GPU execution measured; live/competitive validation pending |
+| Zano | `ZANO` | `progpowz` | CUDA route; historical SM86 1-GPU pool H2H record; strict offline Ada 2-GPU execution measured; live/competitive validation pending |
+| Firo | `FIRO` | `firopow` | CUDA route, requires ≥ 10 GB VRAM; historical SM89 2-GPU pool H2H record; strict offline Ada 2-GPU execution measured; live/competitive validation pending |
 | Kiirocoin | `KIIRO` | `firopow` | CUDA route; historical accepted-share evidence exists, current RC validation pending |
-| Pearl | `PRL` | `pearl` / `noisygemm` | CUDA route (ws_gemm SM86); historical accepted-share evidence exists, current RC validation pending |
+| Pearl | `PRL` | `pearl` / `noisygemm` | CUDA route (ws_gemm SM86); historical accepted-share evidence exists, strict offline Ada 2-GPU execution measured; live/competitive validation pending |
 
 Production mining algorithms use a 1% dev fee on every public route.
 

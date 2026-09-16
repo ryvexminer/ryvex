@@ -1,6 +1,6 @@
 ﻿# Changelog
 
-## v1.17.0-rc.1 (2026-09-15)
+## v1.17.0 (2026-09-16)
 
 ### Changed
 - Consolidated the v1.17 release candidate control and benchmark evidence paths.
@@ -9,7 +9,8 @@
 ### Validation
 - The locked CLI workspace check and test suite pass on the official server candidate.
 - The Windows CUDA Pearl offline validation and isolated runner contract checks pass.
-- Architecture and multi GPU coverage remain subject to the dedicated Vast validation gate.
+- A strict offline Vast campaign measured all six active algorithms on two Ada SM89 GPUs
+  with positive per-GPU rates for 150 seconds; live and comparative checks remain separate.
 
 
 ## v1.16.1 (2026-07-24)
