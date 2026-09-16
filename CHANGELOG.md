@@ -30,7 +30,7 @@
 - Pearl reference-release freshness policy: H2H reference versions now bind exact release markers and asset checksums through package, preflight, controller, and A/B/A metadata.
 - Generic H2H evidence rail: manifest v3 binds every campaign to an exact reference version, comparison basis, pool route, fee status, source archive, and A/B/A metadata across Ampere SM86, Ada SM89, and Blackwell SM120.
 - Competitive evidence ledger: strict 288-cell matrix across 6 algorithms, 3 architectures, 1/2/4/8 GPU topologies, pool/solo, and stock/best-stable-same-power profiles.
-- NoisyGEMM runtime alias normalization: `noisygemm`, `noisy-gemm`, `noisy_gemm` all resolve to the registered `pearl` key.
+- NoisyGEMM runtime alias normalization: `noisygemm` and `noisy-gemm` resolve to the registered `pearl` key.
 
 ### Changed
 - ProgPowZ clean search rewritten as warp-cooperative 16-lane layout with +330.7% hashrate and +240.8% efficiency improvement over the serial clean oracle on SM86.
