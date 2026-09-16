@@ -2,15 +2,14 @@
 
 Ryvex is a multi-algorithm NVIDIA CUDA GPU miner for Ravencoin, Ergo, IronFish,
 Zano, FiroPoW coins (1% dev fee; FIRO exact-RC validation remains pending), and Pearl.
-The current development line is
-`v1.17.0`; it is not published yet. Use the latest public release until
-the v1.17 validation and publication checklist are complete.
+Ryvex v1.17.0 is the current public release. Download the packages from
+the [v1.17.0 GitHub release](https://github.com/ryvexminer/ryvex/releases/tag/v1.17.0).
 
 > **v1.17 validation status:** historical v1.17 pool H2H records include parity
-> and winner results at their recorded commits. A strict offline campaign at
-> exact source commit `7ab1e471c5ab4bd13343f44b986c8c1edf51387a` also measured
-> all six active algorithms on two Ada SM89 GPUs for 150 seconds with positive
-> rates on both GPUs. This proves execution on that Ada two-GPU setup only;
+> and winner results at their recorded commits.
+> A strict offline campaign on two Ada SM89 GPUs measured all six active
+> algorithms for 150 seconds with positive rates on both GPUs. This demonstrates
+> execution on that test setup only;
 > live pool/solo behavior, competitive parity, profitability, and other GPU
 > architectures remain separate release checks.
 

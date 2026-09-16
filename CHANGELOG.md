@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 ## v1.17.0 (2026-09-16)
 
@@ -49,7 +49,7 @@
 
 ### Fixed
 - Aligned GUI package and Tauri metadata with the v1.15.1 release line.
-- Replaced the GUI seed config's EUR-specific electricity setting with the neutral USD default while preserving legacy config compatibility.
+- Replaced the GUI seed config's currency-specific electricity setting with the neutral USD default while preserving legacy config compatibility.
 - Classified Pearl/LuckyPool stale-share `msg` responses as stale timing events and simplified the live CLI message.
 
 ### Release hygiene

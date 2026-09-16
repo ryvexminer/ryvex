@@ -218,7 +218,7 @@ port = 8081
 # miner, and no remote targets are contacted unless an entry is enabled.
 # [[dashboard.multi_rig]]
 # name = "garage-rig"
-# summary_url = "http://192.168.1.42:8080/api/stats"
+# summary_url = "http://remote-rig.example:8080/api/stats"
 # api_token = "remote-rig-read-token"
 
 # === Network Timeouts ===
