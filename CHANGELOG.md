@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.17.3 (2026-09-18)
+
+### Fixed
+- Both KawPoW and ProgPowZ now run their published fast GPU kernels by default,
+  restoring the hashrate measured on the reference cards. The previous package
+  selected the slow interpreted clean kernels, so shipped rigs mined roughly
+  seven to ten times below the rate the same hardware reaches.
+- A host whose runtime CUDA compiler cannot build or load the fast clean kernel
+  no longer stops its GPU worker: KawPoW and ProgPowZ keep mining through the
+  embedded clean module, and both now name the slow engine on the console, where
+  the default logging level would otherwise have left a rig silently running at
+  about a tenth of its capacity. KawPoW probes the fast kernel again after a
+  short delay instead of staying slow until the next GPU restart; ProgPowZ
+  falls back once per CUDA context and picks the fast kernel up again on a
+  fresh context.
+- The ProgPowZ capability string now names the clean module that release builds
+  really embed, and the release gate now requires exactly that string, so it no
+  longer accepts an unverifiable claim.
+
 ## v1.17.2 (2026-09-18)
 
 ### Fixed

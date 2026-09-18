@@ -2,7 +2,7 @@
 
 Ryvex is a multi-algorithm NVIDIA CUDA GPU miner for Ravencoin, Ergo, IronFish,
 Zano, FiroPoW coins (1% dev fee; FIRO exact-RC validation remains pending), and Pearl.
-Ryvex v1.17.2 is the current release. Download it from the [v1.17.2 GitHub release](https://github.com/ryvexminer/ryvex/releases/tag/v1.17.2).
+Ryvex v1.17.3 is the current release. Download it from the [v1.17.3 GitHub release](https://github.com/ryvexminer/ryvex/releases/tag/v1.17.3).
 
 > **v1.17 validation status:** historical v1.17 pool H2H records include parity
 > and winner results at their recorded commits.
@@ -184,7 +184,7 @@ http://localhost:8081
 
 The dashboard shows device status, shares, pool status, session estimates, and recent events. To disable it, start Ryvex with `--dashboard-port 0`.
 
-For remote access, set `bind_address = "0.0.0.0"` in the `[dashboard]` config section and protect the HTTP API with its configured token.
+The dashboard listens only on this computer at `http://localhost:8081`. Setting `bind_address` does not publish the dashboard on the local network; that setting belongs to the separate HTTP monitoring API. To view the dashboard from another machine, open an SSH tunnel to `localhost:8081` on the rig and keep the page local. Do not bind the dashboard to every network interface.
 
 ## Local control client
 

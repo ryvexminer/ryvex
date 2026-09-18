@@ -201,9 +201,11 @@ port = 8081
 # value per session and sends it only in the X-API-Key request header.
 # api_key = "a-random-secret-key"
 
-# HTTP API bind address (default: "127.0.0.1" = local only)
-# Set to "0.0.0.0" to listen on all interfaces (multi-rig LAN monitoring)
-# bind_address = "0.0.0.0"
+# HTTP API bind address (default: "127.0.0.1" = local only).
+# This does not change the integrated dashboard, which always listens on 127.0.0.1.
+# Use an SSH tunnel for remote dashboard access. Do not treat a LAN bind as a
+# supported dashboard path.
+# bind_address = "127.0.0.1"
 
 # Static HTTP API token for remote access (optional).
 # If empty or absent, a random token is generated each session.
