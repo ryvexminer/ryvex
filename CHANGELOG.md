@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.17.2 (2026-09-18)
+
+### Fixed
+- Shares found on the first job after a pool reconnect or failover are now submitted instead of being miscounted as stale.
+- Config files stay owner-private after every save; interrupted saves leave the previous file untouched and concurrent saves no longer collide.
+- Encrypted credentials are rejected at startup when the decryption key is missing or wrong, instead of ciphertext being used as an active token.
+- Profit estimates expire after a defined freshness window: difficulty, network hashrate, and price are tracked separately, and an empty pool response no longer resets the estimate age shown in the dashboard.
+- The dashboard fleet view stays responsive while other rigs are slow and no longer drops healthy rigs because one rig exceeded the refresh budget.
+- Ambiguous HTTP requests are rejected before any control command executes.
+- The publication evidence gate opens every report and binds it to the exact packaged binary; a missing, tampered, wrong-platform, or failed report can no longer pass, and publication requires passed GPU validation per binary.
+- Support reports now describe the effective algorithm, pool, and wallet from command flags even when no config file is present.
+- The integrated dashboard no longer stacks overlapping fleet refreshes, and fleet collection stays inside a short global time budget.
+- Install docs now distinguish free GPU memory from card size, and no longer tell operators to publish the local dashboard on every network interface.
+- Publication now requires a matching evidence provenance manifest; a missing, skipped, stale, or mismatched report cannot pass as success.
+- Pearl hashrate is now reported in proof attempts per second, comparable with pool-side rates, instead of internal tile work units that inflated the display.
+
+### Changed
+- First-run troubleshooting for missing GPU/driver, insufficient free memory, remote access, and CLI-flag support reports is tracked in docs/troubleshooting.md.
+
 ## v1.17.1 (2026-09-16)
 
 ### Fixed
