@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.17.4 (2026-09-19)
+
+### Fixed
+- A second graphics card that reuses the same compiled FiroPoW kernel no longer
+  skips its own safety check: each card now proves the runtime-compiled kernel
+  against the reference implementation before it is allowed to mine with it.
+- When that check fails on one card, the miner now discards the compiled kernel
+  and its stored proof together, and returns that card to the embedded clean
+  engine instead of keeping a kernel that was never proven on that card.
+- A card that failed to compile the runtime kernel no longer keeps a stale proof
+  that would let a later kernel of the same shape skip its safety check.
+
 ## v1.17.3 (2026-09-18)
 
 ### Fixed
