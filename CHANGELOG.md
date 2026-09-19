@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.17.5 (2026-09-20)
+
+### Fixed
+- The FiroPoW benchmark now derives its epoch from the block height with the
+  FiroPoW epoch length. The compiled kernel and the reference it is checked
+  against were previously prepared for two different epochs, so the benchmark
+  rejected a correct fast kernel and fell back to the embedded engine. Affected
+  cards reported about a tenth of the rate the same hardware reaches.
+- Benchmark reports written for an auto-tuned host now carry the corrected
+  FiroPoW rate, so the miner no longer down-weights that algorithm from an
+  understated measurement of its own hardware.
+
 ## v1.17.4 (2026-09-19)
 
 ### Fixed
