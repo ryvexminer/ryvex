@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.17.6 (2026-09-20)
+
+### Fixed
+- A HiveOS rig could sit at 0 H/s without any error. The HiveOS adapter wrote a
+  partial `[dashboard]` table while the miner required every field of that
+  table, so the packaged binary stopped on a configuration parse error before
+  mining started and nothing listened on the API port. Every field of that
+  table is now optional, the adapter always writes an explicit port, and the
+  packaging step loads the generated configuration with the packaged binary
+  before it is allowed to produce an archive.
+- The HiveOS archive published with v1.17.5 is replaced by this one. HiveOS rig
+  operators running that package should update.
+
 ## v1.17.5 (2026-09-20)
 
 ### Fixed
